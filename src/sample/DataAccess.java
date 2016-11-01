@@ -41,6 +41,47 @@ public class DataAccess {
         return result;
     }
 
+    public List<Student> getStudentsView(String query) throws SQLException {
+        List<Student> result = new ArrayList<Student>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+//             ResultSet personResultSet = stmt.executeQuery("SELECT * FROM students_without_apartment")) {
+             ResultSet personResultSet = stmt.executeQuery(query)) {
+            while (personResultSet.next()) {
+                int id = personResultSet.getInt(1);
+                String firstName = personResultSet.getString(2);
+                String middleName = personResultSet.getString(3);
+                String lastName = personResultSet.getString(4);
+                String dateOfBirth = personResultSet.getDate(5).toString();
+                String gender = personResultSet.getString(6);
+                result.add(new Student(id, firstName, middleName, lastName, dateOfBirth, gender));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
+    public List<Apartments> getApartments(String query) throws SQLException {
+        List<Apartments> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet personResultSet = stmt.executeQuery(
+                     query)) {
+            while (personResultSet.next()) {
+                int occupiedBeds = personResultSet.getInt(1);
+                int aptNumber = personResultSet.getInt(2);
+                int buildingId = personResultSet.getInt(3);
+                int beds = personResultSet.getInt(4);
+                int freeBeds = personResultSet.getInt(5);
+                result.add(new Apartments(occupiedBeds, aptNumber, buildingId, beds, freeBeds));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
     public List<Guest> getAllGuests() throws SQLException {
         List<Guest> result = new ArrayList<>();
         try (Connection connection = getConnection();

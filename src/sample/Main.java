@@ -15,8 +15,8 @@ public class Main extends Application {
         source.setDataSourceName("CampusData");
         source.setServerName("localhost");
         source.setDatabaseName("campus");
-        source.setUser("");
-        source.setPassword("" );
+        source.setUser("postgres");
+        source.setPassword("");
         source.setMaxConnections(10);
 
         DataAccess dataAccess = new DataAccess(source);

@@ -2,9 +2,7 @@ package sample;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-/**
- * Created by Lex on 31.10.16.
- */
+
 public class Student extends Person {
     private final SimpleIntegerProperty studentId = new SimpleIntegerProperty();
     private final SimpleIntegerProperty scholarship = new SimpleIntegerProperty();
@@ -16,6 +14,9 @@ public class Student extends Person {
 //    public Student(int id, String fName, String mName, String lName, String dOfBirth, String gender, int doc) {
 //        super(id, fName, mName, lName, dOfBirth, gender, doc);
 //    }
+    public Student(int id, String fName, String mName, String lName, String dOfBirth, String gender) {
+        super(id, fName, mName, lName, dOfBirth, gender, 0);
+    }
 
     public Student(int id, String fName, String mName, String lName, String dOfBirth, String gender, int doc, int studID, int scholarship) {
         super(id, fName, mName, lName, dOfBirth, gender, doc);
