@@ -13,10 +13,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         PGPoolingDataSource source = new PGPoolingDataSource();
         source.setDataSourceName("CampusData");
-        source.setServerName("localhost");
-        source.setDatabaseName("campus");
-        source.setUser("postgres");
-        source.setPassword("");
+
+        source.setServerName("localhost");      //EDIT THIS
+        source.setDatabaseName("campus");      //EDIT THIS
+        source.setUser("postgres");      //EDIT THIS
+        source.setPassword("");      //EDIT THIS
         source.setMaxConnections(10);
 
         DataAccess dataAccess = new DataAccess(source);

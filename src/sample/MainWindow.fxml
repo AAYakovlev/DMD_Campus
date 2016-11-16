@@ -116,6 +116,24 @@
                                         <Button onAction="#showEmployeesWithoutApt" text="Employees Without Apartment"/>
                                     </children>
                                 </HBox>
+                                <HBox>
+                                    <TextField fx:id="firstNameField" promptText="First Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="middleNameField" promptText="Middle Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="lastNameField" promptText="Last Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="genderField" promptText="Gender"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="dobField" promptText="DOB"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="scholarshipField" promptText="Scholarship"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="documentField" promptText="Doc Path"
+                                               prefWidth="100"/>
+
+                                    <Button onAction="#addStudent" text="Add"/>
+                                </HBox>
                             </children>
                         </VBox>
                     </content>

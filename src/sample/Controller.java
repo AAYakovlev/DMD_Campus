@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,8 +24,24 @@ public class Controller implements Initializable{
 
     @FXML
     TableView tableViewStudents;
+
     @FXML
     TableView tableViewGuests;
+    @FXML
+    TextField firstNameField;
+    @FXML
+    TextField middleNameField;
+    @FXML
+    TextField lastNameField;
+    @FXML
+    TextField genderField;
+    @FXML
+    TextField dobField;
+    @FXML
+    TextField scholarshipField;
+    @FXML
+    TextField documentField;
+
     @FXML
     TableView tableAptBeds;
 
@@ -103,6 +120,10 @@ public class Controller implements Initializable{
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public void addStudent(ActionEvent actionEvent) {
+
     }
 
 //    public void showAllStudents(ActionEvent ae){
