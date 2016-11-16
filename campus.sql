@@ -1835,10 +1835,10 @@ WITH (OIDS=FALSE)
 -- ----------------------------
 -- Records of entry_permission
 -- ----------------------------
-INSERT INTO "public"."entry_permission" VALUES ('1', 'apartment1');
-INSERT INTO "public"."entry_permission" VALUES ('2', 'apartment2');
-INSERT INTO "public"."entry_permission" VALUES ('3', 'apartment3');
-INSERT INTO "public"."entry_permission" VALUES ('4', 'apartment4');
+INSERT INTO "public"."entry_permission" VALUES ('1', 'Dormitory1');
+INSERT INTO "public"."entry_permission" VALUES ('2', 'Dormitory2');
+INSERT INTO "public"."entry_permission" VALUES ('3', 'Dormitory3');
+INSERT INTO "public"."entry_permission" VALUES ('4', 'Dormitory4');
 INSERT INTO "public"."entry_permission" VALUES ('5', 'TeachingBuilding');
 INSERT INTO "public"."entry_permission" VALUES ('6', 'ProfessorOffice');
 INSERT INTO "public"."entry_permission" VALUES ('7', 'Pantry');

@@ -64,7 +64,7 @@
                                 <HBox>
                                     <children>
                                         <Button onAction="#showAllGuests" text="All guests"/>
-                                        <Button onAction="#clearTableGuests" text="Late guests(Empty query)"/>
+                                        <Button onAction="#clearTableGuests" text="Late guests"/>
                                     </children>
                                 </HBox>
                             </children>
