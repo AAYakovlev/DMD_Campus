@@ -6148,44 +6148,6 @@ CREATE OR REPLACE VIEW "public"."employees_without_apartments" AS
   WHERE (li.apartment_number IS NULL);
 
 -- ----------------------------
--- View structure for female_employee_apartment_distribution
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."female_employee_apartment_distribution" AS 
- SELECT ewa.person_id,
-    ewa.first_name,
-    ewa.middle_name,
-    ewa.family_name,
-    ewa.date_of_birth,
-    ewa.gender,
-    affe.beds_occupied,
-    affe.apartment_number,
-    affe.building_id,
-    affe.beds,
-    affe.free_beds
-   FROM employees_without_apartments ewa,
-    apartments_for_female_employee affe
-  WHERE (ewa.gender = 'F'::bpchar);
-
--- ----------------------------
--- View structure for female_students_apartment_distribution
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."female_students_apartment_distribution" AS 
- SELECT swa.person_id,
-    swa.first_name,
-    swa.middle_name,
-    swa.family_name,
-    swa.date_of_birth,
-    swa.gender,
-    affs.beds_occupied,
-    affs.apartment_number,
-    affs.building_id,
-    affs.beds,
-    affs.free_beds
-   FROM students_without_apartment swa,
-    apartments_for_female_students affs
-  WHERE (swa.gender = 'F'::bpchar);
-
--- ----------------------------
 -- View structure for guest_control
 -- ----------------------------
 CREATE OR REPLACE VIEW "public"."guest_control" AS 
@@ -6218,44 +6180,6 @@ CREATE OR REPLACE VIEW "public"."have_entry_permissions" AS
              JOIN ep_set_has_ep USING (ep_set_id))
              JOIN entry_permission ep USING (entry_permission_id))
           WHERE (in_out.person_id = person.person_id)));
-
--- ----------------------------
--- View structure for male_employee_apartment_distribution
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."male_employee_apartment_distribution" AS 
- SELECT ewa.person_id,
-    ewa.first_name,
-    ewa.middle_name,
-    ewa.family_name,
-    ewa.date_of_birth,
-    ewa.gender,
-    afme.beds_occupied,
-    afme.apartment_number,
-    afme.building_id,
-    afme.beds,
-    afme.free_beds
-   FROM employees_without_apartments ewa,
-    apartments_for_male_employee afme
-  WHERE (ewa.gender = 'M'::bpchar);
-
--- ----------------------------
--- View structure for male_students_apartment_distribution
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."male_students_apartment_distribution" AS 
- SELECT swa.person_id,
-    swa.first_name,
-    swa.middle_name,
-    swa.family_name,
-    swa.date_of_birth,
-    swa.gender,
-    afms.beds_occupied,
-    afms.apartment_number,
-    afms.building_id,
-    afms.beds,
-    afms.free_beds
-   FROM students_without_apartment swa,
-    apartments_for_male_students afms
-  WHERE (swa.gender = 'M'::bpchar);
 
 -- ----------------------------
 -- View structure for no_entry_permission_for_in_out
