@@ -1985,6 +1985,9 @@ WITH (OIDS=FALSE)
 -- ----------------------------
 INSERT INTO "public"."in_out" VALUES ('1', '1', 'o', '2016-09-02 09:26:33', 't');
 INSERT INTO "public"."in_out" VALUES ('1', '1', 'o', '2016-10-22 06:59:38', 't');
+INSERT INTO "public"."in_out" VALUES ('1', '1', 'o', '2016-11-19 00:59:39.758146', 't');
+INSERT INTO "public"."in_out" VALUES ('1', '1', 'o', '2016-11-19 01:00:38.608803', 'f');
+INSERT INTO "public"."in_out" VALUES ('1', '1', 'i', '2016-11-19 01:00:51.649714', 't');
 INSERT INTO "public"."in_out" VALUES ('1', '2', 'i', '2016-09-24 09:43:52', 'f');
 INSERT INTO "public"."in_out" VALUES ('1', '2', 'o', '2016-11-07 18:24:15', 'f');
 INSERT INTO "public"."in_out" VALUES ('1', '2', 'o', '2016-11-15 16:32:17', 'f');
@@ -2049,6 +2052,8 @@ INSERT INTO "public"."in_out" VALUES ('1', '32', 'o', '2016-09-01 00:00:16', 'f'
 INSERT INTO "public"."in_out" VALUES ('1', '32', 'i', '2016-10-18 17:12:40', 'f');
 INSERT INTO "public"."in_out" VALUES ('1', '33', 'i', '2016-10-03 12:54:26', 'f');
 INSERT INTO "public"."in_out" VALUES ('1', '34', 'i', '2016-11-14 11:48:13', 'f');
+INSERT INTO "public"."in_out" VALUES ('1', '34', 'i', '2016-11-19 01:02:21.998257', 'f');
+INSERT INTO "public"."in_out" VALUES ('1', '34', 'o', '2016-11-19 01:02:29.322543', 'f');
 INSERT INTO "public"."in_out" VALUES ('1', '35', 'i', '2016-09-01 01:59:14', 'f');
 INSERT INTO "public"."in_out" VALUES ('1', '35', 'o', '2016-10-21 10:12:44', 'f');
 INSERT INTO "public"."in_out" VALUES ('1', '35', 'i', '2016-11-02 00:11:16', 'f');
