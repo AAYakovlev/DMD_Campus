@@ -1,7 +1,7 @@
 -- ----------------------------
 -- Sequence structure for account_account_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."account_account_id_seq";
+DROP SEQUENCE IF EXISTS "public"."account_account_id_seq" CASCADE;
 CREATE SEQUENCE "public"."account_account_id_seq"
  INCREMENT 1
  MINVALUE 1
@@ -13,40 +13,40 @@ SELECT setval('"public"."account_account_id_seq"', 36, true);
 -- ----------------------------
 -- Sequence structure for apartment_type_apartment_type_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."apartment_type_apartment_type_id_seq";
+DROP SEQUENCE IF EXISTS "public"."apartment_type_apartment_type_id_seq" CASCADE;
 CREATE SEQUENCE "public"."apartment_type_apartment_type_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 3
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for building_building_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."building_building_id_seq";
+DROP SEQUENCE IF EXISTS "public"."building_building_id_seq" CASCADE;
 CREATE SEQUENCE "public"."building_building_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 5
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for document_document_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."document_document_id_seq";
+DROP SEQUENCE IF EXISTS "public"."document_document_id_seq" CASCADE;
 CREATE SEQUENCE "public"."document_document_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 1000
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for document_type_document_type_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."document_type_document_type_id_seq";
+DROP SEQUENCE IF EXISTS "public"."document_type_document_type_id_seq" CASCADE;
 CREATE SEQUENCE "public"."document_type_document_type_id_seq"
  INCREMENT 1
  MINVALUE 1
@@ -58,29 +58,29 @@ SELECT setval('"public"."document_type_document_type_id_seq"', 9, true);
 -- ----------------------------
 -- Sequence structure for employee_employee_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."employee_employee_id_seq";
+DROP SEQUENCE IF EXISTS "public"."employee_employee_id_seq" CASCADE;
 CREATE SEQUENCE "public"."employee_employee_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 6
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for employee_role_employee_role_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."employee_role_employee_role_id_seq";
+DROP SEQUENCE IF EXISTS "public"."employee_role_employee_role_id_seq" CASCADE;
 CREATE SEQUENCE "public"."employee_role_employee_role_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 6
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for entry_check_machine_ecm_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."entry_check_machine_ecm_id_seq";
+DROP SEQUENCE IF EXISTS "public"."entry_check_machine_ecm_id_seq" CASCADE;
 CREATE SEQUENCE "public"."entry_check_machine_ecm_id_seq"
  INCREMENT 1
  MINVALUE 1
@@ -92,7 +92,7 @@ SELECT setval('"public"."entry_check_machine_ecm_id_seq"', 83, true);
 -- ----------------------------
 -- Sequence structure for entry_permission_entry_permission_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."entry_permission_entry_permission_id_seq";
+DROP SEQUENCE IF EXISTS "public"."entry_permission_entry_permission_id_seq" CASCADE;
 CREATE SEQUENCE "public"."entry_permission_entry_permission_id_seq"
  INCREMENT 1
  MINVALUE 1
@@ -104,29 +104,29 @@ SELECT setval('"public"."entry_permission_entry_permission_id_seq"', 22, true);
 -- ----------------------------
 -- Sequence structure for entry_permission_set_ep_set_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."entry_permission_set_ep_set_id_seq";
+DROP SEQUENCE IF EXISTS "public"."entry_permission_set_ep_set_id_seq" CASCADE;
 CREATE SEQUENCE "public"."entry_permission_set_ep_set_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 7
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for guest_guest_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."guest_guest_id_seq";
+DROP SEQUENCE IF EXISTS "public"."guest_guest_id_seq" CASCADE;
 CREATE SEQUENCE "public"."guest_guest_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 10
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for operations_log_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."operations_log_id_seq";
+DROP SEQUENCE IF EXISTS "public"."operations_log_id_seq" CASCADE;
 CREATE SEQUENCE "public"."operations_log_id_seq"
  INCREMENT 1
  MINVALUE 1
@@ -137,51 +137,51 @@ CREATE SEQUENCE "public"."operations_log_id_seq"
 -- ----------------------------
 -- Sequence structure for person_person_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."person_person_id_seq";
+DROP SEQUENCE IF EXISTS "public"."person_person_id_seq" CASCADE;
 CREATE SEQUENCE "public"."person_person_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 1000
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for student_student_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."student_student_id_seq";
+DROP SEQUENCE IF EXISTS "public"."student_student_id_seq" CASCADE;
 CREATE SEQUENCE "public"."student_student_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 10
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for transaction_transaction_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."transaction_transaction_id_seq";
+DROP SEQUENCE IF EXISTS "public"."transaction_transaction_id_seq" CASCADE;
 CREATE SEQUENCE "public"."transaction_transaction_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 1174
  CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for transaction_type_transaction_type_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."transaction_type_transaction_type_id_seq";
+DROP SEQUENCE IF EXISTS "public"."transaction_type_transaction_type_id_seq" CASCADE;
 CREATE SEQUENCE "public"."transaction_type_transaction_type_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1
+ START 4
  CACHE 1;
 
 -- ----------------------------
 -- Table structure for account
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."account";
+DROP TABLE IF EXISTS "public"."account" CASCADE;
 CREATE TABLE "public"."account" (
 "account_id" int4 DEFAULT nextval('account_account_id_seq'::regclass) NOT NULL,
 "person_id" int4 NOT NULL
@@ -213,7 +213,7 @@ INSERT INTO "public"."account" VALUES ('36', '26');
 -- ----------------------------
 -- Table structure for apartment
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."apartment";
+DROP TABLE IF EXISTS "public"."apartment" CASCADE;
 CREATE TABLE "public"."apartment" (
 "building_id" int4 NOT NULL,
 "apartment_number" int4 NOT NULL,
@@ -582,7 +582,7 @@ INSERT INTO "public"."apartment" VALUES ('4', '421', '1');
 -- ----------------------------
 -- Table structure for apartment_type
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."apartment_type";
+DROP TABLE IF EXISTS "public"."apartment_type" CASCADE;
 CREATE TABLE "public"."apartment_type" (
 "apartment_type_id" int4 DEFAULT nextval('apartment_type_apartment_type_id_seq'::regclass) NOT NULL,
 "beds" int4,
@@ -605,7 +605,7 @@ INSERT INTO "public"."apartment_type" VALUES ('3', '5', '60.00', '3', '900.00', 
 -- ----------------------------
 -- Table structure for building
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."building";
+DROP TABLE IF EXISTS "public"."building" CASCADE;
 CREATE TABLE "public"."building" (
 "building_id" int4 DEFAULT nextval('building_building_id_seq'::regclass) NOT NULL,
 "city" varchar(50) COLLATE "default" NOT NULL,
@@ -630,7 +630,7 @@ INSERT INTO "public"."building" VALUES ('5', 'Innopolis', 'Universitetskaya', '1
 -- ----------------------------
 -- Table structure for document
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."document";
+DROP TABLE IF EXISTS "public"."document" CASCADE;
 CREATE TABLE "public"."document" (
 "document_id" int4 DEFAULT nextval('document_document_id_seq'::regclass) NOT NULL,
 "person_id" int4 NOT NULL,
@@ -1649,7 +1649,7 @@ INSERT INTO "public"."document" VALUES ('1000', '1000', '2016-11-11 00:00:00', '
 -- ----------------------------
 -- Table structure for document_type
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."document_type";
+DROP TABLE IF EXISTS "public"."document_type" CASCADE;
 CREATE TABLE "public"."document_type" (
 "document_type_id" int4 DEFAULT nextval('document_type_document_type_id_seq'::regclass) NOT NULL,
 "type_name" varchar(50) COLLATE "default" NOT NULL,
@@ -1675,7 +1675,7 @@ INSERT INTO "public"."document_type" VALUES ('9', 'Gradebook', '5');
 -- ----------------------------
 -- Table structure for employee
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."employee";
+DROP TABLE IF EXISTS "public"."employee" CASCADE;
 CREATE TABLE "public"."employee" (
 "employee_id" int4 DEFAULT nextval('employee_employee_id_seq'::regclass) NOT NULL,
 "person_id" int4 NOT NULL,
@@ -1699,7 +1699,7 @@ INSERT INTO "public"."employee" VALUES ('6', '26', '30000.00', '6');
 -- ----------------------------
 -- Table structure for employee_role
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."employee_role";
+DROP TABLE IF EXISTS "public"."employee_role" CASCADE;
 CREATE TABLE "public"."employee_role" (
 "employee_role_id" int4 DEFAULT nextval('employee_role_employee_role_id_seq'::regclass) NOT NULL,
 "role_name" varchar(50) COLLATE "default" NOT NULL,
@@ -1722,7 +1722,7 @@ INSERT INTO "public"."employee_role" VALUES ('6', 'Administrator', 'Full-time');
 -- ----------------------------
 -- Table structure for entry_check_machine
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."entry_check_machine";
+DROP TABLE IF EXISTS "public"."entry_check_machine" CASCADE;
 CREATE TABLE "public"."entry_check_machine" (
 "ecm_id" int4 DEFAULT nextval('entry_check_machine_ecm_id_seq'::regclass) NOT NULL,
 "building_id" int4 NOT NULL,
@@ -1816,7 +1816,7 @@ INSERT INTO "public"."entry_check_machine" VALUES ('83', '3', '18', null);
 -- ----------------------------
 -- Table structure for entry_permission
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."entry_permission";
+DROP TABLE IF EXISTS "public"."entry_permission" CASCADE;
 CREATE TABLE "public"."entry_permission" (
 "entry_permission_id" int4 DEFAULT nextval('entry_permission_entry_permission_id_seq'::regclass) NOT NULL,
 "permission_name" varchar(100) COLLATE "default" NOT NULL
@@ -1853,7 +1853,7 @@ INSERT INTO "public"."entry_permission" VALUES ('22', 'Stockroom (canteen)');
 -- ----------------------------
 -- Table structure for entry_permission_set
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."entry_permission_set";
+DROP TABLE IF EXISTS "public"."entry_permission_set" CASCADE;
 CREATE TABLE "public"."entry_permission_set" (
 "ep_set_id" int4 DEFAULT nextval('entry_permission_set_ep_set_id_seq'::regclass) NOT NULL,
 "set_name" varchar(50) COLLATE "default" NOT NULL
@@ -1876,7 +1876,7 @@ INSERT INTO "public"."entry_permission_set" VALUES ('7', 'Cleaning Service');
 -- ----------------------------
 -- Table structure for ep_set_has_ep
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."ep_set_has_ep";
+DROP TABLE IF EXISTS "public"."ep_set_has_ep" CASCADE;
 CREATE TABLE "public"."ep_set_has_ep" (
 "entry_permission_id" int4 NOT NULL,
 "ep_set_id" int4 NOT NULL
@@ -1918,7 +1918,7 @@ INSERT INTO "public"."ep_set_has_ep" VALUES ('22', '6');
 -- ----------------------------
 -- Table structure for guest
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."guest";
+DROP TABLE IF EXISTS "public"."guest" CASCADE;
 CREATE TABLE "public"."guest" (
 "guest_id" int4 DEFAULT nextval('guest_guest_id_seq'::regclass) NOT NULL,
 "person_id" int4 NOT NULL,
@@ -1945,7 +1945,7 @@ INSERT INTO "public"."guest" VALUES ('10', '20', '10');
 -- ----------------------------
 -- Table structure for guest_to_person
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."guest_to_person";
+DROP TABLE IF EXISTS "public"."guest_to_person" CASCADE;
 CREATE TABLE "public"."guest_to_person" (
 "guest_id" int4 NOT NULL,
 "person_id" int4 NOT NULL,
@@ -1968,7 +1968,7 @@ INSERT INTO "public"."guest_to_person" VALUES ('5', '5', '2016-11-03 03:34:59', 
 -- ----------------------------
 -- Table structure for in_out
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."in_out";
+DROP TABLE IF EXISTS "public"."in_out" CASCADE;
 CREATE TABLE "public"."in_out" (
 "person_id" int4 NOT NULL,
 "ecm_id" int4 NOT NULL,
@@ -3692,7 +3692,7 @@ INSERT INTO "public"."in_out" VALUES ('26', '52', 'o', '2016-09-08 01:46:00', 'f
 -- ----------------------------
 -- Table structure for lives_in
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."lives_in";
+DROP TABLE IF EXISTS "public"."lives_in" CASCADE;
 CREATE TABLE "public"."lives_in" (
 "person_id" int4 NOT NULL,
 "apartment_number" int4 NOT NULL,
@@ -3726,7 +3726,7 @@ INSERT INTO "public"."lives_in" VALUES ('26', '102', '3', '2015-04-20 00:00:00')
 -- ----------------------------
 -- Table structure for operations_log
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."operations_log";
+DROP TABLE IF EXISTS "public"."operations_log" CASCADE;
 CREATE TABLE "public"."operations_log" (
 "id" int4 DEFAULT nextval('operations_log_id_seq'::regclass) NOT NULL,
 "date_time" timestamp(6) NOT NULL,
@@ -3743,7 +3743,7 @@ WITH (OIDS=FALSE)
 -- ----------------------------
 -- Table structure for person
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."person";
+DROP TABLE IF EXISTS "public"."person" CASCADE;
 CREATE TABLE "public"."person" (
 "person_id" int4 DEFAULT nextval('person_person_id_seq'::regclass) NOT NULL,
 "first_name" varchar(50) COLLATE "default" NOT NULL,
@@ -4764,7 +4764,7 @@ INSERT INTO "public"."person" VALUES ('1000', 'Laurie', null, 'Harlan', '1986-01
 -- ----------------------------
 -- Table structure for person_has_ep_set
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."person_has_ep_set";
+DROP TABLE IF EXISTS "public"."person_has_ep_set" CASCADE;
 CREATE TABLE "public"."person_has_ep_set" (
 "person_id" int4 NOT NULL,
 "ep_set_id" int4 NOT NULL
@@ -5790,7 +5790,7 @@ INSERT INTO "public"."person_has_ep_set" VALUES ('1000', '4');
 -- ----------------------------
 -- Table structure for student
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."student";
+DROP TABLE IF EXISTS "public"."student" CASCADE;
 CREATE TABLE "public"."student" (
 "student_id" int4 DEFAULT nextval('student_student_id_seq'::regclass) NOT NULL,
 "person_id" int4 NOT NULL,
@@ -5817,7 +5817,7 @@ INSERT INTO "public"."student" VALUES ('10', '10', '40000.00');
 -- ----------------------------
 -- Table structure for transaction
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."transaction";
+DROP TABLE IF EXISTS "public"."transaction" CASCADE;
 CREATE TABLE "public"."transaction" (
 "transaction_id" int4 DEFAULT nextval('transaction_transaction_id_seq'::regclass) NOT NULL,
 "transaction_type_id" int4 NOT NULL,
@@ -6981,7 +6981,7 @@ INSERT INTO "public"."transaction" VALUES ('1174', '2', '-378.38', '1', '2016-10
 -- ----------------------------
 -- Table structure for transaction_type
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."transaction_type";
+DROP TABLE IF EXISTS "public"."transaction_type" CASCADE;
 CREATE TABLE "public"."transaction_type" (
 "transaction_type_id" int4 DEFAULT nextval('transaction_type_transaction_type_id_seq'::regclass) NOT NULL,
 "type_name" varchar(50) COLLATE "default" NOT NULL
@@ -6998,6 +6998,7 @@ INSERT INTO "public"."transaction_type" VALUES ('2', 'Tuition Fee');
 INSERT INTO "public"."transaction_type" VALUES ('3', 'Salary');
 INSERT INTO "public"."transaction_type" VALUES ('4', 'Scholarship');
 
+
 -- ----------------------------
 -- View structure for apartment_occupation
 -- ----------------------------
@@ -7011,6 +7012,63 @@ CREATE OR REPLACE VIEW "public"."apartment_occupation" AS
      LEFT JOIN lives_in li ON (((li.building_id = a.building_id) AND (li.apartment_number = a.apartment_number))))
      JOIN apartment_type at ON ((a.apartment_type_id = at.apartment_type_id)))
   GROUP BY a.apartment_number, a.building_id, at.beds;
+
+  -- ----------------------------
+-- View structure for apartments_with_free_beds
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."apartments_with_free_beds" AS 
+ SELECT apartment_occupation.beds_occupied,
+    apartment_occupation.apartment_number,
+    apartment_occupation.building_id,
+    apartment_occupation.beds,
+    apartment_occupation.free_beds
+   FROM apartment_occupation
+  WHERE (apartment_occupation.free_beds > 0);
+
+-- ----------------------------
+-- View structure for apartments_with_employee
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."apartments_with_employee" AS
+ SELECT a.apartment_number,
+    a.building_id
+   FROM (((apartment a
+     JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
+     JOIN person p ON ((li.person_id = p.person_id)))
+     JOIN employee e ON ((li.person_id = e.person_id)));
+
+-- ----------------------------
+-- View structure for apartments_with_female_persons
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."apartments_with_female_persons" AS
+ SELECT a.apartment_number,
+    a.building_id
+   FROM ((apartment a
+     JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
+     JOIN person p ON ((li.person_id = p.person_id)))
+  WHERE (p.gender = 'F'::bpchar);
+
+
+-- ----------------------------
+-- View structure for apartments_with_male_persons
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."apartments_with_male_persons" AS
+ SELECT a.apartment_number,
+    a.building_id
+   FROM ((apartment a
+     JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
+     JOIN person p ON ((li.person_id = p.person_id)))
+  WHERE (p.gender = 'M'::bpchar);
+
+-- ----------------------------
+-- View structure for apartments_with_students
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."apartments_with_students" AS
+ SELECT a.apartment_number,
+    a.building_id
+   FROM (((apartment a
+     JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
+     JOIN person p ON ((li.person_id = p.person_id)))
+     JOIN student s ON ((li.person_id = s.person_id)));
 
 -- ----------------------------
 -- View structure for apartments_for_female_employee
@@ -7077,62 +7135,6 @@ CREATE OR REPLACE VIEW "public"."apartments_for_male_students" AS
           WHERE ((awfb.apartment_number = awe.apartment_number) AND (awfb.building_id = awe.building_id))))));
 
 -- ----------------------------
--- View structure for apartments_with_employee
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_employee" AS 
- SELECT a.apartment_number,
-    a.building_id
-   FROM (((apartment a
-     JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
-     JOIN person p ON ((li.person_id = p.person_id)))
-     JOIN employee e ON ((li.person_id = e.person_id)));
-
--- ----------------------------
--- View structure for apartments_with_female_persons
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_female_persons" AS 
- SELECT a.apartment_number,
-    a.building_id
-   FROM ((apartment a
-     JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
-     JOIN person p ON ((li.person_id = p.person_id)))
-  WHERE (p.gender = 'F'::bpchar);
-
--- ----------------------------
--- View structure for apartments_with_free_beds
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_free_beds" AS 
- SELECT apartment_occupation.beds_occupied,
-    apartment_occupation.apartment_number,
-    apartment_occupation.building_id,
-    apartment_occupation.beds,
-    apartment_occupation.free_beds
-   FROM apartment_occupation
-  WHERE (apartment_occupation.free_beds > 0);
-
--- ----------------------------
--- View structure for apartments_with_male_persons
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_male_persons" AS 
- SELECT a.apartment_number,
-    a.building_id
-   FROM ((apartment a
-     JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
-     JOIN person p ON ((li.person_id = p.person_id)))
-  WHERE (p.gender = 'M'::bpchar);
-
--- ----------------------------
--- View structure for apartments_with_students
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_students" AS 
- SELECT a.apartment_number,
-    a.building_id
-   FROM (((apartment a
-     JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
-     JOIN person p ON ((li.person_id = p.person_id)))
-     JOIN student s ON ((li.person_id = s.person_id)));
-
--- ----------------------------
 -- View structure for employees_without_apartments
 -- ----------------------------
 CREATE OR REPLACE VIEW "public"."employees_without_apartments" AS 
@@ -7180,6 +7182,16 @@ CREATE OR REPLACE VIEW "public"."have_entry_permissions" AS
              JOIN ep_set_has_ep USING (ep_set_id))
              JOIN entry_permission ep USING (entry_permission_id))
           WHERE (in_out.person_id = person.person_id)));
+
+-- ----------------------------
+-- View structure for last_time_person_accepted_in_out
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."last_time_person_accepted_in_out" AS 
+ SELECT in_out.person_id,
+    max(in_out.date_time) AS last_accepted_entry
+   FROM in_out
+  WHERE (in_out.accepted = true)
+  GROUP BY in_out.person_id;
 
 -- ----------------------------
 -- View structure for no_entry_permission_for_in_out
@@ -7239,6 +7251,67 @@ CREATE OR REPLACE VIEW "public"."outdated_documents_of_students_and_employee" AS
         UNION
          SELECT employee.person_id
            FROM employee)));
+
+-- ----------------------------
+-- View structure for persons_inside_campus_now
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."persons_inside_campus_now" AS 
+ SELECT in_out.person_id,
+    in_out.ecm_id,
+    in_out.direction,
+    in_out.date_time,
+    in_out.accepted,
+    entry_check_machine.building_id,
+    entry_check_machine.entry_permission_id,
+    entry_check_machine.constraint_group_id,
+    person.first_name,
+    person.middle_name,
+    person.family_name,
+    person.date_of_birth,
+    person.gender,
+    person.main_document_id
+   FROM ((in_out
+     JOIN entry_check_machine USING (ecm_id))
+     JOIN person USING (person_id))
+  WHERE ((in_out.person_id IN ( SELECT last_time_person_accepted_in_out.person_id
+           FROM last_time_person_accepted_in_out)) AND (in_out.date_time = ( SELECT last_time_person_accepted_in_out.last_accepted_entry
+           FROM last_time_person_accepted_in_out
+          WHERE (last_time_person_accepted_in_out.person_id = in_out.person_id))) AND ((entry_check_machine.constraint_group_id <> 1) OR (in_out.direction <> 'o'::bpchar)));
+
+-- ----------------------------
+-- View structure for persons_with_first_accepted_campus_entry_equals_out
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."persons_with_first_accepted_campus_entry_equals_out" AS 
+ SELECT in_out.person_id,
+    in_out.date_time,
+    in_out.ecm_id,
+    in_out.direction,
+    in_out.accepted
+   FROM (in_out
+     JOIN entry_check_machine USING (ecm_id))
+  WHERE ((in_out.accepted = true) AND (entry_check_machine.constraint_group_id = 1) AND (in_out.direction = 'o'::bpchar) AND (in_out.date_time <= ALL ( SELECT io.date_time
+           FROM (in_out io
+             JOIN entry_check_machine ecm USING (ecm_id))
+          WHERE ((io.accepted = true) AND (ecm.constraint_group_id = 1) AND (io.person_id = in_out.person_id)))))
+  GROUP BY in_out.person_id, in_out.date_time, in_out.ecm_id, in_out.direction, in_out.accepted;
+
+-- ----------------------------
+-- View structure for persons_with_last_accepted_campus_entry_equals_in
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."persons_with_last_accepted_campus_entry_equals_in" AS 
+ SELECT in_out.person_id,
+    in_out.date_time,
+    in_out.ecm_id,
+    in_out.direction,
+    in_out.accepted,
+    now() AS now
+   FROM (in_out
+     JOIN entry_check_machine USING (ecm_id))
+  WHERE ((in_out.accepted = true) AND (entry_check_machine.constraint_group_id = 1) AND (in_out.direction = 'i'::bpchar) AND (in_out.date_time >= ALL ( SELECT io.date_time
+           FROM (in_out io
+             JOIN entry_check_machine ecm USING (ecm_id))
+          WHERE ((io.accepted = true) AND (ecm.constraint_group_id = 1) AND (io.person_id = in_out.person_id)))))
+  GROUP BY in_out.person_id, in_out.date_time, in_out.ecm_id, in_out.direction, in_out.accepted;
 
 -- ----------------------------
 -- View structure for rental_fee_balance
