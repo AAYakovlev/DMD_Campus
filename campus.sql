@@ -7391,15 +7391,52 @@ CREATE OR REPLACE VIEW "public"."tuition_fee_balance_negative" AS
   GROUP BY account.person_id, person.first_name, person.family_name
  HAVING (sum(transaction.amount) < (0)::numeric);
 
--- ---------------------------- -- View structure for guest_control -- ---------------------------- CREATE OR REPLACE VIEW "public"."guest_control" AS SELECT guest.guest_id, person.first_name,person.family_name,(g.date_time_end - g.date_time_start) AS stay_time FROM  guest JOIN person ON (guest.person_id = person.person_id) JOIN guest_to_person g ON (guest.guest_id = g.guest_id) WHERE (g.date_time_end - g.date_time_start)>'86400';--one day = 86400 seconds  -- ---------------------------- -- View structure for payment_control_rental_fee -- ---------------------------- CREATE  OR REPLACE VIEW "public"."payment_control_rental_fee" AS SELECT person_id, sum(amount) as rental_fee_balance  FROM account   NATURAL JOIN person   NATURAL JOIN transaction   NATURAL JOIN transaction_type WHERE type_name ='Rental Fee' GROUP BY person_id HAVING sum(amount) < 0; -- ---------------------------- -- View structure for payment_control_TuitionFee -- ----------------------------  CREATE  OR REPLACE VIEW "public"."payment_control_tuition_fee" AS SELECT person_id, sum(amount) as tuition_fee_balance  FROM account   NATURAL JOIN person   NATURAL JOIN transaction   NATURAL JOIN transaction_type WHERE type_name ='Tuition Fee' GROUP BY person_id HAVING sum(amount) < 0; -- ----------------------------
--- View structure for personnel_attendance_control_student -- ----------------------------
-SELECT person.person_id,person.first_name,person.family_name,max last_time_check_out
-FROM (SELECT in_out.person_id,MAX(in_out.date_time),in_out.direction
-FROM in_out
-WHERE in_out.direction = 'o' AND (SELECT current_timestamp)-in_out.date_time>'604800'
-GROUP BY person_id,in_out.direction--,in_out.date_time
-ORDER BY person_id) AS T JOIN person ON t.person_id =person.person_id
+-- ----------------------------
+-- View structure for guest_control
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."guest_control" AS
+SELECT guest.guest_id, person.first_name,person.family_name,(g.date_time_end - g.date_time_start) AS stay_time
+FROM  guest JOIN person ON (guest.person_id = person.person_id) JOIN guest_to_person g ON (guest.guest_id = g.guest_id)
+WHERE (g.date_time_end - g.date_time_start)>'86400';--one day = 86400 seconds
 
+-- ----------------------------
+-- View structure for payment_control_rental_fee
+-- ----------------------------
+CREATE  OR REPLACE VIEW "public"."payment_control_rental_fee" AS
+SELECT person_id, sum(amount) as rental_fee_balance  FROM account
+  NATURAL JOIN transaction
+  NATURAL JOIN transaction_type
+WHERE type_name ='Rental Fee'
+GROUP BY person_id
+HAVING sum(amount) < 0;
+
+-- ----------------------------
+-- View structure for payment_control_TuitionFee
+-- ----------------------------
+CREATE  OR REPLACE VIEW "public"."payment_control_tuition_fee" AS
+SELECT person_id, sum(amount) as tuition_fee_balance  FROM account
+  NATURAL JOIN transaction
+  NATURAL JOIN transaction_type
+WHERE type_name ='Tuition Fee'
+GROUP BY person_id
+HAVING sum(amount) < 0;
+
+-- ----------------------------
+-- View structure for personnel_attendance_control
+-- ----------------------------
+CREATE  OR REPLACE VIEW "public"."personnel_attendance_control" AS
+SELECT person.person_id,person.first_name,person.family_name,now()-last_accepted_entry as no_action_for
+FROM (
+       SELECT in_out.person_id,MAX(in_out.date_time) as last_accepted_entry--in_out.direction
+              FROM in_out
+              WHERE
+                      now()-in_out.date_time>'604800'
+                    AND
+                      in_out.accepted = TRUE
+              GROUP BY person_id--,in_out.direction
+              ORDER BY last_accepted_entry
+     ) AS T
+  JOIN person ON T.person_id =person.person_id;
 
 -- ----------------------------
 -- Alter Sequences Owned By 
