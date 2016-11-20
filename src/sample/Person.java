@@ -3,9 +3,6 @@ package sample;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-/**
- * Created by Lex on 31.10.16.
- */
 public class Person {
 
     private final SimpleIntegerProperty id = new SimpleIntegerProperty();

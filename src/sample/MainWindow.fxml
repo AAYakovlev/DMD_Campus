@@ -23,54 +23,6 @@
     <children>
         <TabPane>
             <tabs>
-                <Tab closable="false" text="Guests">
-                    <content>
-                        <VBox>
-                            <children>
-                                <TableView fx:id="tableViewGuests">
-                                    <columns>
-                                        <TableColumn prefWidth="200" text="First name">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="firstName"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn prefWidth="200" text="Last name">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="lastName"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn prefWidth="200" text="Host first name">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="hostFirstName"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn prefWidth="200" text="Host last name">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="hostLastName"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn prefWidth="200" text="Start time">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="start"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn prefWidth="200" text="End time">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="end"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                    </columns>
-                                </TableView>
-                                <HBox>
-                                    <children>
-                                        <Button onAction="#showAllGuests" text="All guests"/>
-                                        <Button onAction="#clearTableGuests" text="Late guests"/>
-                                    </children>
-                                </HBox>
-                            </children>
-                        </VBox>
-                    </content>
-                </Tab>
                 <Tab closable="false" text="Students">
                     <content>
                         <VBox>
@@ -113,7 +65,6 @@
                                     <children>
                                         <Button onAction="#showAllStudents" text="All students"/>
                                         <Button onAction="#showStudentsWithoutApt" text="Students Without Apartment"/>
-                                        <Button onAction="#showEmployeesWithoutApt" text="Employees Without Apartment"/>
                                     </children>
                                 </HBox>
                                 <HBox>
@@ -138,7 +89,141 @@
                         </VBox>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Occupied apartments">
+                <Tab closable="false" text="Employees">
+                    <content>
+                        <VBox>
+                            <children>
+                                <TableView fx:id="tableViewEmps">
+                                    <columns>
+                                        <TableColumn prefWidth="50" text="ID">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="id"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="First name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="firstName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="50" text="Middle name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="middleName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Last name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="lastName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="100" text="Date of birth">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="dateOfBirth"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="50" text="Gender">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="gender"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="150" text="Role">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="role"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="50" text="Salary">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="salary"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <HBox>
+                                    <children>
+                                        <Button onAction="#showAllEmployees" text="All employees"/>
+                                        <Button onAction="#showEmployeesWithoutApt" text="Employees Without Apartment"/>
+                                    </children>
+                                </HBox>
+                                <HBox>
+                                    <TextField fx:id="firstNameFieldEmp" promptText="First Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="middleNameFieldEmp" promptText="Middle Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="lastNameFieldEmp" promptText="Last Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="genderFieldEmp" promptText="Gender"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="dobFieldEmp" promptText="DOB"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="salaryFieldEmp" promptText="Salary"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="roleFieldEmp" promptText="Role"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="documentFieldEmp" promptText="Doc Path"
+                                               prefWidth="100"/>
+
+                                    <Button onAction="#addEmployee" text="Add"/>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="List of tenants">
+                    <content>
+                        <VBox>
+                            <children>
+                                <TableView fx:id="tableViewTenants">
+                                    <columns>
+                                        <TableColumn prefWidth="50" text="ID">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="id"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="First name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="firstName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="50" text="Middle name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="middleName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Last name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="lastName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="50" text="Gender">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="gender"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="apartmentNumberTenants" prefWidth="50" text="Apartment number"
+                                                     onEditCommit="#addPersonToApt">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="aptNum"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="buildingTenants" prefWidth="50" text="Building"
+                                                     onEditCommit="#addPersonToApt">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="buildingID"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <HBox>
+                                    <children>
+                                        <Button onAction="#showAllPersonsInApartments" text="All persons"/>
+                                        <Button text="Students STUB"/>
+                                        <Button text="Employees STUB"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Apartments occupation">
                     <content>
                         <VBox>
                             <children>
@@ -187,6 +272,54 @@
                                                 onAction="#showAptForMaleEmployees"/>
                                     </HBox>
                                 </VBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Guests">
+                    <content>
+                        <VBox>
+                            <children>
+                                <TableView fx:id="tableViewGuests">
+                                    <columns>
+                                        <TableColumn prefWidth="200" text="First name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="firstName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Last name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="lastName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Host first name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="hostFirstName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Host last name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="hostLastName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Start time">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="start"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="End time">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="end"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <HBox>
+                                    <children>
+                                        <Button onAction="#showAllGuests" text="All guests"/>
+                                        <Button onAction="#clearTableGuests" text="Late guests"/>
+                                    </children>
+                                </HBox>
                             </children>
                         </VBox>
                     </content>
