@@ -3689,7 +3689,8 @@ INSERT INTO "public"."in_out" VALUES ('26', '50', 'o', '2016-10-14 03:10:56', 'f
 INSERT INTO "public"."in_out" VALUES ('26', '51', 'o', '2016-10-03 06:19:47', 'f');
 INSERT INTO "public"."in_out" VALUES ('26', '52', 'o', '2016-09-08 01:46:00', 'f');
 
--- ----------------------------
+-- ----
+-- ------------------------
 -- Table structure for lives_in
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."lives_in" CASCADE;
