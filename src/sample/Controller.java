@@ -13,6 +13,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
+import javax.print.Doc;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -34,6 +35,15 @@ public class Controller implements Initializable {
 
     @FXML
     TableView tableViewGuests;
+    @FXML
+    TableColumn<Guest, String> stayTimeColumn;
+
+    @FXML
+    TableView tableViewDocs;
+
+
+    @FXML
+    TableView tableViewAttendance;
 
     @FXML
     TableView tableViewTenants;
@@ -81,6 +91,9 @@ public class Controller implements Initializable {
     @FXML
     TableView tableAptBeds;
 
+    @FXML
+    TableView tableBalance;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableViewTenants.setEditable(true);
@@ -90,32 +103,27 @@ public class Controller implements Initializable {
         showAllEmployees(null);
         showAllGuests(null);
         showAllPersonsInApartments(null);
+        showRentalFee(null);
+        showOutdatedDocs(null);
+        showPersonsInsideNow(null);
         fillAptTable("SELECT * FROM apartment_occupation ORDER BY beds_occupied DESC");
-    }
-
-    public void showAptOccupation(ActionEvent actionEvent) {
-        fillAptTable("SELECT * FROM apartment_occupation ORDER BY beds_occupied DESC");
-    }
-
-    public void showAptForFemaleStudents(ActionEvent actionEvent) {
-        fillAptTable("SELECT * FROM apartments_for_female_students ORDER BY beds_occupied DESC");
-    }
-
-    public void showAptForMaleStudents(ActionEvent actionEvent) {
-        fillAptTable("SELECT * FROM apartments_for_male_students ORDER BY beds_occupied DESC");
-    }
-
-    public void showAptForMaleEmployees(ActionEvent actionEvent) {
-        fillAptTable("SELECT * FROM apartments_for_male_employee ORDER BY beds_occupied DESC");
-    }
-
-    public void showAptForFemaleEmployees(ActionEvent actionEvent) {
-        fillAptTable("SELECT * FROM apartments_for_female_employee ORDER BY beds_occupied DESC");
     }
 
     public void showAllGuests(ActionEvent actionEvent) {
         try {
+            stayTimeColumn.setText("Start time");
             List<Guest> guests = dataAccess.getAllGuests();
+            ObservableList<Guest> guestsCollection = FXCollections.observableArrayList(guests);
+            tableViewGuests.setItems(guestsCollection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showLateGuests(ActionEvent actionEvent) {
+        try {
+            stayTimeColumn.setText("Stay time");
+            List<Guest> guests = dataAccess.getLateGuests();
             ObservableList<Guest> guestsCollection = FXCollections.observableArrayList(guests);
             tableViewGuests.setItems(guestsCollection);
         } catch (SQLException e) {
@@ -148,6 +156,26 @@ public class Controller implements Initializable {
             List<Employee> employees = dataAccess.getAllEmployees();
             ObservableList<Employee> personsCollection = FXCollections.observableArrayList(employees);
             tableViewEmps.setItems(personsCollection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showOutdatedDocs(ActionEvent actionEvent) {
+        try {
+            List<Documents> docs = dataAccess.getOutdatedDocs();
+            ObservableList<Documents> docssCollection =  FXCollections.observableArrayList(docs);
+            tableViewDocs.setItems(docssCollection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showPersonsInsideNow(ActionEvent actionEvent) {
+        try {
+            List<PersonInside> persons = dataAccess.getPersonsInsideNow();
+            ObservableList<PersonInside> personsCollection =  FXCollections.observableArrayList(persons);
+            tableViewAttendance.setItems(personsCollection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -225,12 +253,33 @@ public class Controller implements Initializable {
 //        columns.addAll(new TableColumn("First Name")., );
 //    }
 
-    public void clearTableGuests(ActionEvent actionEvent) {
-        tableViewGuests.setItems(FXCollections.observableArrayList(Collections.EMPTY_LIST));
+//    public void clearTableGuests(ActionEvent actionEvent) {
+//        tableViewGuests.setItems(FXCollections.observableArrayList(Collections.EMPTY_LIST));
+//    }
+//
+//    public void clearTableStudents(ActionEvent actionEvent) {
+//        tableViewStudents.setItems(FXCollections.observableArrayList(Collections.EMPTY_LIST));
+//    }
+
+
+    public void showAptOccupation(ActionEvent actionEvent) {
+        fillAptTable("SELECT * FROM apartment_occupation ORDER BY beds_occupied DESC");
     }
 
-    public void clearTableStudents(ActionEvent actionEvent) {
-        tableViewStudents.setItems(FXCollections.observableArrayList(Collections.EMPTY_LIST));
+    public void showAptForFemaleStudents(ActionEvent actionEvent) {
+        fillAptTable("SELECT * FROM apartments_for_female_students ORDER BY beds_occupied DESC");
+    }
+
+    public void showAptForMaleStudents(ActionEvent actionEvent) {
+        fillAptTable("SELECT * FROM apartments_for_male_students ORDER BY beds_occupied DESC");
+    }
+
+    public void showAptForMaleEmployees(ActionEvent actionEvent) {
+        fillAptTable("SELECT * FROM apartments_for_male_employee ORDER BY beds_occupied DESC");
+    }
+
+    public void showAptForFemaleEmployees(ActionEvent actionEvent) {
+        fillAptTable("SELECT * FROM apartments_for_female_employee ORDER BY beds_occupied DESC");
     }
 
     private void fillAptTable(String sql) {
@@ -238,6 +287,29 @@ public class Controller implements Initializable {
             List<Apartments> apartments = dataAccess.getApartments(sql);
             ObservableList<Apartments> apartmentsCollection = FXCollections.observableArrayList(apartments);
             tableAptBeds.setItems(apartmentsCollection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showRentalFee(ActionEvent actionEvent) {
+        fillBalanceTable("SELECT * FROM rental_fee_balance ORDER BY family_name");
+    }
+
+    public void showRentalFeeNegative(ActionEvent actionEvent) {
+        fillBalanceTable("SELECT * FROM rental_fee_balance_negative ORDER BY family_name");
+    }
+    public void showTuitionFee(ActionEvent actionEvent) {
+        fillBalanceTable("SELECT * FROM tuition_fee_balance ORDER BY family_name");
+    }
+    public void showTuitionFeeNegative(ActionEvent actionEvent) {
+        fillBalanceTable("SELECT * FROM tuition_fee_balance_negative ORDER BY family_name");
+    }
+    private void fillBalanceTable(String sql) {
+        try {
+            List<BalancePerson> balances = dataAccess.getBalances(sql);
+            ObservableList<BalancePerson> balancesCollection = FXCollections.observableArrayList(balances);
+            tableBalance.setItems(balancesCollection);
         } catch (SQLException e) {
             e.printStackTrace();
         }

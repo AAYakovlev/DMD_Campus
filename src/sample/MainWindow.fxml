@@ -282,6 +282,112 @@
                             <children>
                                 <TableView fx:id="tableViewGuests">
                                     <columns>
+                                        <TableColumn prefWidth="130" text="First name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="firstName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" text="Last name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="lastName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" text="Host first name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="hostFirstName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" text="Host last name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="hostLastName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="stayTimeColumn" prefWidth="175" text="Start time">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="start"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="175" text="End time">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="end"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <VBox>
+                                <HBox>
+                                    <children>
+                                        <Button onAction="#showAllGuests" text="All guests"/>
+                                        <Button onAction="#showLateGuests" text="Late guests"/>
+                                    </children>
+                                </HBox>
+
+                                <HBox>
+                                    <TextField fx:id="firstNameFieldGuests" promptText="First Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="lastNameFieldGuests" promptText="Last Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="genderFieldGuests" promptText="Host First Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="dobFieldGuests" promptText="Host Last Name"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="scholarshipFieldGuests" promptText="Arrive date"
+                                               prefWidth="100"/>
+                                    <TextField fx:id="documentFieldGuests" promptText="Leave date"
+                                               prefWidth="100"/>
+
+                                    <Button onAction="#addStudent" text="Add"/>
+                                </HBox>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Docs">
+                    <content>
+                        <VBox>
+                            <children>
+                                <TableView fx:id="tableViewDocs">
+                                    <columns>
+                                        <TableColumn prefWidth="130" text="First name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="firstName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" text="Last name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="lastName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" text="Overdue for">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="overdue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" text="Doc type">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="docType"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+
+                                <Button text="Outdated docs" onAction="#showOutdatedDocs"/>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Account balances">
+                    <content>
+                        <VBox>
+                            <children>
+                                <TableView fx:id="tableBalance">
+                                    <columns>
+                                        <TableColumn prefWidth="120" text="Id">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="id"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
                                         <TableColumn prefWidth="200" text="First name">
                                             <cellValueFactory>
                                                 <PropertyValueFactory property="firstName"/>
@@ -292,34 +398,61 @@
                                                 <PropertyValueFactory property="lastName"/>
                                             </cellValueFactory>
                                         </TableColumn>
-                                        <TableColumn prefWidth="200" text="Host first name">
+                                        <TableColumn prefWidth="100" text="Balance">
                                             <cellValueFactory>
-                                                <PropertyValueFactory property="hostFirstName"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn prefWidth="200" text="Host last name">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="hostLastName"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn prefWidth="200" text="Start time">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="start"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-                                        <TableColumn prefWidth="200" text="End time">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="end"/>
+                                                <PropertyValueFactory property="balance"/>
                                             </cellValueFactory>
                                         </TableColumn>
                                     </columns>
                                 </TableView>
-                                <HBox>
-                                    <children>
-                                        <Button onAction="#showAllGuests" text="All guests"/>
-                                        <Button onAction="#clearTableGuests" text="Late guests"/>
-                                    </children>
-                                </HBox>
+                                <VBox>
+                                    <HBox>
+                                        <Button text="Rental fee"
+                                                onAction="#showRentalFee"/>
+                                        <Button text="Rental fee negative"
+                                                onAction="#showRentalFeeNegative"/>
+                                    </HBox>
+                                    <HBox>
+                                        <Button text="Tuition fee"
+                                                onAction="#showTuitionFee"/>
+                                        <Button text="Tuition fee negative"
+                                                onAction="#showTuitionFeeNegative"/>
+                                    </HBox>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Attendance">
+                    <content>
+                        <VBox>
+                            <children>
+                                <TableView fx:id="tableViewAttendance">
+                                    <columns>
+                                        <TableColumn prefWidth="130" text="First name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="firstName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" text="Last name">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="lastName"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="130" text="Building">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="buildingId"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn prefWidth="200" text="Time">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="dateTime"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+
+                                <Button text="People inside now" onAction="#showPersonsInsideNow"/>
                             </children>
                         </VBox>
                     </content>

@@ -69,7 +69,6 @@ public class DataAccess {
         List<Student> result = new ArrayList<Student>();
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
-//             ResultSet personResultSet = stmt.executeQuery("SELECT * FROM students_without_apartment")) {
              ResultSet personResultSet = stmt.executeQuery(query)) {
             while (personResultSet.next()) {
                 int id = personResultSet.getInt(1);
@@ -106,15 +105,34 @@ public class DataAccess {
         return result;
     }
 
+    public List<BalancePerson> getBalances(String query) throws SQLException {
+        List<BalancePerson> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet personResultSet = stmt.executeQuery(
+                     query)) {
+            while (personResultSet.next()) {
+                int id = personResultSet.getInt(1);
+                String fName = personResultSet.getString(2);
+                String lName = personResultSet.getString(3);
+                int balance = personResultSet.getInt(4);
+                result.add(new BalancePerson(id, fName, lName, balance));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
     public List<Guest> getAllGuests() throws SQLException {
         List<Guest> result = new ArrayList<>();
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet personResultSet = stmt.executeQuery(
                      "SELECT gp.first_name, gp.family_name, hp.first_name, hp.family_name, g2p.date_time_start, g2p.date_time_end FROM person gp\n" +
-                     "  NATURAL RIGHT JOIN guest g\n" +
-                     "  JOIN guest_to_person g2p ON g.guest_id = g2p.guest_id\n" +
-                     "  JOIN person hp ON g2p.person_id = hp.person_id")) {
+                             "  NATURAL RIGHT JOIN guest g\n" +
+                             "  JOIN guest_to_person g2p ON g.guest_id = g2p.guest_id\n" +
+                             "  JOIN person hp ON g2p.person_id = hp.person_id")) {
             while (personResultSet.next()) {
                 String firstName = personResultSet.getString(1);
                 String lastName = personResultSet.getString(2);
@@ -123,6 +141,50 @@ public class DataAccess {
                 String start = personResultSet.getString(5);
                 String end = personResultSet.getString(6);
                 result.add(new Guest(firstName, lastName, hostFirstName, hostLastName, start, end));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
+    public List<Guest> getLateGuests() throws SQLException {
+        List<Guest> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet personResultSet = stmt.executeQuery(
+                     "SELECT g.first_name, g.family_name, p.first_name, p.family_name, g.stay_time  " +
+                             "FROM guest_control AS g " +
+                             "LEFT JOIN guest_to_person " +
+                             "ON g.guest_id=guest_to_person.guest_id\n" +
+                             "LEFT JOIN person AS p " +
+                             "ON guest_to_person.person_id = p.person_id")) {
+            while (personResultSet.next()) {
+                String firstName = personResultSet.getString(1);
+                String lastName = personResultSet.getString(2);
+                String hostFirstName = personResultSet.getString(3);
+                String hostLastName = personResultSet.getString(4);
+                String start = personResultSet.getString(5);
+                result.add(new Guest(firstName, lastName, hostFirstName, hostLastName, start, ""));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
+    public List<Documents> getOutdatedDocs() throws SQLException {
+        List<Documents> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet personResultSet = stmt.executeQuery(
+                     "SELECT first_name, family_name, overdue_for, type_name FROM outdated_documents_of_students_and_employee")) {
+            while (personResultSet.next()) {
+                String firstName = personResultSet.getString(1);
+                String lastName = personResultSet.getString(2);
+                String overdueFor = personResultSet.getString(3);
+                String docType = personResultSet.getString(4);
+                result.add(new Documents(firstName, lastName, overdueFor, docType));
             }
             personResultSet.close();
             stmt.close();
@@ -144,6 +206,24 @@ public class DataAccess {
                 String gender = personResultSet.getString(6);
                 int documentId = personResultSet.getInt(7);
                 result.add(new Person(id, firstName, middleName, lastName, dateOfBirth, gender, documentId));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
+    public List<PersonInside> getPersonsInsideNow() throws SQLException {
+        List<PersonInside> result = new ArrayList<>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet personResultSet = stmt.executeQuery("SELECT first_name, family_name, building_id, date_time FROM persons_inside_campus_now")) {
+            while (personResultSet.next()) {
+                String firstName = personResultSet.getString(1);
+                String lastName = personResultSet.getString(2);
+                int buildingId = personResultSet.getInt(3);
+                String dateTime = personResultSet.getTimestamp(4).toString();
+                result.add(new PersonInside(firstName, lastName, buildingId, dateTime));
             }
             personResultSet.close();
             stmt.close();
@@ -222,23 +302,4 @@ public class DataAccess {
             connection.close();
         }
     }
-
-//    public int add(Person person) throws SQLException {
-//        int rowsUpdated;
-//        try (Connection connection = getConnection();
-//            PreparedStatement stmt = connection.prepareStatement(
-//                    "INSERT INTO person (person_id, first_name, middle_name, family_name, date_of_birth, gender, main_document_id) VALUES (?,?,?)",
-//                    Statement.RETURN_GENERATED_KEYS)) {
-//            stmt.setString(1, person.getFirstName());
-//            stmt.setString(2, person.getLastName());
-//            stmt.setString(3, person.getCity());
-//            rowsUpdated = stmt.executeUpdate();
-//            try (ResultSet rs = stmt.getGeneratedKeys()) {
-//                if (rs.next()) {
-//                    person.setId(rs.getInt(1));
-//                }
-//            }
-//        }
-//        return rowsUpdated;
-//    }
 }

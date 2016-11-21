@@ -80,6 +80,8 @@ BEGIN
 
   BEGIN
     SET CONSTRAINTS ALL DEFERRED;
+--     account
+--     entry permission set
     INSERT INTO document VALUES (new_doc_id, new_person_id, current_timestamp, 1, image_path);
     INSERT INTO person VALUES (new_person_id, first_name, middle_name, family_name, dob, gender,  new_doc_id);
     INSERT INTO student VALUES (new_student_id, new_person_id, scholarship);
