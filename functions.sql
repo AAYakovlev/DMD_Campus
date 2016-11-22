@@ -111,3 +111,27 @@ BEGIN
   END;
 END;
 $$ LANGUAGE plpgsql;
+-- -----------------------
+-- add guest
+-- -----------------------
+CREATE OR REPLACE FUNCTION add_guest (first_name_param  VARCHAR(50), middle_name_param VARCHAR(50), family_name_param VARCHAR(50),
+                                       guest_start_time TIMESTAMP) RETURNS VOID AS $$
+DECLARE
+  new_guest_to_person_id INTEGER;
+  new_guest_id INTEGER;
+  new_person_id INTEGER;
+BEGIN
+  SELECT p.person_id INTO new_guest_to_person_id FROM person AS p WHERE (p.first_name=first_name_param) IS NOT FALSE AND (p.middle_name=middle_name_param) IS NOT FALSE
+                                                               AND (p.family_name=family_name_param) IS NOT FALSE;
+  IF (new_guest_to_person_id IN ( SELECT p2.person_id FROM person AS p2 WHERE p2.person_id = new_guest_to_person_id))
+  THEN
+    SELECT guest.guest_id + 1 INTO new_guest_id FROM guest ORDER BY guest.guest_id DESC LIMIT 1;
+    SELECT person.person_id +1 INTO new_person_id FROM person ORDER BY person_id DESC LIMIT 1;
+    INSERT INTO guest VALUES (new_guest_id,new_person_id, new_guest_to_person_id);
+    INSERT INTO guest_to_person VALUES (new_guest_id,new_person_id,guest_start_time);
+  ELSE
+    RAISE EXCEPTION 'No this respondent'
+    USING HINT = 'Check interviewee name';
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
