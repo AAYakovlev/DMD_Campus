@@ -73,18 +73,17 @@ DECLARE
   new_student_id INTEGER;
   new_doc_id INTEGER;
 BEGIN
-  --   find next ids
-  SELECT person.person_id + 1 INTO new_person_id FROM person ORDER BY person_id DESC LIMIT 1;
-  SELECT student.student_id + 1 INTO new_student_id FROM student ORDER BY student_id DESC LIMIT 1;
-  SELECT document.document_id + 1 INTO new_doc_id FROM document ORDER BY document_id DESC LIMIT 1;
+  SELECT nextval('person_person_id_seq'::REGCLASS) INTO new_person_id;
 
   BEGIN
     SET CONSTRAINTS ALL DEFERRED;
---     account
---     entry permission set
-    INSERT INTO document VALUES (new_doc_id, new_person_id, current_timestamp, 1, image_path);
+    INSERT INTO document VALUES (nextval('document_document_id_seq'::REGCLASS), new_person_id, current_timestamp + INTERVAL '1 year', 1, image_path)
+    RETURNING document_id INTO new_doc_id;
     INSERT INTO person VALUES (new_person_id, first_name, middle_name, family_name, dob, gender,  new_doc_id);
-    INSERT INTO student VALUES (new_student_id, new_person_id, scholarship);
+    INSERT INTO student VALUES (nextval('student_student_id_seq'::REGCLASS), new_person_id, scholarship);
+    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id);
+    INSERT INTO person_has_ep_set VALUES (new_person_id, 4);  -- base for persons
+    INSERT INTO person_has_ep_set VALUES (new_person_id, 1);  -- base for students
   END;
 END;
 $$ LANGUAGE plpgsql;
@@ -94,20 +93,30 @@ CREATE OR REPLACE FUNCTION add_new_employee (first_name VARCHAR(50),middle_name 
                                              role VARCHAR(50), image_path VARCHAR(200)) RETURNS VOID AS $$
 DECLARE
   new_person_id INTEGER;
-  new_emp_id INTEGER;
   new_doc_id INTEGER;
   role_id INTEGER;
 BEGIN
-  SELECT person.person_id + 1 INTO new_person_id FROM person ORDER BY person_id DESC LIMIT 1;
-  SELECT employee.employee_id + 1 INTO new_emp_id FROM employee ORDER BY employee_id DESC LIMIT 1;
-  SELECT document.document_id + 1 INTO new_doc_id FROM document ORDER BY document_id DESC LIMIT 1;
   SELECT employee_role.employee_role_id INTO role_id FROM employee_role WHERE role_name LIKE role;
+  SELECT nextval('person_person_id_seq'::REGCLASS) INTO new_person_id;
 
   BEGIN
     SET CONSTRAINTS ALL DEFERRED;
-    INSERT INTO document VALUES (new_doc_id, new_person_id, current_timestamp, 1, image_path);
+    INSERT INTO document VALUES (nextval('document_document_id_seq'::REGCLASS), new_person_id, current_timestamp + INTERVAL '1 year', 1, image_path)
+    RETURNING document_id INTO new_doc_id;
     INSERT INTO person VALUES (new_person_id, first_name, middle_name, family_name, dob, gender,  new_doc_id);
-    INSERT INTO employee VALUES (new_emp_id, new_person_id, salary, role_id);
+    INSERT INTO employee VALUES (nextval('employee_employee_id_seq'::REGCLASS), new_person_id, salary, role_id);
+    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id);
+    INSERT INTO person_has_ep_set VALUES (new_person_id, 4);  -- base for persons
+    IF (role_id = 4 OR role_id = 5)
+    THEN
+      INSERT INTO person_has_ep_set VALUES (new_person_id, 6);  -- canteen staff
+    ELSEIF (role_id = 3 OR role_id = 6)
+      THEN
+        INSERT INTO person_has_ep_set VALUES (new_person_id, 2);  -- administrator
+    ELSEIF (role_id = 2)
+      THEN
+        INSERT INTO person_has_ep_set VALUES (new_person_id, 7);  -- cleaning
+    END IF;
   END;
 END;
 $$ LANGUAGE plpgsql;

@@ -255,6 +255,54 @@ public class DataAccess {
         return result;
     }
 
+    public List<PersonInApartment> getAllStudentsInApartments() throws SQLException {
+        List<PersonInApartment> result = new ArrayList<PersonInApartment>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet personResultSet = stmt.executeQuery("SELECT * FROM student NATURAL JOIN person NATURAL LEFT JOIN lives_in")) {
+            while (personResultSet.next()) {
+                int id = personResultSet.getInt(1);
+                String firstName = personResultSet.getString(4);
+                String middleName = personResultSet.getString(5);
+                String lastName = personResultSet.getString(6);
+                String dateOfBirth = personResultSet.getDate(7).toString();
+                String gender = personResultSet.getString(8);
+                int documentId = personResultSet.getInt(9);
+                int aptNum = personResultSet.getInt(10);
+                int building = personResultSet.getInt(11);
+                String startDate = personResultSet.getString(12);
+                result.add(new PersonInApartment(id, firstName, middleName, lastName, dateOfBirth, gender, documentId, aptNum, building, startDate));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
+    public List<PersonInApartment> getAllEmployeesInApartments() throws SQLException {
+        List<PersonInApartment> result = new ArrayList<PersonInApartment>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet personResultSet = stmt.executeQuery("SELECT * FROM employee NATURAL JOIN person NATURAL LEFT JOIN lives_in")) {
+            while (personResultSet.next()) {
+                int id = personResultSet.getInt(1);
+                String firstName = personResultSet.getString(5);
+                String middleName = personResultSet.getString(6);
+                String lastName = personResultSet.getString(7);
+                String dateOfBirth = personResultSet.getDate(8).toString();
+                String gender = personResultSet.getString(9);
+                int documentId = personResultSet.getInt(10);
+                int aptNum = personResultSet.getInt(11);
+                int building = personResultSet.getInt(12);
+                String startDate = personResultSet.getString(13);
+                result.add(new PersonInApartment(id, firstName, middleName, lastName, dateOfBirth, gender, documentId, aptNum, building, startDate));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
     public void add_student(String fname, String mname, String lname, String gender, Timestamp dob, String doc_path, Integer scholarship) throws SQLException {
         try (Connection connection = getConnection();
              CallableStatement statement = connection.prepareCall(" { call add_new_student( ?, ?, ?, ?, CAST(? AS TIMESTAMP), ?, ? ) } ");) {

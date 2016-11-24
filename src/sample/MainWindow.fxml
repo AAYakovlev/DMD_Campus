@@ -215,8 +215,8 @@
                                 <HBox>
                                     <children>
                                         <Button onAction="#showAllPersonsInApartments" text="All persons"/>
-                                        <Button text="Students STUB"/>
-                                        <Button text="Employees STUB"/>
+                                        <Button onAction="#showAllStudentsInApartments" text="Students"/>
+                                        <Button onAction="#showAllEmployeesInApartments" text="Employees"/>
                                     </children>
                                 </HBox>
                             </children>

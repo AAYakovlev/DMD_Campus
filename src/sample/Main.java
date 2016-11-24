@@ -27,7 +27,7 @@ public class Main extends Application {
 
         Parent root = loader.load();
         primaryStage.setTitle("Campus administration");
-        primaryStage.setScene(new Scene(root, 900, 700));
+        primaryStage.setScene(new Scene(root, 900, 540));
         primaryStage.show();
     }
 

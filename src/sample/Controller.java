@@ -151,6 +151,26 @@ public class Controller implements Initializable {
         }
     }
 
+    public void showAllStudentsInApartments(ActionEvent actionEvent) {
+        try {
+            List<PersonInApartment> persons = dataAccess.getAllStudentsInApartments();
+            personInApartmentCollection = FXCollections.observableArrayList(persons);
+            tableViewTenants.setItems(personInApartmentCollection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showAllEmployeesInApartments(ActionEvent actionEvent) {
+        try {
+            List<PersonInApartment> persons = dataAccess.getAllEmployeesInApartments();
+            personInApartmentCollection = FXCollections.observableArrayList(persons);
+            tableViewTenants.setItems(personInApartmentCollection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showAllEmployees(ActionEvent actionEvent) {
         try {
             List<Employee> employees = dataAccess.getAllEmployees();
