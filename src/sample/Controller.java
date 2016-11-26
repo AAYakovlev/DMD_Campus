@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.tools.corba.se.idl.constExpr.Times;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,9 +36,29 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    TableView tableViewGuests;
+    TableView<Guest> tableViewGuests;
     @FXML
     TableColumn<Guest, String> stayTimeColumn;
+    @FXML
+    TextField hostFirstNameFieldGuests;
+    @FXML
+    TextField hostLastNameFieldGuests;
+    @FXML
+    TextField hostDOBFieldGuests;
+    @FXML
+    TextField firstNameFieldGuests;
+    @FXML
+    TextField middleNameFieldGuests;
+    @FXML
+    TextField lastNameFieldGuests;
+    @FXML
+    TextField genderFieldGuests;
+    @FXML
+    TextField dobFieldGuests;
+    @FXML
+    TextField documentFieldGuests;
+    @FXML
+    TextField arriveFieldGuests;
 
     @FXML
     TableView tableViewDocs;
@@ -184,7 +206,7 @@ public class Controller implements Initializable {
     public void showOutdatedDocs(ActionEvent actionEvent) {
         try {
             List<Documents> docs = dataAccess.getOutdatedDocs();
-            ObservableList<Documents> docssCollection =  FXCollections.observableArrayList(docs);
+            ObservableList<Documents> docssCollection = FXCollections.observableArrayList(docs);
             tableViewDocs.setItems(docssCollection);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -194,7 +216,7 @@ public class Controller implements Initializable {
     public void showPersonsInsideNow(ActionEvent actionEvent) {
         try {
             List<PersonInside> persons = dataAccess.getPersonsInsideNow();
-            ObservableList<PersonInside> personsCollection =  FXCollections.observableArrayList(persons);
+            ObservableList<PersonInside> personsCollection = FXCollections.observableArrayList(persons);
             tableViewAttendance.setItems(personsCollection);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -204,7 +226,7 @@ public class Controller implements Initializable {
     public void showStudentsWithoutApt(ActionEvent actionEvent) {
         try {
             List<Student> students = dataAccess.getStudentsView("SELECT * FROM students_without_apartment");
-            ObservableList<Student> personsCollection =  FXCollections.observableArrayList(students);
+            ObservableList<Student> personsCollection = FXCollections.observableArrayList(students);
             tableViewStudents.setItems(personsCollection);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -224,19 +246,47 @@ public class Controller implements Initializable {
     public void addStudent(ActionEvent actionEvent) {
         try {
             dataAccess.add_student(firstNameField.getText(), middleNameField.getText(), lastNameField.getText(), genderField.getText(),
-                    new Timestamp(new SimpleDateFormat("YYYY-MM-DD").parse(dobField.getText()).getTime()), documentField.getText(), Integer.parseInt(scholarshipField.getText()));
-        } catch (SQLException | ParseException e) {
+                    Timestamp.valueOf(dobField.getText() + " 00:00:00"), documentField.getText(), Integer.parseInt(scholarshipField.getText()));
+        } catch (SQLException e) {
             e.printStackTrace();
+
             alert("Incorrect input", e.getMessage());
         }
         showAllStudents(actionEvent);
     }
 
+    public void addGuest(ActionEvent actionEvent) {
+        try {
+            dataAccess.add_guest(hostFirstNameFieldGuests.getText(), hostLastNameFieldGuests.getText(), Timestamp.valueOf(hostDOBFieldGuests.getText() + " 00:00:00"),
+                    firstNameFieldGuests.getText(), middleNameFieldGuests.getText(), lastNameFieldGuests.getText(), genderFieldGuests.getText(),
+                    Timestamp.valueOf(dobFieldGuests.getText() + " 00:00:00"), documentFieldGuests.getText());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            alert("Incorrect input", e.getMessage());
+        }
+        showAllGuests(null);
+    }
+
+    public void markGuestAsLeaved(ActionEvent actionEvent) {
+        Guest g = tableViewGuests.getSelectionModel().getSelectedItem();
+        if (g == null) {
+            alert("Incorrect input", "Select guest");
+            return;
+        }
+        try {
+            dataAccess.guestLeaving(g.getGuestId(), g.getHostId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            alert("Incorrect input", e.getMessage());
+        }
+        showAllGuests(null);
+    }
+
     public void addEmployee(ActionEvent actionEvent) {
         try {
             dataAccess.add_employee(firstNameFieldEmp.getText(), middleNameFieldEmp.getText(), lastNameFieldEmp.getText(), genderFieldEmp.getText(),
-                    new Timestamp(new SimpleDateFormat("YYYY-MM-DD").parse(dobFieldEmp.getText()).getTime()), Integer.parseInt(salaryFieldEmp.getText()), roleFieldEmp.getText(), documentFieldEmp.getText());
-        } catch (SQLException | ParseException e) {
+                    Timestamp.valueOf(dobFieldEmp.getText() + " 00:00:00"), Integer.parseInt(salaryFieldEmp.getText()), roleFieldEmp.getText(), documentFieldEmp.getText());
+        } catch (SQLException e) {
             e.printStackTrace();
             alert("Incorrect input", e.getMessage());
         }
@@ -246,19 +296,16 @@ public class Controller implements Initializable {
     public void addPersonToApt(TableColumn.CellEditEvent<PersonInApartment, Integer> event) {
         try {
             PersonInApartment person = personInApartmentCollection.get(event.getTablePosition().getRow());
-            if(event.getTableColumn() == apartmentNumberTenants){
+            if (event.getTableColumn() == apartmentNumberTenants) {
                 person.setAptNum(event.getNewValue());
-                if(person.getBuildingID() != 0) {
-                    dataAccess.add_person_to_apt(person.getFirstName(), person.getMiddleName(), person.getLastName(),
-                            person.getAptNum(), person.getBuildingID(), new Timestamp(new Date(System.currentTimeMillis()).getTime()));
+                if (person.getBuildingID() != 0) {
+                    dataAccess.add_person_to_apt(person.getId(), person.getAptNum(), person.getBuildingID(), new Timestamp(new Date(System.currentTimeMillis()).getTime()));
                     notification("Info", "Successfully updated");
                 }
-            }
-            else if(event.getTableColumn() == buildingTenants){
+            } else if (event.getTableColumn() == buildingTenants) {
                 person.setBuildingID(event.getNewValue());
-                if(person.getAptNum() != 0) {
-                    dataAccess.add_person_to_apt(person.getFirstName(), person.getMiddleName(), person.getLastName(),
-                            person.getAptNum(), person.getBuildingID(), new Timestamp(new Date(System.currentTimeMillis()).getTime()));
+                if (person.getAptNum() != 0) {
+                    dataAccess.add_person_to_apt(person.getId(), person.getAptNum(), person.getBuildingID(), new Timestamp(new Date(System.currentTimeMillis()).getTime()));
                     notification("Info", "Successfully updated");
                 }
             }
@@ -267,20 +314,6 @@ public class Controller implements Initializable {
             alert("Incorrect input", e.getMessage());
         }
     }
-
-//    public void showAllStudents(ActionEvent ae){
-//        List<TableColumn> columns = new ArrayList<>();
-//        columns.addAll(new TableColumn("First Name")., );
-//    }
-
-//    public void clearTableGuests(ActionEvent actionEvent) {
-//        tableViewGuests.setItems(FXCollections.observableArrayList(Collections.EMPTY_LIST));
-//    }
-//
-//    public void clearTableStudents(ActionEvent actionEvent) {
-//        tableViewStudents.setItems(FXCollections.observableArrayList(Collections.EMPTY_LIST));
-//    }
-
 
     public void showAptOccupation(ActionEvent actionEvent) {
         fillAptTable("SELECT * FROM apartment_occupation ORDER BY beds_occupied DESC");
@@ -319,12 +352,15 @@ public class Controller implements Initializable {
     public void showRentalFeeNegative(ActionEvent actionEvent) {
         fillBalanceTable("SELECT * FROM rental_fee_balance_negative ORDER BY family_name");
     }
+
     public void showTuitionFee(ActionEvent actionEvent) {
         fillBalanceTable("SELECT * FROM tuition_fee_balance ORDER BY family_name");
     }
+
     public void showTuitionFeeNegative(ActionEvent actionEvent) {
         fillBalanceTable("SELECT * FROM tuition_fee_balance_negative ORDER BY family_name");
     }
+
     private void fillBalanceTable(String sql) {
         try {
             List<BalancePerson> balances = dataAccess.getBalances(sql);
@@ -334,13 +370,6 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-//
-//    private void showCollection(List collection, List<TableColumn> columns){
-//        ObservableList list = FXCollections.observableArrayList(collection);
-//        tableViewStudents.getColumns().removeAll();
-//        tableViewStudents.getColumns().addAll(columns);
-//        tableViewStudents.setItems(list);
-//    }
 
     private void alert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -349,6 +378,7 @@ public class Controller implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
     private void notification(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

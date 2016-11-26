@@ -6,9 +6,9 @@ CREATE SEQUENCE "public"."account_account_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 36
+ START 37
  CACHE 1;
-SELECT setval('"public"."account_account_id_seq"', 36, true);
+SELECT setval('"public"."account_account_id_seq"', 37, true);
 
 -- ----------------------------
 -- Sequence structure for apartment_type_apartment_type_id_seq
@@ -18,7 +18,7 @@ CREATE SEQUENCE "public"."apartment_type_apartment_type_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 3
+ START 4
  CACHE 1;
 
 -- ----------------------------
@@ -29,7 +29,7 @@ CREATE SEQUENCE "public"."building_building_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 5
+ START 6
  CACHE 1;
 
 -- ----------------------------
@@ -40,7 +40,7 @@ CREATE SEQUENCE "public"."document_document_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1000
+ START 1001
  CACHE 1;
 
 -- ----------------------------
@@ -51,9 +51,9 @@ CREATE SEQUENCE "public"."document_type_document_type_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 9
+ START 10
  CACHE 1;
-SELECT setval('"public"."document_type_document_type_id_seq"', 9, true);
+SELECT setval('"public"."document_type_document_type_id_seq"', 10, true);
 
 -- ----------------------------
 -- Sequence structure for employee_employee_id_seq
@@ -63,7 +63,7 @@ CREATE SEQUENCE "public"."employee_employee_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 6
+ START 7
  CACHE 1;
 
 -- ----------------------------
@@ -74,7 +74,7 @@ CREATE SEQUENCE "public"."employee_role_employee_role_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 6
+ START 7
  CACHE 1;
 
 -- ----------------------------
@@ -85,9 +85,9 @@ CREATE SEQUENCE "public"."entry_check_machine_ecm_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 83
+ START 84
  CACHE 1;
-SELECT setval('"public"."entry_check_machine_ecm_id_seq"', 83, true);
+SELECT setval('"public"."entry_check_machine_ecm_id_seq"', 84, true);
 
 -- ----------------------------
 -- Sequence structure for entry_permission_entry_permission_id_seq
@@ -97,9 +97,9 @@ CREATE SEQUENCE "public"."entry_permission_entry_permission_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 22
+ START 23
  CACHE 1;
-SELECT setval('"public"."entry_permission_entry_permission_id_seq"', 22, true);
+SELECT setval('"public"."entry_permission_entry_permission_id_seq"', 23, true);
 
 -- ----------------------------
 -- Sequence structure for entry_permission_set_ep_set_id_seq
@@ -109,7 +109,7 @@ CREATE SEQUENCE "public"."entry_permission_set_ep_set_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 7
+ START 8
  CACHE 1;
 
 -- ----------------------------
@@ -120,7 +120,7 @@ CREATE SEQUENCE "public"."guest_guest_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 10
+ START 11
  CACHE 1;
 
 -- ----------------------------
@@ -142,7 +142,7 @@ CREATE SEQUENCE "public"."person_person_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1000
+ START 1001
  CACHE 1;
 
 -- ----------------------------
@@ -153,7 +153,7 @@ CREATE SEQUENCE "public"."student_student_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 10
+ START 11
  CACHE 1;
 
 -- ----------------------------
@@ -164,7 +164,7 @@ CREATE SEQUENCE "public"."transaction_transaction_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 1174
+ START 1175
  CACHE 1;
 
 -- ----------------------------
@@ -175,7 +175,7 @@ CREATE SEQUENCE "public"."transaction_type_transaction_type_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 4
+ START 5
  CACHE 1;
 
 -- ----------------------------

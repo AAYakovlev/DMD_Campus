@@ -1,10 +1,12 @@
 package sample;
 
 
+import org.postgresql.util.PSQLException;
+
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
+import java.util.*;
 
 public class DataAccess {
 
@@ -129,7 +131,7 @@ public class DataAccess {
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet personResultSet = stmt.executeQuery(
-                     "SELECT gp.first_name, gp.family_name, hp.first_name, hp.family_name, g2p.date_time_start, g2p.date_time_end FROM person gp\n" +
+                     "SELECT gp.first_name, gp.family_name, hp.first_name, hp.family_name, g2p.date_time_start, g2p.date_time_end, g.guest_id, hp.person_id FROM person gp\n" +
                              "  NATURAL RIGHT JOIN guest g\n" +
                              "  JOIN guest_to_person g2p ON g.guest_id = g2p.guest_id\n" +
                              "  JOIN person hp ON g2p.person_id = hp.person_id")) {
@@ -140,7 +142,9 @@ public class DataAccess {
                 String hostLastName = personResultSet.getString(4);
                 String start = personResultSet.getString(5);
                 String end = personResultSet.getString(6);
-                result.add(new Guest(firstName, lastName, hostFirstName, hostLastName, start, end));
+                int guestID = personResultSet.getInt(7);
+                int hostID = personResultSet.getInt(8);
+                result.add(new Guest(firstName, lastName, hostFirstName, hostLastName, start, end, hostID, guestID));
             }
             personResultSet.close();
             stmt.close();
@@ -153,19 +157,18 @@ public class DataAccess {
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet personResultSet = stmt.executeQuery(
-                     "SELECT g.first_name, g.family_name, p.first_name, p.family_name, g.stay_time  " +
-                             "FROM guest_control AS g " +
-                             "LEFT JOIN guest_to_person " +
-                             "ON g.guest_id=guest_to_person.guest_id\n" +
-                             "LEFT JOIN person AS p " +
-                             "ON guest_to_person.person_id = p.person_id")) {
+                     "SELECT gh.guest_name, gh.guest_family_name, gh.host_first_name, gh.host_family_name," +
+                             " gh.stay_time, gh.guest_person_id, gh.host_person_id" +
+                             " FROM guest_control_with_host AS gh;")) {
             while (personResultSet.next()) {
                 String firstName = personResultSet.getString(1);
                 String lastName = personResultSet.getString(2);
                 String hostFirstName = personResultSet.getString(3);
                 String hostLastName = personResultSet.getString(4);
                 String start = personResultSet.getString(5);
-                result.add(new Guest(firstName, lastName, hostFirstName, hostLastName, start, ""));
+                int guestID = personResultSet.getInt(6);
+                int hostID = personResultSet.getInt(7);
+                result.add(new Guest(firstName, lastName, hostFirstName, hostLastName, start, "", hostID, guestID));
             }
             personResultSet.close();
             stmt.close();
@@ -336,15 +339,56 @@ public class DataAccess {
         }
     }
 
-    public void add_person_to_apt(String fname, String mname, String lname, int apt_num, int building_id, Timestamp start_date) throws SQLException {
+    public void add_person_to_apt(int personId, int apt_num, int building_id, Timestamp start_date) throws SQLException {
         try (Connection connection = getConnection();
-             CallableStatement statement = connection.prepareCall(" { call add_person_into_appartment( ?, ?, ?, ?, ?, CAST(? AS TIMESTAMP) ) } ");) {
+             CallableStatement statement = connection.prepareCall(" { call add_person_into_appartment( ?, ?, ?, CAST(? AS TIMESTAMP) ) } ");) {
+            statement.setInt(1, personId);
+            statement.setInt(2, apt_num);
+            statement.setInt(3, building_id);
+            statement.setTimestamp(4, start_date);
+            statement.execute();
+            statement.close();
+            connection.close();
+        }
+    }
+
+    public void add_guest(String hostfName, String hostlName, Timestamp hostDOB, String fname, String mname, String lname, String gender, Timestamp dob, String doc_path) throws SQLException {
+        int hostID;
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement("SELECT p.person_id FROM person  AS p WHERE p.first_name LIKE ? AND p.family_name LIKE ? AND p.date_of_birth = CAST(? AS TIMESTAMP)")) {
+            stmt.setString(1, hostfName);
+            stmt.setString(2, hostlName);
+            stmt.setTimestamp(3, hostDOB);
+            ResultSet result = stmt.executeQuery();
+            result.next();
+            hostID = result.getInt(1);
+        } catch (PSQLException e) {
+            throw new SQLException("Host not found");
+        }
+        try (Connection connection = getConnection();
+             CallableStatement statement = connection.prepareCall(" { call create_guest_person( ?, ?, ?, ?, CAST(? AS TIMESTAMP), CAST(? AS TIMESTAMP), ?, ?, ? ) } ");) {
             statement.setString(1, fname);
             statement.setString(2, mname);
             statement.setString(3, lname);
-            statement.setInt(4, apt_num);
-            statement.setInt(5, building_id);
-            statement.setTimestamp(6, start_date);
+            statement.setString(4, gender);
+            statement.setTimestamp(5, dob);
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.YEAR, 1);
+            statement.setTimestamp(6, Timestamp.from(Instant.ofEpochMilli(cal.getTimeInMillis())));
+            statement.setInt(7, 1);
+            statement.setString(8, doc_path);
+            statement.setInt(9, hostID);
+            statement.execute();
+            statement.close();
+            connection.close();
+        }
+    }
+
+    public void guestLeaving(int guestId, int personId) throws SQLException {
+        try (Connection connection = getConnection();
+             CallableStatement statement = connection.prepareCall(" { call guest_left_from_person( ?, ? ) } ");) {
+            statement.setInt(1, guestId);
+            statement.setInt(2, personId);
             statement.execute();
             statement.close();
             connection.close();

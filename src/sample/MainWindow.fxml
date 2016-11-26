@@ -198,7 +198,8 @@
                                                 <PropertyValueFactory property="gender"/>
                                             </cellValueFactory>
                                         </TableColumn>
-                                        <TableColumn fx:id="apartmentNumberTenants" prefWidth="50" text="Apartment number"
+                                        <TableColumn fx:id="apartmentNumberTenants" prefWidth="50"
+                                                     text="Apartment number"
                                                      onEditCommit="#addPersonToApt">
                                             <cellValueFactory>
                                                 <PropertyValueFactory property="aptNum"/>
@@ -315,29 +316,44 @@
                                     </columns>
                                 </TableView>
                                 <VBox>
-                                <HBox>
-                                    <children>
-                                        <Button onAction="#showAllGuests" text="All guests"/>
-                                        <Button onAction="#showLateGuests" text="Late guests"/>
-                                    </children>
-                                </HBox>
+                                    <HBox>
+                                        <children>
+                                            <Button onAction="#showAllGuests" text="All guests"/>
+                                            <Button onAction="#showLateGuests" text="Late guests"/>
+                                        </children>
+                                    </HBox>
 
-                                <HBox>
-                                    <TextField fx:id="firstNameFieldGuests" promptText="First Name"
-                                               prefWidth="100"/>
-                                    <TextField fx:id="lastNameFieldGuests" promptText="Last Name"
-                                               prefWidth="100"/>
-                                    <TextField fx:id="genderFieldGuests" promptText="Host First Name"
-                                               prefWidth="100"/>
-                                    <TextField fx:id="dobFieldGuests" promptText="Host Last Name"
-                                               prefWidth="100"/>
-                                    <TextField fx:id="scholarshipFieldGuests" promptText="Arrive date"
-                                               prefWidth="100"/>
-                                    <TextField fx:id="documentFieldGuests" promptText="Leave date"
-                                               prefWidth="100"/>
+                                    <HBox>
+                                        <VBox>
+                                            <HBox>
+                                                <TextField fx:id="hostFirstNameFieldGuests" promptText="Host First Name"
+                                                           prefWidth="200"/>
+                                                <TextField fx:id="hostLastNameFieldGuests" promptText="Host Last Name"
+                                                           prefWidth="200"/>
+                                                <TextField fx:id="hostDOBFieldGuests" promptText="Hots Date of birth"
+                                                           prefWidth="200"/>
+                                            </HBox>
+                                            <HBox>
+                                                <TextField fx:id="firstNameFieldGuests" promptText="First Name"
+                                                           prefWidth="100"/>
+                                                <TextField fx:id="middleNameFieldGuests" promptText="Middle Name"
+                                                           prefWidth="100"/>
+                                                <TextField fx:id="lastNameFieldGuests" promptText="Last Name"
+                                                           prefWidth="100"/>
+                                                <TextField fx:id="genderFieldGuests" promptText="Gender"
+                                                           prefWidth="100"/>
+                                                <TextField fx:id="dobFieldGuests" promptText="DOB"
+                                                           prefWidth="100"/>
+                                                <TextField fx:id="documentFieldGuests" promptText="Doc path"
+                                                           prefWidth="100"/>
 
-                                    <Button onAction="#addStudent" text="Add"/>
-                                </HBox>
+                                                <Button onAction="#addGuest" text="Add"/>
+                                            </HBox>
+                                        </VBox>
+                                    </HBox>
+                                    <HBox>
+                                        <Button onAction="#markGuestAsLeaved" text="Guest leaved"/>
+                                    </HBox>
                                 </VBox>
                             </children>
                         </VBox>

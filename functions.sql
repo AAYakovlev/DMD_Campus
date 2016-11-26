@@ -46,17 +46,12 @@ CREATE OR REPLACE FUNCTION insert_into_in_out(_person_id INT4, _ecm_id INT4, _di
   END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION add_person_into_appartment(first_name_param  VARCHAR(50), middle_name_param VARCHAR(50), family_name_param VARCHAR(50),
+CREATE OR REPLACE FUNCTION add_person_into_appartment(person_id INTEGER,
                                                       apartment_number INTEGER, building_id_param INTEGER, date_time_start_param TIMESTAMP) RETURNS VOID AS $$
-DECLARE
-  new_person_id INTEGER;
 BEGIN
-  SELECT p.person_id INTO new_person_id FROM person AS p WHERE (p.first_name=first_name_param) IS NOT FALSE AND (p.middle_name=middle_name_param) IS NOT FALSE
-                                                               AND (p.family_name=family_name_param) IS NOT FALSE;
-
   IF (apartment_number IN ( SELECT a.apartment_number FROM apartments_with_free_beds AS a WHERE a.building_id = building_id_param))
   THEN
-    INSERT INTO lives_in VALUES (new_person_id, apartment_number, building_id_param, date_time_start_param);
+    INSERT INTO lives_in VALUES (person_id, apartment_number, building_id_param, date_time_start_param);
   ELSE
     RAISE EXCEPTION 'No free places'
     USING HINT = 'Check apt number and building id';
@@ -131,7 +126,7 @@ AS $function$
 BEGIN
  IF (NOT exists(SELECT * FROM guest WHERE guest.guest_id = _guest_id))
   THEN
-    RAISE NOTICE 'No guest person';
+    RAISE EXCEPTION 'No guest person';
    RETURN FALSE;
 
  END IF;
@@ -140,7 +135,7 @@ BEGIN
                   UNION
                 SELECT person_id FROM  employee WHERE employee.person_id = _person_id))
     THEN
-    RAISE NOTICE 'Host should be students or employee';
+    RAISE EXCEPTION 'Host should be students or employee';
     RETURN FALSE;
   END IF;
 
@@ -148,7 +143,7 @@ BEGIN
                                       WHERE guest_to_person.guest_id = _guest_id
                                         AND  guest_to_person.date_time_end IS NULL))
     THEN
-    RAISE NOTICE 'Guest should leave before come in again';
+    RAISE EXCEPTION 'Guest should leave before come in again';
     RETURN FALSE;
   END IF;
 
@@ -196,7 +191,7 @@ BEGIN
         SET CONSTRAINTS ALL DEFERRED;
         INSERT INTO document VALUES (new_doc_id, new_person_id, _update_to_date, _document_type_id, _image_path);
         INSERT INTO person VALUES (new_person_id, _first_name, _middle_name, _family_name, _date_of_birth, _gender,  new_doc_id);
-        INSERT INTO guest VALUES (new_guest_id, new_person_id,_host_person_id);
+        INSERT INTO guest VALUES (new_guest_id, new_person_id);
       END;
 
       IF (SELECT add_guest_to_person(new_guest_id,_host_person_id) = TRUE)
@@ -225,7 +220,7 @@ AS $function$
 BEGIN
  IF (NOT exists(SELECT * FROM guest WHERE guest.guest_id = _guest_id))
   THEN
-    RAISE NOTICE 'No guest person';
+    RAISE EXCEPTION 'No guest person';
     RETURN FALSE;
   END IF;
 
@@ -233,7 +228,7 @@ BEGIN
                   UNION
                 SELECT person_id FROM  employee WHERE employee.person_id = _person_id))
     THEN
-    RAISE NOTICE 'Host should be students or employee';
+    RAISE EXCEPTION 'Host should be students or employee';
    RETURN FALSE;
   END IF;
 
@@ -242,7 +237,7 @@ BEGIN
                                         AND  guest_to_person.person_id = _person_id
                                         AND  guest_to_person.date_time_end IS NULL))
     THEN
-      RAISE NOTICE 'Not registered';
+      RAISE EXCEPTION 'Not registered';
       RETURN FALSE;
     ELSE
       UPDATE guest_to_person SET date_time_end = now()
