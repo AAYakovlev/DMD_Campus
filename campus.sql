@@ -7495,6 +7495,11 @@ ALTER TABLE "public"."apartment_type" ADD UNIQUE ("type_name") DEFERRABLE;
 ALTER TABLE "public"."apartment_type" ADD PRIMARY KEY ("apartment_type_id");
 
 -- ----------------------------
+-- Uniques structure for table building
+-- ----------------------------
+ALTER TABLE "public"."building" ADD UNIQUE ("city", "street", "number_in_street");
+
+-- ----------------------------
 -- Primary Key structure for table building
 -- ----------------------------
 ALTER TABLE "public"."building" ADD PRIMARY KEY ("building_id");
@@ -7598,6 +7603,7 @@ ALTER TABLE "public"."operations_log" ADD PRIMARY KEY ("id");
 -- Uniques structure for table person
 -- ----------------------------
 ALTER TABLE "public"."person" ADD UNIQUE ("main_document_id") DEFERRABLE;
+ALTER TABLE "public"."person" ADD UNIQUE ("first_name", "family_name", "date_of_birth");
 
 -- ----------------------------
 -- Primary Key structure for table person
