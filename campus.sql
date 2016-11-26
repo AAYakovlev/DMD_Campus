@@ -7029,9 +7029,8 @@ CREATE OR REPLACE VIEW "public"."apartments_with_free_beds" AS
 CREATE OR REPLACE VIEW "public"."apartments_with_employee" AS
  SELECT a.apartment_number,
     a.building_id
-   FROM (((apartment a
+   FROM ((apartment a
      JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
-     JOIN person p ON ((li.person_id = p.person_id)))
      JOIN employee e ON ((li.person_id = e.person_id)));
 
 -- ----------------------------
@@ -7062,9 +7061,8 @@ CREATE OR REPLACE VIEW "public"."apartments_with_male_persons" AS
 CREATE OR REPLACE VIEW "public"."apartments_with_students" AS
  SELECT a.apartment_number,
     a.building_id
-   FROM (((apartment a
+   FROM ((apartment a
      JOIN lives_in li ON (((a.building_id = li.building_id) AND (a.apartment_number = li.apartment_number))))
-     JOIN person p ON ((li.person_id = p.person_id)))
      JOIN student s ON ((li.person_id = s.person_id)));
 
 -- ----------------------------
