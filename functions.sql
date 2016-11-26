@@ -10,10 +10,10 @@ CREATE OR REPLACE FUNCTION insert_into_in_out(_person_id INT4, _ecm_id INT4, _di
                   JOIN entry_check_machine ecm ON ep.entry_permission_id = ecm.entry_permission_id
                   WHERE person.person_id = _person_id AND ecm.ecm_id = _ecm_id))
     THEN
-      SELECT constraint_group_id FROM entry_check_machine 
-	  WHERE ecm_id = _ecm_id 
+      SELECT constraint_group_id FROM entry_check_machine
+	  WHERE ecm_id = _ecm_id
 	  INTO const_g_id;
-	  
+
       IF ((const_g_id) ISNULL )
       THEN
         INSERT INTO in_out (person_id, ecm_id, direction, date_time, accepted) VALUES (_person_id,_ecm_id,_direction,now(),TRUE);
@@ -133,13 +133,13 @@ BEGIN
   THEN
     RAISE NOTICE 'No guest person';
    RETURN FALSE;
-     
+
  END IF;
-  
-  IF (not exists(SELECT person_id from student WHERE student.person_id = _person_id 
-                  UNION 
+
+  IF (not exists(SELECT person_id from student WHERE student.person_id = _person_id
+                  UNION
                 SELECT person_id FROM  employee WHERE employee.person_id = _person_id))
-    THEN 
+    THEN
     RAISE NOTICE 'Host should be students or employee';
     RETURN FALSE;
   END IF;
@@ -189,9 +189,9 @@ BEGIN
       END IF;
     ELSE
 
-      SELECT max(person.person_id) + 1 INTO new_person_id FROM person ;
-      SELECT max(guest.guest_id) + 1 INTO new_guest_id FROM guest;
-      SELECT max(document.document_id) + 1 INTO new_doc_id FROM document;
+      SELECT nextval('person_person_id_seq'::REGCLASS) INTO new_person_id;
+      SELECT nextval('guest_guest_id_seq'::REGCLASS) INTO new_guest_id;
+      SELECT nextval('document_document_id_seq'::REGCLASS) INTO new_doc_id;
       BEGIN
         SET CONSTRAINTS ALL DEFERRED;
         INSERT INTO document VALUES (new_doc_id, new_person_id, _update_to_date, _document_type_id, _image_path);
@@ -244,12 +244,12 @@ BEGIN
     THEN
       RAISE NOTICE 'Not registered';
       RETURN FALSE;
-    ELSE 
+    ELSE
       UPDATE guest_to_person SET date_time_end = now()
       WHERE guest_id = _guest_id
                                           AND  person_id = _person_id
                                           AND  date_time_end IS NULL;
-      RETURN TRUE; 
+      RETURN TRUE;
   END IF;
 END;
 $function$
