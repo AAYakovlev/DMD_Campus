@@ -352,8 +352,9 @@ public class DataAccess {
         }
     }
 
-    public void add_guest(String hostfName, String hostlName, Timestamp hostDOB, String fname, String mname, String lname, String gender, Timestamp dob, String doc_path) throws SQLException {
+    public SQLWarning add_guest(String hostfName, String hostlName, Timestamp hostDOB, String fname, String mname, String lname, String gender, Timestamp dob, String doc_path) throws SQLException {
         int hostID;
+        boolean res;
         try (Connection connection = getConnection();
              PreparedStatement stmt = connection.prepareStatement("SELECT p.person_id FROM person  AS p WHERE p.first_name LIKE ? AND p.family_name LIKE ? AND p.date_of_birth = CAST(? AS TIMESTAMP)")) {
             stmt.setString(1, hostfName);
@@ -366,32 +367,45 @@ public class DataAccess {
             throw new SQLException("Host not found");
         }
         try (Connection connection = getConnection();
-             CallableStatement statement = connection.prepareCall(" { call create_guest_person( ?, ?, ?, ?, CAST(? AS TIMESTAMP), CAST(? AS TIMESTAMP), ?, ?, ? ) } ");) {
-            statement.setString(1, fname);
-            statement.setString(2, mname);
-            statement.setString(3, lname);
-            statement.setString(4, gender);
-            statement.setTimestamp(5, dob);
+             CallableStatement statement = connection.prepareCall(" { ? = call create_guest_person( ?, ?, ?, ?, CAST(? AS TIMESTAMP), CAST(? AS TIMESTAMP), ?, ?, ? ) } ");) {
+            statement.setString(2, fname);
+            statement.setString(3, mname);
+            statement.setString(4, lname);
+            statement.setString(5, gender);
+            statement.setTimestamp(6, dob);
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.YEAR, 1);
-            statement.setTimestamp(6, Timestamp.from(Instant.ofEpochMilli(cal.getTimeInMillis())));
-            statement.setInt(7, 1);
-            statement.setString(8, doc_path);
-            statement.setInt(9, hostID);
+            statement.setTimestamp(7, Timestamp.from(Instant.ofEpochMilli(cal.getTimeInMillis())));
+            statement.setInt(8, 1);
+            statement.setString(9, doc_path);
+            statement.setInt(10, hostID);
+            statement.registerOutParameter(1, Types.BOOLEAN);
             statement.execute();
+            res = statement.getBoolean(1);
+            SQLWarning warnings = statement.getWarnings();
             statement.close();
             connection.close();
+            if(!res)
+                return warnings;
         }
+        return null;
     }
 
-    public void guestLeaving(int guestId, int personId) throws SQLException {
+    public SQLWarning guestLeaving(int guestId, int personId) throws SQLException {
+        boolean res;
         try (Connection connection = getConnection();
-             CallableStatement statement = connection.prepareCall(" { call guest_left_from_person( ?, ? ) } ");) {
-            statement.setInt(1, guestId);
-            statement.setInt(2, personId);
+             CallableStatement statement = connection.prepareCall(" { ? = call guest_left_from_person( ?, ? ) } ");) {
+            statement.setInt(2, guestId);
+            statement.setInt(3, personId);
+            statement.registerOutParameter(1, Types.BOOLEAN);
             statement.execute();
+            res = statement.getBoolean(1);
+            SQLWarning warnings = statement.getWarnings();
             statement.close();
             connection.close();
+            if(!res)
+                return warnings;
         }
+        return null;
     }
 }

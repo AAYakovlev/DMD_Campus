@@ -126,7 +126,7 @@ AS $function$
 BEGIN
  IF (NOT exists(SELECT * FROM guest WHERE guest.guest_id = _guest_id))
   THEN
-    RAISE EXCEPTION 'No guest person';
+    RAISE NOTICE 'No guest person';
    RETURN FALSE;
 
  END IF;
@@ -135,7 +135,7 @@ BEGIN
                   UNION
                 SELECT person_id FROM  employee WHERE employee.person_id = _person_id))
     THEN
-    RAISE EXCEPTION 'Host should be students or employee';
+    RAISE NOTICE 'Host should be students or employee';
     RETURN FALSE;
   END IF;
 
@@ -143,7 +143,7 @@ BEGIN
                                       WHERE guest_to_person.guest_id = _guest_id
                                         AND  guest_to_person.date_time_end IS NULL))
     THEN
-    RAISE EXCEPTION 'Guest should leave before come in again';
+    RAISE NOTICE 'Guest should leave before come in again';
     RETURN FALSE;
   END IF;
 
@@ -220,7 +220,7 @@ AS $function$
 BEGIN
  IF (NOT exists(SELECT * FROM guest WHERE guest.guest_id = _guest_id))
   THEN
-    RAISE EXCEPTION 'No guest person';
+    RAISE NOTICE 'No guest person';
     RETURN FALSE;
   END IF;
 
@@ -228,7 +228,7 @@ BEGIN
                   UNION
                 SELECT person_id FROM  employee WHERE employee.person_id = _person_id))
     THEN
-    RAISE EXCEPTION 'Host should be students or employee';
+    RAISE NOTICE 'Host should be students or employee';
    RETURN FALSE;
   END IF;
 
@@ -237,7 +237,7 @@ BEGIN
                                         AND  guest_to_person.person_id = _person_id
                                         AND  guest_to_person.date_time_end IS NULL))
     THEN
-      RAISE EXCEPTION 'Not registered';
+      RAISE NOTICE 'Not registered';
       RETURN FALSE;
     ELSE
       UPDATE guest_to_person SET date_time_end = now()

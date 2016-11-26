@@ -18,6 +18,7 @@ import javax.print.Doc;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -257,9 +258,11 @@ public class Controller implements Initializable {
 
     public void addGuest(ActionEvent actionEvent) {
         try {
-            dataAccess.add_guest(hostFirstNameFieldGuests.getText(), hostLastNameFieldGuests.getText(), Timestamp.valueOf(hostDOBFieldGuests.getText() + " 00:00:00"),
+            SQLWarning warning = dataAccess.add_guest(hostFirstNameFieldGuests.getText(), hostLastNameFieldGuests.getText(), Timestamp.valueOf(hostDOBFieldGuests.getText() + " 00:00:00"),
                     firstNameFieldGuests.getText(), middleNameFieldGuests.getText(), lastNameFieldGuests.getText(), genderFieldGuests.getText(),
                     Timestamp.valueOf(dobFieldGuests.getText() + " 00:00:00"), documentFieldGuests.getText());
+            if(warning != null)
+                alert("Incorrect input",warning.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
             alert("Incorrect input", e.getMessage());
@@ -274,7 +277,9 @@ public class Controller implements Initializable {
             return;
         }
         try {
-            dataAccess.guestLeaving(g.getGuestId(), g.getHostId());
+            SQLWarning warning = dataAccess.guestLeaving(g.getGuestId(), g.getHostId());
+            if(warning != null)
+                alert("Incorrect input",warning.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
             alert("Incorrect input", e.getMessage());
