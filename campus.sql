@@ -1921,8 +1921,7 @@ INSERT INTO "public"."ep_set_has_ep" VALUES ('22', '6');
 DROP TABLE IF EXISTS "public"."guest" CASCADE;
 CREATE TABLE "public"."guest" (
 "guest_id" int4 DEFAULT nextval('guest_guest_id_seq'::regclass) NOT NULL,
-"person_id" int4 NOT NULL,
-"guest_to_person_id" int4 NOT NULL
+"person_id" int4 NOT NULL
 )
 WITH (OIDS=FALSE)
 
@@ -1931,16 +1930,16 @@ WITH (OIDS=FALSE)
 -- ----------------------------
 -- Records of guest
 -- ----------------------------
-INSERT INTO "public"."guest" VALUES ('1', '11', '1');
-INSERT INTO "public"."guest" VALUES ('2', '12', '2');
-INSERT INTO "public"."guest" VALUES ('3', '13', '3');
-INSERT INTO "public"."guest" VALUES ('4', '14', '4');
-INSERT INTO "public"."guest" VALUES ('5', '15', '5');
-INSERT INTO "public"."guest" VALUES ('6', '16', '6');
-INSERT INTO "public"."guest" VALUES ('7', '17', '7');
-INSERT INTO "public"."guest" VALUES ('8', '18', '8');
-INSERT INTO "public"."guest" VALUES ('9', '19', '9');
-INSERT INTO "public"."guest" VALUES ('10', '20', '10');
+INSERT INTO "public"."guest" VALUES ('1', '11');
+INSERT INTO "public"."guest" VALUES ('2', '12');
+INSERT INTO "public"."guest" VALUES ('3', '13');
+INSERT INTO "public"."guest" VALUES ('4', '14');
+INSERT INTO "public"."guest" VALUES ('5', '15');
+INSERT INTO "public"."guest" VALUES ('6', '16');
+INSERT INTO "public"."guest" VALUES ('7', '17');
+INSERT INTO "public"."guest" VALUES ('8', '18');
+INSERT INTO "public"."guest" VALUES ('9', '19');
+INSERT INTO "public"."guest" VALUES ('10', '20');
 
 -- ----------------------------
 -- Table structure for guest_to_person
@@ -3689,8 +3688,7 @@ INSERT INTO "public"."in_out" VALUES ('26', '50', 'o', '2016-10-14 03:10:56', 'f
 INSERT INTO "public"."in_out" VALUES ('26', '51', 'o', '2016-10-03 06:19:47', 'f');
 INSERT INTO "public"."in_out" VALUES ('26', '52', 'o', '2016-09-08 01:46:00', 'f');
 
--- ----
--- ------------------------
+-- ----------------------------
 -- Table structure for lives_in
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."lives_in" CASCADE;
@@ -6999,11 +6997,10 @@ INSERT INTO "public"."transaction_type" VALUES ('2', 'Tuition Fee');
 INSERT INTO "public"."transaction_type" VALUES ('3', 'Salary');
 INSERT INTO "public"."transaction_type" VALUES ('4', 'Scholarship');
 
-
 -- ----------------------------
 -- View structure for apartment_occupation
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartment_occupation" AS 
+CREATE OR REPLACE VIEW "public"."apartment_occupation" AS
  SELECT count(li.person_id) AS beds_occupied,
     a.apartment_number,
     a.building_id,
@@ -7014,10 +7011,10 @@ CREATE OR REPLACE VIEW "public"."apartment_occupation" AS
      JOIN apartment_type at ON ((a.apartment_type_id = at.apartment_type_id)))
   GROUP BY a.apartment_number, a.building_id, at.beds;
 
-  -- ----------------------------
+-- ----------------------------
 -- View structure for apartments_with_free_beds
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_free_beds" AS 
+CREATE OR REPLACE VIEW "public"."apartments_with_free_beds" AS
  SELECT apartment_occupation.beds_occupied,
     apartment_occupation.apartment_number,
     apartment_occupation.building_id,
@@ -7048,7 +7045,6 @@ CREATE OR REPLACE VIEW "public"."apartments_with_female_persons" AS
      JOIN person p ON ((li.person_id = p.person_id)))
   WHERE (p.gender = 'F'::bpchar);
 
-
 -- ----------------------------
 -- View structure for apartments_with_male_persons
 -- ----------------------------
@@ -7074,7 +7070,7 @@ CREATE OR REPLACE VIEW "public"."apartments_with_students" AS
 -- ----------------------------
 -- View structure for apartments_for_female_employee
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_for_female_employee" AS 
+CREATE OR REPLACE VIEW "public"."apartments_for_female_employee" AS
  SELECT awfb.beds_occupied,
     awfb.apartment_number,
     awfb.building_id,
@@ -7090,7 +7086,7 @@ CREATE OR REPLACE VIEW "public"."apartments_for_female_employee" AS
 -- ----------------------------
 -- View structure for apartments_for_female_students
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_for_female_students" AS 
+CREATE OR REPLACE VIEW "public"."apartments_for_female_students" AS
  SELECT awfb.beds_occupied,
     awfb.apartment_number,
     awfb.building_id,
@@ -7106,7 +7102,7 @@ CREATE OR REPLACE VIEW "public"."apartments_for_female_students" AS
 -- ----------------------------
 -- View structure for apartments_for_male_employee
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_for_male_employee" AS 
+CREATE OR REPLACE VIEW "public"."apartments_for_male_employee" AS
  SELECT awfb.beds_occupied,
     awfb.apartment_number,
     awfb.building_id,
@@ -7122,7 +7118,7 @@ CREATE OR REPLACE VIEW "public"."apartments_for_male_employee" AS
 -- ----------------------------
 -- View structure for apartments_for_male_students
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_for_male_students" AS 
+CREATE OR REPLACE VIEW "public"."apartments_for_male_students" AS
  SELECT awfb.beds_occupied,
     awfb.apartment_number,
     awfb.building_id,
@@ -7138,7 +7134,7 @@ CREATE OR REPLACE VIEW "public"."apartments_for_male_students" AS
 -- ----------------------------
 -- View structure for employees_without_apartments
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."employees_without_apartments" AS 
+CREATE OR REPLACE VIEW "public"."employees_without_apartments" AS
  SELECT p.person_id,
     p.first_name,
     p.middle_name,
@@ -7153,7 +7149,7 @@ CREATE OR REPLACE VIEW "public"."employees_without_apartments" AS
 -- ----------------------------
 -- View structure for guest_control
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."guest_control" AS 
+CREATE OR REPLACE VIEW "public"."guest_control" AS
  SELECT guest.guest_id,
     person.first_name,
     person.family_name,
@@ -7164,9 +7160,27 @@ CREATE OR REPLACE VIEW "public"."guest_control" AS
   WHERE ((g.date_time_end - g.date_time_start) > '24:00:00'::interval);
 
 -- ----------------------------
+-- View structure for guest_control_with_host
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."guest_control_with_host" AS
+ SELECT guest.guest_id,
+    guest.person_id AS guest_person_id,
+    p1.first_name AS guest_name,
+    p1.family_name AS guest_family_name,
+    (g.date_time_end - g.date_time_start) AS stay_time,
+    p2.person_id AS host_person_id,
+    p2.first_name AS host_first_name,
+    p2.family_name AS host_family_name
+   FROM (((guest
+     JOIN person p1 ON ((guest.person_id = p1.person_id)))
+     JOIN guest_to_person g ON ((guest.guest_id = g.guest_id)))
+     JOIN person p2 ON ((g.person_id = p2.person_id)))
+  WHERE ((g.date_time_end - g.date_time_start) > '24:00:00'::interval);
+
+-- ----------------------------
 -- View structure for have_entry_permissions
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."have_entry_permissions" AS 
+CREATE OR REPLACE VIEW "public"."have_entry_permissions" AS
  SELECT in_out.ecm_id,
     in_out.person_id,
     in_out.direction AS in_out,
@@ -7187,7 +7201,7 @@ CREATE OR REPLACE VIEW "public"."have_entry_permissions" AS
 -- ----------------------------
 -- View structure for last_time_person_accepted_in_out
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."last_time_person_accepted_in_out" AS 
+CREATE OR REPLACE VIEW "public"."last_time_person_accepted_in_out" AS
  SELECT in_out.person_id,
     max(in_out.date_time) AS last_accepted_entry
    FROM in_out
@@ -7197,7 +7211,7 @@ CREATE OR REPLACE VIEW "public"."last_time_person_accepted_in_out" AS
 -- ----------------------------
 -- View structure for no_entry_permission_for_in_out
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."no_entry_permission_for_in_out" AS 
+CREATE OR REPLACE VIEW "public"."no_entry_permission_for_in_out" AS
  SELECT in_out.ecm_id,
     in_out.person_id,
     in_out.direction AS in_out,
@@ -7218,7 +7232,7 @@ CREATE OR REPLACE VIEW "public"."no_entry_permission_for_in_out" AS
 -- ----------------------------
 -- View structure for outdated_documents
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."outdated_documents" AS 
+CREATE OR REPLACE VIEW "public"."outdated_documents" AS
  SELECT document.person_id,
     document.document_id,
     document.document_type_id,
@@ -7235,7 +7249,7 @@ CREATE OR REPLACE VIEW "public"."outdated_documents" AS
 -- ----------------------------
 -- View structure for outdated_documents_of_students_and_employee
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."outdated_documents_of_students_and_employee" AS 
+CREATE OR REPLACE VIEW "public"."outdated_documents_of_students_and_employee" AS
  SELECT document.person_id,
     document.document_id,
     document.document_type_id,
@@ -7254,9 +7268,53 @@ CREATE OR REPLACE VIEW "public"."outdated_documents_of_students_and_employee" AS
            FROM employee)));
 
 -- ----------------------------
+-- View structure for payment_control_rental_fee
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."payment_control_rental_fee" AS
+ SELECT account.person_id,
+    sum(transaction.amount) AS rental_fee_balance
+   FROM (((account
+     JOIN person USING (person_id))
+     JOIN transaction USING (account_id))
+     JOIN transaction_type USING (transaction_type_id))
+  WHERE ((transaction_type.type_name)::text = 'Rental Fee'::text)
+  GROUP BY account.person_id
+ HAVING (sum(transaction.amount) < (0)::numeric);
+
+-- ----------------------------
+-- View structure for payment_control_tuition_fee
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."payment_control_tuition_fee" AS
+ SELECT account.person_id,
+    sum(transaction.amount) AS tuition_fee_balance
+   FROM (((account
+     JOIN person USING (person_id))
+     JOIN transaction USING (account_id))
+     JOIN transaction_type USING (transaction_type_id))
+  WHERE ((transaction_type.type_name)::text = 'Tuition Fee'::text)
+  GROUP BY account.person_id
+ HAVING (sum(transaction.amount) < (0)::numeric);
+
+-- ----------------------------
+-- View structure for personnel_attendance_control
+-- ----------------------------
+CREATE OR REPLACE VIEW "public"."personnel_attendance_control" AS
+ SELECT person.person_id,
+    person.first_name,
+    person.family_name,
+    (now() - (t.last_accepted_entry)::timestamp with time zone) AS no_action_for
+   FROM (( SELECT in_out.person_id,
+            max(in_out.date_time) AS last_accepted_entry
+           FROM in_out
+          WHERE (((now() - (in_out.date_time)::timestamp with time zone) > '168:00:00'::interval) AND (in_out.accepted = true))
+          GROUP BY in_out.person_id
+          ORDER BY (max(in_out.date_time))) t
+     JOIN person ON ((t.person_id = person.person_id)));
+
+-- ----------------------------
 -- View structure for persons_inside_campus_now
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."persons_inside_campus_now" AS 
+CREATE OR REPLACE VIEW "public"."persons_inside_campus_now" AS
  SELECT in_out.person_id,
     in_out.ecm_id,
     in_out.direction,
@@ -7282,7 +7340,7 @@ CREATE OR REPLACE VIEW "public"."persons_inside_campus_now" AS
 -- ----------------------------
 -- View structure for persons_with_first_accepted_campus_entry_equals_out
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."persons_with_first_accepted_campus_entry_equals_out" AS 
+CREATE OR REPLACE VIEW "public"."persons_with_first_accepted_campus_entry_equals_out" AS
  SELECT in_out.person_id,
     in_out.date_time,
     in_out.ecm_id,
@@ -7299,7 +7357,7 @@ CREATE OR REPLACE VIEW "public"."persons_with_first_accepted_campus_entry_equals
 -- ----------------------------
 -- View structure for persons_with_last_accepted_campus_entry_equals_in
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."persons_with_last_accepted_campus_entry_equals_in" AS 
+CREATE OR REPLACE VIEW "public"."persons_with_last_accepted_campus_entry_equals_in" AS
  SELECT in_out.person_id,
     in_out.date_time,
     in_out.ecm_id,
@@ -7317,7 +7375,7 @@ CREATE OR REPLACE VIEW "public"."persons_with_last_accepted_campus_entry_equals_
 -- ----------------------------
 -- View structure for rental_fee_balance
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."rental_fee_balance" AS 
+CREATE OR REPLACE VIEW "public"."rental_fee_balance" AS
  SELECT account.person_id,
     person.first_name,
     person.family_name,
@@ -7332,7 +7390,7 @@ CREATE OR REPLACE VIEW "public"."rental_fee_balance" AS
 -- ----------------------------
 -- View structure for rental_fee_balance_negative
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."rental_fee_balance_negative" AS 
+CREATE OR REPLACE VIEW "public"."rental_fee_balance_negative" AS
  SELECT account.person_id,
     person.first_name,
     person.family_name,
@@ -7348,7 +7406,7 @@ CREATE OR REPLACE VIEW "public"."rental_fee_balance_negative" AS
 -- ----------------------------
 -- View structure for students_without_apartment
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."students_without_apartment" AS 
+CREATE OR REPLACE VIEW "public"."students_without_apartment" AS
  SELECT p.person_id,
     p.first_name,
     p.middle_name,
@@ -7363,7 +7421,7 @@ CREATE OR REPLACE VIEW "public"."students_without_apartment" AS
 -- ----------------------------
 -- View structure for tuition_fee_balance
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."tuition_fee_balance" AS 
+CREATE OR REPLACE VIEW "public"."tuition_fee_balance" AS
  SELECT account.person_id,
     person.first_name,
     person.family_name,
@@ -7378,7 +7436,7 @@ CREATE OR REPLACE VIEW "public"."tuition_fee_balance" AS
 -- ----------------------------
 -- View structure for tuition_fee_balance_negative
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."tuition_fee_balance_negative" AS 
+CREATE OR REPLACE VIEW "public"."tuition_fee_balance_negative" AS
  SELECT account.person_id,
     person.first_name,
     person.family_name,
@@ -7392,54 +7450,7 @@ CREATE OR REPLACE VIEW "public"."tuition_fee_balance_negative" AS
  HAVING (sum(transaction.amount) < (0)::numeric);
 
 -- ----------------------------
--- View structure for guest_control
--- ----------------------------
-CREATE OR REPLACE VIEW "public"."guest_control" AS
-SELECT guest.guest_id, person.first_name,person.family_name,(g.date_time_end - g.date_time_start) AS stay_time
-FROM  guest JOIN person ON (guest.person_id = person.person_id) JOIN guest_to_person g ON (guest.guest_id = g.guest_id)
-WHERE (g.date_time_end - g.date_time_start)>'86400';--one day = 86400 seconds
-
--- ----------------------------
--- View structure for payment_control_rental_fee
--- ----------------------------
-CREATE  OR REPLACE VIEW "public"."payment_control_rental_fee" AS
-SELECT person_id, sum(amount) as rental_fee_balance  FROM account
-  NATURAL JOIN transaction
-  NATURAL JOIN transaction_type
-WHERE type_name ='Rental Fee'
-GROUP BY person_id
-HAVING sum(amount) < 0;
-
--- ----------------------------
--- View structure for payment_control_TuitionFee
--- ----------------------------
-CREATE  OR REPLACE VIEW "public"."payment_control_tuition_fee" AS
-SELECT person_id, sum(amount) as tuition_fee_balance  FROM account
-  NATURAL JOIN transaction
-  NATURAL JOIN transaction_type
-WHERE type_name ='Tuition Fee'
-GROUP BY person_id
-HAVING sum(amount) < 0;
-
--- ----------------------------
--- View structure for personnel_attendance_control
--- ----------------------------
-CREATE  OR REPLACE VIEW "public"."personnel_attendance_control" AS
-SELECT person.person_id,person.first_name,person.family_name,now()-last_accepted_entry as no_action_for
-FROM (
-       SELECT in_out.person_id,MAX(in_out.date_time) as last_accepted_entry--in_out.direction
-              FROM in_out
-              WHERE
-                      now()-in_out.date_time>'604800'
-                    AND
-                      in_out.accepted = TRUE
-              GROUP BY person_id--,in_out.direction
-              ORDER BY last_accepted_entry
-     ) AS T
-  JOIN person ON T.person_id =person.person_id;
-
--- ----------------------------
--- Alter Sequences Owned By 
+-- Alter Sequences Owned By
 -- ----------------------------
 ALTER SEQUENCE "public"."account_account_id_seq" OWNED BY "account"."account_id";
 ALTER SEQUENCE "public"."apartment_type_apartment_type_id_seq" OWNED BY "apartment_type"."apartment_type_id";
@@ -7643,8 +7654,8 @@ ALTER TABLE "public"."document" ADD FOREIGN KEY ("person_id") REFERENCES "public
 -- ----------------------------
 -- Foreign Key structure for table "public"."employee"
 -- ----------------------------
-ALTER TABLE "public"."employee" ADD FOREIGN KEY ("employee_role_id") REFERENCES "public"."employee_role" ("employee_role_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."employee" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."employee" ADD FOREIGN KEY ("employee_role_id") REFERENCES "public"."employee_role" ("employee_role_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."entry_check_machine"
@@ -7655,20 +7666,19 @@ ALTER TABLE "public"."entry_check_machine" ADD FOREIGN KEY ("building_id") REFER
 -- ----------------------------
 -- Foreign Key structure for table "public"."ep_set_has_ep"
 -- ----------------------------
-ALTER TABLE "public"."ep_set_has_ep" ADD FOREIGN KEY ("ep_set_id") REFERENCES "public"."entry_permission_set" ("ep_set_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."ep_set_has_ep" ADD FOREIGN KEY ("entry_permission_id") REFERENCES "public"."entry_permission" ("entry_permission_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."ep_set_has_ep" ADD FOREIGN KEY ("ep_set_id") REFERENCES "public"."entry_permission_set" ("ep_set_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."guest"
 -- ----------------------------
-ALTER TABLE "public"."guest" ADD FOREIGN KEY ("guest_to_person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."guest" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."guest_to_person"
 -- ----------------------------
-ALTER TABLE "public"."guest_to_person" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."guest_to_person" ADD FOREIGN KEY ("guest_id") REFERENCES "public"."guest" ("guest_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."guest_to_person" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."in_out"
@@ -7701,5 +7711,5 @@ ALTER TABLE "public"."student" ADD FOREIGN KEY ("person_id") REFERENCES "public"
 -- ----------------------------
 -- Foreign Key structure for table "public"."transaction"
 -- ----------------------------
-ALTER TABLE "public"."transaction" ADD FOREIGN KEY ("account_id") REFERENCES "public"."account" ("account_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."transaction" ADD FOREIGN KEY ("transaction_type_id") REFERENCES "public"."transaction_type" ("transaction_type_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."transaction" ADD FOREIGN KEY ("account_id") REFERENCES "public"."account" ("account_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
