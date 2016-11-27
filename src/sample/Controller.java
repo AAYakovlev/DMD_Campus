@@ -58,8 +58,6 @@ public class Controller implements Initializable {
     TextField dobFieldGuests;
     @FXML
     TextField documentFieldGuests;
-    @FXML
-    TextField arriveFieldGuests;
 
     @FXML
     TableView tableViewDocs;
@@ -76,7 +74,7 @@ public class Controller implements Initializable {
     TableColumn<PersonInApartment, Integer> buildingTenants;
 
     @FXML
-    TableView tableViewStudents;
+    TableView<Student> tableViewStudents;
     @FXML
     TextField firstNameField;
     @FXML
@@ -157,8 +155,8 @@ public class Controller implements Initializable {
     public void showAllStudents(ActionEvent actionEvent) {
         try {
             List<Student> students = dataAccess.getAllStudents();
-            ObservableList<Student> personsCollection = FXCollections.observableArrayList(students);
-            tableViewStudents.setItems(personsCollection);
+            ObservableList<Student> studentsCollection = FXCollections.observableArrayList(students);
+            tableViewStudents.setItems(studentsCollection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -250,8 +248,9 @@ public class Controller implements Initializable {
                     Timestamp.valueOf(dobField.getText() + " 00:00:00"), documentField.getText(), Integer.parseInt(scholarshipField.getText()));
         } catch (SQLException e) {
             e.printStackTrace();
-
             alert("Incorrect input", e.getMessage());
+        } catch (IllegalArgumentException e){
+            alert("Incorrect input", "Date must be like 1990-01-01 (YYYY-MM-DD)");
         }
         showAllStudents(actionEvent);
     }
@@ -298,6 +297,16 @@ public class Controller implements Initializable {
         showAllEmployees(actionEvent);
     }
 
+    public void deleteStudent(ActionEvent actionEvent) {
+        try {
+            dataAccess.delete_student(tableViewStudents.getSelectionModel().getSelectedItem().getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            alert("Incorrect input", e.getMessage());
+        }
+        showAllStudents(actionEvent);
+    }
+
     public void addPersonToApt(TableColumn.CellEditEvent<PersonInApartment, Integer> event) {
         try {
             PersonInApartment person = personInApartmentCollection.get(event.getTablePosition().getRow());
@@ -316,7 +325,12 @@ public class Controller implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            alert("Incorrect input", e.getMessage());
+            if(e.getMessage().contains("No free places")){
+                alert("Incorrect input", "No free places in selected apartment");
+            } else
+                alert("Incorrect input", e.getMessage());
+            personInApartmentCollection.get(event.getTablePosition().getRow()).setBuildingID(0);
+            personInApartmentCollection.get(event.getTablePosition().getRow()).setAptNum(0);
         }
     }
 

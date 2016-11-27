@@ -6,7 +6,9 @@ import org.postgresql.util.PSQLException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class DataAccess {
 
@@ -262,18 +264,20 @@ public class DataAccess {
         List<PersonInApartment> result = new ArrayList<PersonInApartment>();
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
-             ResultSet personResultSet = stmt.executeQuery("SELECT * FROM student NATURAL JOIN person NATURAL LEFT JOIN lives_in")) {
+             ResultSet personResultSet = stmt.executeQuery("SELECT p.person_id, p.first_name, p.middle_name, p.family_name," +
+                     " p.date_of_birth, p.gender, p.main_document_id, l.apartment_number," +
+                     " l.building_id, l.date_time_start FROM student NATURAL JOIN person AS p NATURAL LEFT JOIN lives_in AS l")) {
             while (personResultSet.next()) {
                 int id = personResultSet.getInt(1);
-                String firstName = personResultSet.getString(4);
-                String middleName = personResultSet.getString(5);
-                String lastName = personResultSet.getString(6);
-                String dateOfBirth = personResultSet.getDate(7).toString();
-                String gender = personResultSet.getString(8);
-                int documentId = personResultSet.getInt(9);
-                int aptNum = personResultSet.getInt(10);
-                int building = personResultSet.getInt(11);
-                String startDate = personResultSet.getString(12);
+                String firstName = personResultSet.getString(2);
+                String middleName = personResultSet.getString(3);
+                String lastName = personResultSet.getString(4);
+                String dateOfBirth = personResultSet.getDate(5).toString();
+                String gender = personResultSet.getString(6);
+                int documentId = personResultSet.getInt(7);
+                int aptNum = personResultSet.getInt(8);
+                int building = personResultSet.getInt(9);
+                String startDate = personResultSet.getString(10);
                 result.add(new PersonInApartment(id, firstName, middleName, lastName, dateOfBirth, gender, documentId, aptNum, building, startDate));
             }
             personResultSet.close();
@@ -286,18 +290,20 @@ public class DataAccess {
         List<PersonInApartment> result = new ArrayList<PersonInApartment>();
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
-             ResultSet personResultSet = stmt.executeQuery("SELECT * FROM employee NATURAL JOIN person NATURAL LEFT JOIN lives_in")) {
+             ResultSet personResultSet = stmt.executeQuery("SELECT p.person_id, p.first_name, p.middle_name, p.family_name," +
+                     "p.date_of_birth, p.gender, p.main_document_id, l.apartment_number," +
+                     "l.building_id, l.date_time_start FROM employee NATURAL JOIN person AS p  NATURAL LEFT JOIN lives_in AS l")) {
             while (personResultSet.next()) {
                 int id = personResultSet.getInt(1);
-                String firstName = personResultSet.getString(5);
-                String middleName = personResultSet.getString(6);
-                String lastName = personResultSet.getString(7);
-                String dateOfBirth = personResultSet.getDate(8).toString();
-                String gender = personResultSet.getString(9);
-                int documentId = personResultSet.getInt(10);
-                int aptNum = personResultSet.getInt(11);
-                int building = personResultSet.getInt(12);
-                String startDate = personResultSet.getString(13);
+                String firstName = personResultSet.getString(2);
+                String middleName = personResultSet.getString(3);
+                String lastName = personResultSet.getString(4);
+                String dateOfBirth = personResultSet.getDate(5).toString();
+                String gender = personResultSet.getString(6);
+                int documentId = personResultSet.getInt(7);
+                int aptNum = personResultSet.getInt(8);
+                int building = personResultSet.getInt(9);
+                String startDate = personResultSet.getString(10);
                 result.add(new PersonInApartment(id, firstName, middleName, lastName, dateOfBirth, gender, documentId, aptNum, building, startDate));
             }
             personResultSet.close();
@@ -320,6 +326,17 @@ public class DataAccess {
             statement.close();
             connection.close();
         }
+    }
+
+    public int delete_student(Integer id) throws SQLException {
+        int deleted;
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement("DELETE FROM student WHERE person_id= ?")) {
+            stmt.setInt(1, id);
+            deleted = stmt.executeUpdate();
+            stmt.close();
+        }
+        return deleted;
     }
 
     public void add_employee(String fname, String mname, String lname, String gender, Timestamp dob, Integer salary, String role, String doc_path) throws SQLException {
@@ -385,7 +402,7 @@ public class DataAccess {
             SQLWarning warnings = statement.getWarnings();
             statement.close();
             connection.close();
-            if(!res)
+            if (!res)
                 return warnings;
         }
         return null;
@@ -403,7 +420,7 @@ public class DataAccess {
             SQLWarning warnings = statement.getWarnings();
             statement.close();
             connection.close();
-            if(!res)
+            if (!res)
                 return warnings;
         }
         return null;

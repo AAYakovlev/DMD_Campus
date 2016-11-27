@@ -62,10 +62,8 @@
                                     </columns>
                                 </TableView>
                                 <HBox>
-                                    <children>
                                         <Button onAction="#showAllStudents" text="All students"/>
                                         <Button onAction="#showStudentsWithoutApt" text="Students Without Apartment"/>
-                                    </children>
                                 </HBox>
                                 <HBox>
                                     <TextField fx:id="firstNameField" promptText="First Name"
@@ -84,6 +82,9 @@
                                                prefWidth="100"/>
 
                                     <Button onAction="#addStudent" text="Add"/>
+                                </HBox>
+                                <HBox>
+                                    <Button onAction="#deleteStudent" text="Delete selected"/>
                                 </HBox>
                             </children>
                         </VBox>
