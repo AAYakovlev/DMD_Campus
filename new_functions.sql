@@ -75,6 +75,7 @@ BEGIN
     INSERT INTO document VALUES (nextval('document_document_id_seq'::REGCLASS), new_person_id, current_timestamp + INTERVAL '1 year', 1, image_path)
     RETURNING document_id INTO new_doc_id;
     INSERT INTO person VALUES (new_person_id, first_name, middle_name, family_name, dob, gender,  new_doc_id);
+    INSERT INTO student VALUES (new_person_id, scholarship);
     INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id);
     INSERT INTO person_has_ep_set VALUES (new_person_id, 4);  -- base for persons
     INSERT INTO person_has_ep_set VALUES (new_person_id, 1);  -- base for students
@@ -98,6 +99,7 @@ BEGIN
     INSERT INTO document VALUES (nextval('document_document_id_seq'::REGCLASS), new_person_id, current_timestamp + INTERVAL '1 year', 1, image_path)
     RETURNING document_id INTO new_doc_id;
     INSERT INTO person VALUES (new_person_id, first_name, middle_name, family_name, dob, gender,  new_doc_id);
+    INSERT INTO employee VALUES (new_person_id, salary, role_id);
     INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id);
     INSERT INTO person_has_ep_set VALUES (new_person_id, 4);  -- base for persons
     IF (role_id = 4 OR role_id = 5)

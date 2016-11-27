@@ -40,6 +40,7 @@ CREATE SEQUENCE "public"."document_document_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
+ START 26
  CACHE 1;
 
 -- ----------------------------
