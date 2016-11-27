@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 
 public class Student extends Person {
-    private final SimpleIntegerProperty studentId = new SimpleIntegerProperty();
     private final SimpleIntegerProperty scholarship = new SimpleIntegerProperty();
 
 //    public Student(int id, String fName, String mName, String lName, String dOfBirth, String gender) {
@@ -18,23 +17,11 @@ public class Student extends Person {
         super(id, fName, mName, lName, dOfBirth, gender, 0);
     }
 
-    public Student(int id, String fName, String mName, String lName, String dOfBirth, String gender, int doc, int studID, int scholarship) {
+    public Student(int id, String fName, String mName, String lName, String dOfBirth, String gender, int doc, int scholarship) {
         super(id, fName, mName, lName, dOfBirth, gender, doc);
-        setStudentId(studID);
         setScholarship(scholarship);
     }
 
-    public int getStudentId() {
-        return studentId.get();
-    }
-
-    public SimpleIntegerProperty studentIdProperty() {
-        return studentId;
-    }
-
-    public void setStudentId(int studentId) {
-        this.studentId.set(studentId);
-    }
 
     public int getScholarship() {
         return scholarship.get();

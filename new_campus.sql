@@ -40,7 +40,7 @@ CREATE SEQUENCE "public"."document_document_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 26
+ START 27
  CACHE 1;
 
 -- ----------------------------
@@ -109,7 +109,7 @@ CREATE SEQUENCE "public"."person_person_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 26
+ START 27
  CACHE 1;
 
 -- ----------------------------

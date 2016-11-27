@@ -33,9 +33,9 @@ public class DataAccess {
                 String dateOfBirth = personResultSet.getDate(5).toString();
                 String gender = personResultSet.getString(6);
                 int documentId = personResultSet.getInt(7);
-                int studentID = personResultSet.getInt(8);
-                int scholarship = personResultSet.getInt(9);
-                result.add(new Student(id, firstName, middleName, lastName, dateOfBirth, gender, documentId, studentID, scholarship));
+//                int studentID = personResultSet.getInt(8);
+                int scholarship = personResultSet.getInt(8);
+                result.add(new Student(id, firstName, middleName, lastName, dateOfBirth, gender, documentId, scholarship));
             }
             personResultSet.close();
             stmt.close();
@@ -56,10 +56,10 @@ public class DataAccess {
                 String dateOfBirth = personResultSet.getDate(6).toString();
                 String gender = personResultSet.getString(7);
                 int documentId = personResultSet.getInt(8);
-                int empID = personResultSet.getInt(9);
-                int salary = personResultSet.getInt(10);
-                String role = personResultSet.getString(11);
-                result.add(new Employee(id, firstName, middleName, lastName, dateOfBirth, gender, documentId, empID, salary, role));
+//                int empID = personResultSet.getInt(9);
+                int salary = personResultSet.getInt(9);
+                String role = personResultSet.getString(10);
+                result.add(new Employee(id, firstName, middleName, lastName, dateOfBirth, gender, documentId, salary, role));
             }
             personResultSet.close();
             stmt.close();
@@ -131,9 +131,9 @@ public class DataAccess {
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
              ResultSet personResultSet = stmt.executeQuery(
-                     "SELECT gp.first_name, gp.family_name, hp.first_name, hp.family_name, g2p.date_time_start, g2p.date_time_end, g.guest_id, hp.person_id FROM person gp\n" +
+                     "SELECT gp.first_name, gp.family_name, hp.first_name, hp.family_name, g2p.date_time_start, g2p.date_time_end, g2p.guest_person_id, hp.person_id FROM person gp\n" +
                              "  NATURAL RIGHT JOIN guest g\n" +
-                             "  JOIN guest_to_person g2p ON g.guest_id = g2p.guest_id\n" +
+                             "  JOIN guest_to_person g2p ON g.person_id = g2p.guest_person_id\n" +
                              "  JOIN person hp ON g2p.person_id = hp.person_id")) {
             while (personResultSet.next()) {
                 String firstName = personResultSet.getString(1);
