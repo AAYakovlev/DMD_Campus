@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataAccess {
 
-    private static DataSource dataSource = null;
+    private DataSource dataSource = null;
 
     public DataAccess(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -82,6 +82,26 @@ public class DataAccess {
                 String dateOfBirth = personResultSet.getDate(5).toString();
                 String gender = personResultSet.getString(6);
                 result.add(new Student(id, firstName, middleName, lastName, dateOfBirth, gender));
+            }
+            personResultSet.close();
+            stmt.close();
+        }
+        return result;
+    }
+
+    public List<Employee> getEmployeesView(String query) throws SQLException {
+        List<Employee> result = new ArrayList<Employee>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet personResultSet = stmt.executeQuery(query)) {
+            while (personResultSet.next()) {
+                int id = personResultSet.getInt(1);
+                String firstName = personResultSet.getString(2);
+                String middleName = personResultSet.getString(3);
+                String lastName = personResultSet.getString(4);
+                String dateOfBirth = personResultSet.getDate(5).toString();
+                String gender = personResultSet.getString(6);
+                result.add(new Employee(id, firstName, middleName, lastName, dateOfBirth, gender));
             }
             personResultSet.close();
             stmt.close();
@@ -328,7 +348,7 @@ public class DataAccess {
         }
     }
 
-    public int delete_student(Integer id) throws SQLException {
+    public int deleteStudent(Integer id) throws SQLException {
         int deleted;
         try (Connection connection = getConnection();
              PreparedStatement stmt = connection.prepareStatement("DELETE FROM student WHERE person_id= ?")) {
@@ -339,7 +359,29 @@ public class DataAccess {
         return deleted;
     }
 
-    public void add_employee(String fname, String mname, String lname, String gender, Timestamp dob, Integer salary, String role, String doc_path) throws SQLException {
+    public int deleteEmployee(Integer id) throws SQLException {
+        int deleted;
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement("DELETE FROM employee WHERE person_id= ?")) {
+            stmt.setInt(1, id);
+            deleted = stmt.executeUpdate();
+            stmt.close();
+        }
+        return deleted;
+    }
+
+    public int deletePersonFromApartment(Integer id) throws SQLException {
+        int deleted;
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement("DELETE FROM lives_in WHERE person_id= ?")) {
+            stmt.setInt(1, id);
+            deleted = stmt.executeUpdate();
+            stmt.close();
+        }
+        return deleted;
+    }
+
+    public void addEmployee(String fname, String mname, String lname, String gender, Timestamp dob, Integer salary, String role, String doc_path) throws SQLException {
         try (Connection connection = getConnection();
              CallableStatement statement = connection.prepareCall(" { call add_new_employee( ?, ?, ?, ?, CAST(? AS TIMESTAMP), ?, ?, ? ) } ");) {
             statement.setString(1, fname);
@@ -356,7 +398,7 @@ public class DataAccess {
         }
     }
 
-    public void add_person_to_apt(int personId, int apt_num, int building_id, Timestamp start_date) throws SQLException {
+    public void addPersonToApt(int personId, int apt_num, int building_id, Timestamp start_date) throws SQLException {
         try (Connection connection = getConnection();
              CallableStatement statement = connection.prepareCall(" { call add_person_into_appartment( ?, ?, ?, CAST(? AS TIMESTAMP) ) } ");) {
             statement.setInt(1, personId);
@@ -369,7 +411,7 @@ public class DataAccess {
         }
     }
 
-    public SQLWarning add_guest(String hostfName, String hostlName, Timestamp hostDOB, String fname, String mname, String lname, String gender, Timestamp dob, String doc_path) throws SQLException {
+    public SQLWarning addGuest(String hostfName, String hostlName, Timestamp hostDOB, String fname, String mname, String lname, String gender, Timestamp dob, String doc_path) throws SQLException {
         int hostID;
         boolean res;
         try (Connection connection = getConnection();
@@ -424,5 +466,30 @@ public class DataAccess {
                 return warnings;
         }
         return null;
+    }
+
+    public List<String> getEmpRolesForCombo() {
+        return getComboBoxItems("SELECT role_name FROM employee_role");
+    }
+
+    public List<String> getDocTypesForCombo() {
+        return getComboBoxItems("SELECT type_name FROM document_type");
+    }
+
+    private List<String> getComboBoxItems(String query) {
+        List<String> result = new ArrayList<String>();
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet itemsResultSet = stmt.executeQuery(query)) {
+            while (itemsResultSet.next()) {
+                String item = itemsResultSet.getString(1);
+                result.add(item);
+            }
+            itemsResultSet.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

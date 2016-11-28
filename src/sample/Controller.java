@@ -1,40 +1,23 @@
 package sample;
 
-import com.sun.tools.corba.se.idl.constExpr.Times;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-import javax.print.Doc;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-
-    private DataAccess dataAccess;
-    private ObservableList<PersonInApartment> personInApartmentCollection;
-
-    public Controller(DataAccess dataAccess) {
-        this.dataAccess = dataAccess;
-    }
 
     @FXML
     TableView<Guest> tableViewGuests;
@@ -62,12 +45,11 @@ public class Controller implements Initializable {
     @FXML
     TableView tableViewDocs;
 
-
     @FXML
     TableView tableViewAttendance;
 
     @FXML
-    TableView tableViewTenants;
+    TableView<PersonInApartment> tableViewTenants;
     @FXML
     TableColumn<PersonInApartment, Integer> apartmentNumberTenants;
     @FXML
@@ -91,7 +73,7 @@ public class Controller implements Initializable {
     TextField documentField;
 
     @FXML
-    TableView tableViewEmps;
+    TableView<Employee> tableViewEmps;
     @FXML
     TextField firstNameFieldEmp;
     @FXML
@@ -107,13 +89,20 @@ public class Controller implements Initializable {
     @FXML
     TextField documentFieldEmp;
     @FXML
-    TextField roleFieldEmp;
+    ComboBox<String> roleFieldEmpCombo;
 
     @FXML
     TableView tableAptBeds;
 
     @FXML
     TableView tableBalance;
+
+    private DataAccess dataAccess;
+    private ObservableList<PersonInApartment> personInApartmentCollection;
+
+    public Controller(DataAccess dataAccess) {
+        this.dataAccess = dataAccess;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -128,6 +117,12 @@ public class Controller implements Initializable {
         showOutdatedDocs(null);
         showPersonsInsideNow(null);
         fillAptTable("SELECT * FROM apartment_occupation ORDER BY beds_occupied DESC");
+        initComboBoxes();
+    }
+
+    public void initComboBoxes() {
+        roleFieldEmpCombo.setItems(FXCollections.observableList(dataAccess.getEmpRolesForCombo()));
+        roleFieldEmpCombo.getSelectionModel().selectFirst();
     }
 
     public void showAllGuests(ActionEvent actionEvent) {
@@ -234,8 +229,8 @@ public class Controller implements Initializable {
 
     public void showEmployeesWithoutApt(ActionEvent actionEvent) {
         try {
-            List<Student> students = dataAccess.getStudentsView("SELECT * FROM employees_without_apartments");
-            ObservableList<Student> personsCollection = FXCollections.observableArrayList(students);
+            List<Employee> students = dataAccess.getEmployeesView("SELECT * FROM employees_without_apartments");
+            ObservableList<Employee> personsCollection = FXCollections.observableArrayList(students);
             tableViewEmps.setItems(personsCollection);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -249,7 +244,7 @@ public class Controller implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             alert("Incorrect input", e.getMessage());
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             alert("Incorrect input", "Date must be like 1990-01-01 (YYYY-MM-DD)");
         }
         showAllStudents(actionEvent);
@@ -257,11 +252,11 @@ public class Controller implements Initializable {
 
     public void addGuest(ActionEvent actionEvent) {
         try {
-            SQLWarning warning = dataAccess.add_guest(hostFirstNameFieldGuests.getText(), hostLastNameFieldGuests.getText(), Timestamp.valueOf(hostDOBFieldGuests.getText() + " 00:00:00"),
+            SQLWarning warning = dataAccess.addGuest(hostFirstNameFieldGuests.getText(), hostLastNameFieldGuests.getText(), Timestamp.valueOf(hostDOBFieldGuests.getText() + " 00:00:00"),
                     firstNameFieldGuests.getText(), middleNameFieldGuests.getText(), lastNameFieldGuests.getText(), genderFieldGuests.getText(),
                     Timestamp.valueOf(dobFieldGuests.getText() + " 00:00:00"), documentFieldGuests.getText());
-            if(warning != null)
-                alert("Incorrect input",warning.getMessage());
+            if (warning != null)
+                alert("Incorrect input", warning.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
             alert("Incorrect input", e.getMessage());
@@ -277,8 +272,8 @@ public class Controller implements Initializable {
         }
         try {
             SQLWarning warning = dataAccess.guestLeaving(g.getGuestId(), g.getHostId());
-            if(warning != null)
-                alert("Incorrect input",warning.getMessage());
+            if (warning != null)
+                alert("Incorrect input", warning.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
             alert("Incorrect input", e.getMessage());
@@ -288,8 +283,8 @@ public class Controller implements Initializable {
 
     public void addEmployee(ActionEvent actionEvent) {
         try {
-            dataAccess.add_employee(firstNameFieldEmp.getText(), middleNameFieldEmp.getText(), lastNameFieldEmp.getText(), genderFieldEmp.getText(),
-                    Timestamp.valueOf(dobFieldEmp.getText() + " 00:00:00"), Integer.parseInt(salaryFieldEmp.getText()), roleFieldEmp.getText(), documentFieldEmp.getText());
+            dataAccess.addEmployee(firstNameFieldEmp.getText(), middleNameFieldEmp.getText(), lastNameFieldEmp.getText(), genderFieldEmp.getText(),
+                    Timestamp.valueOf(dobFieldEmp.getText() + " 00:00:00"), Integer.parseInt(salaryFieldEmp.getText()), roleFieldEmpCombo.getValue(), documentFieldEmp.getText());
         } catch (SQLException e) {
             e.printStackTrace();
             alert("Incorrect input", e.getMessage());
@@ -298,13 +293,51 @@ public class Controller implements Initializable {
     }
 
     public void deleteStudent(ActionEvent actionEvent) {
-        try {
-            dataAccess.delete_student(tableViewStudents.getSelectionModel().getSelectedItem().getId());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            alert("Incorrect input", e.getMessage());
+        if (tableViewStudents.getSelectionModel().getSelectedItem() != null &&
+                confirmation("Confirm", "Delete student " +
+                        tableViewStudents.getSelectionModel().getSelectedItem().getFirstName() + " " +
+                        tableViewStudents.getSelectionModel().getSelectedItem().getLastName())) {
+            try {
+                dataAccess.deleteStudent(tableViewStudents.getSelectionModel().getSelectedItem().getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                alert("Incorrect input", e.getMessage());
+            }
+            showAllStudents(actionEvent);
         }
-        showAllStudents(actionEvent);
+    }
+
+    public void deleteEmployee(ActionEvent actionEvent) {
+        if (tableViewEmps.getSelectionModel().getSelectedItem() != null &&
+                confirmation("Confirm", "Delete employee " +
+                        tableViewEmps.getSelectionModel().getSelectedItem().getFirstName() + " " +
+                        tableViewEmps.getSelectionModel().getSelectedItem().getLastName())) {
+            try {
+                dataAccess.deleteEmployee(tableViewEmps.getSelectionModel().getSelectedItem().getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                alert("Incorrect input", e.getMessage());
+            }
+            showAllEmployees(actionEvent);
+        }
+    }
+
+    public void deletePersonFromLivesIn(ActionEvent actionEvent) {
+        if (tableViewTenants.getSelectionModel().getSelectedItem() != null &&
+                confirmation("Confirm", "Move out " +
+                        tableViewTenants.getSelectionModel().getSelectedItem().getFirstName() + " " +
+                        tableViewTenants.getSelectionModel().getSelectedItem().getLastName() + " from room " +
+                        tableViewTenants.getSelectionModel().getSelectedItem().getAptNum() + " in building " +
+                        tableViewTenants.getSelectionModel().getSelectedItem().getBuildingID())) {
+            try {
+                dataAccess.deletePersonFromApartment(tableViewTenants.getSelectionModel().getSelectedItem().getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                alert("Incorrect input", e.getMessage());
+            }
+            tableViewTenants.getSelectionModel().getSelectedItem().setAptNum(0);
+            tableViewTenants.getSelectionModel().getSelectedItem().setBuildingID(0);
+        }
     }
 
     public void addPersonToApt(TableColumn.CellEditEvent<PersonInApartment, Integer> event) {
@@ -313,19 +346,19 @@ public class Controller implements Initializable {
             if (event.getTableColumn() == apartmentNumberTenants) {
                 person.setAptNum(event.getNewValue());
                 if (person.getBuildingID() != 0) {
-                    dataAccess.add_person_to_apt(person.getId(), person.getAptNum(), person.getBuildingID(), new Timestamp(new Date(System.currentTimeMillis()).getTime()));
+                    dataAccess.addPersonToApt(person.getId(), person.getAptNum(), person.getBuildingID(), new Timestamp(new Date(System.currentTimeMillis()).getTime()));
                     notification("Info", "Successfully updated");
                 }
             } else if (event.getTableColumn() == buildingTenants) {
                 person.setBuildingID(event.getNewValue());
                 if (person.getAptNum() != 0) {
-                    dataAccess.add_person_to_apt(person.getId(), person.getAptNum(), person.getBuildingID(), new Timestamp(new Date(System.currentTimeMillis()).getTime()));
+                    dataAccess.addPersonToApt(person.getId(), person.getAptNum(), person.getBuildingID(), new Timestamp(new Date(System.currentTimeMillis()).getTime()));
                     notification("Info", "Successfully updated");
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            if(e.getMessage().contains("No free places")){
+            if (e.getMessage().contains("No free places")) {
                 alert("Incorrect input", "No free places in selected apartment");
             } else
                 alert("Incorrect input", e.getMessage());
@@ -396,6 +429,16 @@ public class Controller implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private boolean confirmation(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+        ButtonType result = alert.getResult();
+        return result == ButtonType.OK;
     }
 
     private void notification(String title, String content) {

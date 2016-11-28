@@ -7,6 +7,9 @@ public class Employee extends Person{
     private final SimpleIntegerProperty salary = new SimpleIntegerProperty();
     private final SimpleStringProperty role = new SimpleStringProperty();
 
+    public Employee(int id, String fName, String mName, String lName, String dOfBirth, String gender) {
+        super(id, fName, mName, lName, dOfBirth, gender, 0);
+    }
 
     public Employee(int id, String fName, String mName, String lName, String dOfBirth, String gender, int doc, int salary, String role) {
         super(id, fName, mName, lName, dOfBirth, gender, doc);
