@@ -65,7 +65,6 @@ CREATE OR REPLACE FUNCTION add_new_student (first_name VARCHAR(50),middle_name V
                                             scholarship INTEGER) RETURNS VOID AS $$
 DECLARE
   new_person_id INTEGER;
-  new_student_id INTEGER;
   new_doc_id INTEGER;
 BEGIN
   SELECT nextval('person_person_id_seq'::REGCLASS) INTO new_person_id;
@@ -75,11 +74,14 @@ BEGIN
     INSERT INTO document VALUES (nextval('document_document_id_seq'::REGCLASS), new_person_id, current_timestamp + INTERVAL '1 year', 1, image_path)
     RETURNING document_id INTO new_doc_id;
     INSERT INTO person VALUES (new_person_id, first_name, middle_name, family_name, dob, gender,  new_doc_id);
+  END;
+
     INSERT INTO student VALUES (new_person_id, scholarship);
-    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id);
+    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id,1); -- rental_fee
+    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id,2); -- tuition_fee
+    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id,4); -- Scholarship
     INSERT INTO person_has_ep_set VALUES (new_person_id, 4);  -- base for persons
     INSERT INTO person_has_ep_set VALUES (new_person_id, 1);  -- base for students
-  END;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -99,8 +101,10 @@ BEGIN
     INSERT INTO document VALUES (nextval('document_document_id_seq'::REGCLASS), new_person_id, current_timestamp + INTERVAL '1 year', 1, image_path)
     RETURNING document_id INTO new_doc_id;
     INSERT INTO person VALUES (new_person_id, first_name, middle_name, family_name, dob, gender,  new_doc_id);
+  END;
     INSERT INTO employee VALUES (new_person_id, salary, role_id);
-    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id);
+    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id, 1); -- rental_fee
+    INSERT INTO account VALUES (nextval('account_account_id_seq'::REGCLASS), new_person_id, 3); -- Salary
     INSERT INTO person_has_ep_set VALUES (new_person_id, 4);  -- base for persons
     IF (role_id = 4 OR role_id = 5)
     THEN
@@ -112,7 +116,6 @@ BEGIN
       THEN
         INSERT INTO person_has_ep_set VALUES (new_person_id, 7);  -- cleaning
     END IF;
-  END;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -248,3 +251,17 @@ BEGIN
   END IF;
 END;
 $function$
+
+CREATE OR REPLACE FUNCTION update_account_balance() RETURNS TRIGGER AS $$
+DECLARE
+BEGIN
+  UPDATE account
+    SET balance = (SELECT sum(amount) FROM transaction WHERE transaction.account_id = new.account_id);
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS "account_balance_update" ON "public"."transaction";
+CREATE TRIGGER "account_balance_update" AFTER INSERT OR DELETE ON "public"."transaction"
+FOR EACH ROW
+EXECUTE PROCEDURE "update_account_balance"();
