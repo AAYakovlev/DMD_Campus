@@ -141,7 +141,7 @@ DROP TABLE IF EXISTS "public"."account" CASCADE;
 CREATE TABLE "public"."account" (
 "account_id" int4 DEFAULT nextval('account_account_id_seq'::regclass) NOT NULL,
 "person_id" int4 NOT NULL,
-"account_type_id" int4,
+"account_type_id" int4 NOT NULL,
 "balance" numeric(255)
 )
 WITH (OIDS=FALSE)
@@ -168,15 +168,15 @@ INSERT INTO "public"."account" VALUES ('34', '24', '1', '63');
 INSERT INTO "public"."account" VALUES ('35', '25', '1', '318');
 INSERT INTO "public"."account" VALUES ('36', '26', '1', '-240');
 INSERT INTO "public"."account" VALUES ('39', '1', '2', '8696');
-INSERT INTO "public"."account" VALUES ('40', '2', '2', '15685');
-INSERT INTO "public"."account" VALUES ('41', '3', '2', '-10398');
-INSERT INTO "public"."account" VALUES ('42', '4', '2', '15272');
-INSERT INTO "public"."account" VALUES ('43', '5', '2', '5463');
-INSERT INTO "public"."account" VALUES ('44', '6', '2', '7835');
-INSERT INTO "public"."account" VALUES ('45', '7', '2', '7577');
+INSERT INTO "public"."account" VALUES ('40', '2', '2', '15285');
+INSERT INTO "public"."account" VALUES ('41', '3', '2', '-11769');
+INSERT INTO "public"."account" VALUES ('42', '4', '2', '13850');
+INSERT INTO "public"."account" VALUES ('43', '5', '2', '5391');
+INSERT INTO "public"."account" VALUES ('44', '6', '2', '6323');
+INSERT INTO "public"."account" VALUES ('45', '7', '2', '6599');
 INSERT INTO "public"."account" VALUES ('46', '8', '2', '-685');
-INSERT INTO "public"."account" VALUES ('47', '9', '2', '-12273');
-INSERT INTO "public"."account" VALUES ('48', '10', '2', '-1685');
+INSERT INTO "public"."account" VALUES ('47', '9', '2', '-14813');
+INSERT INTO "public"."account" VALUES ('48', '10', '2', '-2429');
 INSERT INTO "public"."account" VALUES ('49', '1', '4', '39000');
 INSERT INTO "public"."account" VALUES ('50', '2', '4', '72000');
 INSERT INTO "public"."account" VALUES ('51', '3', '4', '51000');
@@ -193,6 +193,7 @@ INSERT INTO "public"."account" VALUES ('61', '23', '3', '110000');
 INSERT INTO "public"."account" VALUES ('62', '24', '3', '65000');
 INSERT INTO "public"."account" VALUES ('63', '25', '3', '80000');
 INSERT INTO "public"."account" VALUES ('64', '26', '3', '70000');
+
 
 -- ----------------------------
 -- Table structure for account_type
@@ -692,9 +693,9 @@ WITH (OIDS=FALSE)
 -- ----------------------------
 -- Records of document_type
 -- ----------------------------
-INSERT INTO "public"."document_type" VALUES ('1', 'Pasport Russian Federation', '1');
+INSERT INTO "public"."document_type" VALUES ('1', 'Pasport', '1');
 INSERT INTO "public"."document_type" VALUES ('2', 'Driver''s license', '2');
-INSERT INTO "public"."document_type" VALUES ('3', 'Military card', '3');
+INSERT INTO "public"."document_type" VALUES ('3', 'Military card', '2');
 INSERT INTO "public"."document_type" VALUES ('4', 'Student card', '4');
 INSERT INTO "public"."document_type" VALUES ('5', 'INN', '5');
 INSERT INTO "public"."document_type" VALUES ('6', 'SNILS', '5');
@@ -3122,7 +3123,6 @@ INSERT INTO "public"."transaction" VALUES ('256', '-761.61', '47', '2016-09-02 0
 INSERT INTO "public"."transaction" VALUES ('257', '-554.55', '48', '2016-09-01 00:00:13', null);
 INSERT INTO "public"."transaction" VALUES ('258', '-306.00', '40', '2016-09-01 00:00:23', null);
 INSERT INTO "public"."transaction" VALUES ('259', '1180.18', '41', '2016-09-20 18:14:56', null);
-INSERT INTO "public"."transaction" VALUES ('260', '0.64', '44', '2016-09-01 00:00:04', null);
 INSERT INTO "public"."transaction" VALUES ('261', '1649.16', '45', '2016-09-10 08:32:11', null);
 INSERT INTO "public"."transaction" VALUES ('262', '1525.15', '43', '2016-11-01 00:07:41', null);
 INSERT INTO "public"."transaction" VALUES ('263', '36.17', '46', '2016-09-07 06:43:50', null);
@@ -3163,7 +3163,6 @@ INSERT INTO "public"."transaction" VALUES ('297', '-866.87', '45', '2016-09-01 0
 INSERT INTO "public"."transaction" VALUES ('298', '-8.92', '48', '2016-09-26 06:10:50', null);
 INSERT INTO "public"."transaction" VALUES ('299', '-0.99', '43', '2016-09-01 00:04:49', null);
 INSERT INTO "public"."transaction" VALUES ('300', '-406.06', '46', '2016-09-12 09:51:29', null);
-INSERT INTO "public"."transaction" VALUES ('301', '10.31', '41', '2016-09-01 00:00:07', null);
 INSERT INTO "public"."transaction" VALUES ('302', '-1492.93', '44', '2016-10-06 21:53:48', null);
 INSERT INTO "public"."transaction" VALUES ('303', '3.31', '40', '2016-10-20 09:53:33', null);
 INSERT INTO "public"."transaction" VALUES ('304', '331.03', '47', '2016-10-18 00:47:45', null);
@@ -3174,7 +3173,6 @@ INSERT INTO "public"."transaction" VALUES ('308', '783.78', '43', '2016-09-01 19
 INSERT INTO "public"."transaction" VALUES ('309', '-0.25', '39', '2016-09-01 09:46:52', null);
 INSERT INTO "public"."transaction" VALUES ('310', '-1332.33', '40', '2016-10-04 20:08:31', null);
 INSERT INTO "public"."transaction" VALUES ('311', '-254.00', '44', '2016-09-22 15:21:27', null);
-INSERT INTO "public"."transaction" VALUES ('312', '-0.92', '42', '2016-09-01 00:00:01', null);
 INSERT INTO "public"."transaction" VALUES ('313', '-1497.50', '46', '2016-09-26 11:36:31', null);
 INSERT INTO "public"."transaction" VALUES ('314', '214.02', '41', '2016-10-05 09:38:31', null);
 INSERT INTO "public"."transaction" VALUES ('315', '512.51', '43', '2016-10-20 03:03:16', null);
@@ -3314,7 +3312,6 @@ INSERT INTO "public"."transaction" VALUES ('448', '-475.76', '48', '2016-10-19 2
 INSERT INTO "public"."transaction" VALUES ('449', '423.04', '40', '2016-10-14 05:08:48', null);
 INSERT INTO "public"."transaction" VALUES ('450', '-869.69', '42', '2016-11-02 07:37:16', null);
 INSERT INTO "public"."transaction" VALUES ('451', '890.79', '45', '2016-09-02 02:03:07', null);
-INSERT INTO "public"."transaction" VALUES ('452', '1178.12', '44', '2016-09-01 00:00:02', null);
 INSERT INTO "public"."transaction" VALUES ('453', '6.83', '39', '2016-09-25 23:59:53', null);
 INSERT INTO "public"."transaction" VALUES ('454', '-297.98', '47', '2016-09-09 00:59:10', null);
 INSERT INTO "public"."transaction" VALUES ('455', '-577.58', '46', '2016-11-06 20:21:03', null);
@@ -3378,10 +3375,7 @@ INSERT INTO "public"."transaction" VALUES ('512', '243.02', '47', '2016-09-26 12
 INSERT INTO "public"."transaction" VALUES ('513', '-6.66', '40', '2016-09-01 00:12:01', null);
 INSERT INTO "public"."transaction" VALUES ('514', '1628.63', '44', '2016-10-05 22:24:07', null);
 INSERT INTO "public"."transaction" VALUES ('515', '-287.29', '43', '2016-10-04 07:14:05', null);
-INSERT INTO "public"."transaction" VALUES ('516', '607.61', '41', '2016-09-01 00:00:07', null);
 INSERT INTO "public"."transaction" VALUES ('517', '-383.38', '45', '2016-10-15 09:20:50', null);
-INSERT INTO "public"."transaction" VALUES ('518', '333.00', '44', '2016-09-01 00:00:04', null);
-INSERT INTO "public"."transaction" VALUES ('519', '381.00', '48', '2016-09-01 00:00:04', null);
 INSERT INTO "public"."transaction" VALUES ('520', '-411.12', '40', '2016-09-17 22:13:19', null);
 INSERT INTO "public"."transaction" VALUES ('521', '-825.73', '39', '2016-10-12 23:05:06', null);
 INSERT INTO "public"."transaction" VALUES ('522', '1823.18', '42', '2016-09-01 01:19:21', null);
@@ -3474,7 +3468,7 @@ INSERT INTO "public"."transaction" VALUES ('608', '-393.94', '43', '2016-10-16 1
 INSERT INTO "public"."transaction" VALUES ('609', '-204.05', '41', '2016-09-01 00:00:36', null);
 INSERT INTO "public"."transaction" VALUES ('610', '-1542.54', '47', '2016-09-01 02:16:31', null);
 INSERT INTO "public"."transaction" VALUES ('611', '-334.34', '45', '2016-09-12 13:09:31', null);
-INSERT INTO "public"."transaction" VALUES ('612', '-1495.95', '44', '2016-09-01 00:00:01', null);
+INSERT INTO "public"."transaction" VALUES ('612', '-1495.95', '44', '2016-10-01 00:00:01', null);
 INSERT INTO "public"."transaction" VALUES ('613', '-1935.36', '39', '2016-10-22 18:54:03', null);
 INSERT INTO "public"."transaction" VALUES ('614', '966.13', '48', '2016-09-01 00:00:03', null);
 INSERT INTO "public"."transaction" VALUES ('615', '1208.21', '41', '2016-09-28 23:11:33', null);
@@ -3644,8 +3638,6 @@ INSERT INTO "public"."transaction" VALUES ('778', '-306.31', '46', '2016-09-16 0
 INSERT INTO "public"."transaction" VALUES ('779', '0.03', '43', '2016-10-30 09:56:21', null);
 INSERT INTO "public"."transaction" VALUES ('780', '1076.11', '39', '2016-09-28 12:08:15', null);
 INSERT INTO "public"."transaction" VALUES ('781', '2.15', '44', '2016-09-06 12:30:37', null);
-INSERT INTO "public"."transaction" VALUES ('782', '401.04', '40', '2016-09-01 00:00:04', null);
-INSERT INTO "public"."transaction" VALUES ('783', '753.08', '41', '2016-09-01 00:00:07', null);
 INSERT INTO "public"."transaction" VALUES ('784', '1640.64', '42', '2016-10-06 10:25:08', null);
 INSERT INTO "public"."transaction" VALUES ('785', '971.97', '45', '2016-11-05 17:27:14', null);
 INSERT INTO "public"."transaction" VALUES ('786', '-323.00', '46', '2016-09-01 00:00:03', null);
@@ -3653,7 +3645,6 @@ INSERT INTO "public"."transaction" VALUES ('787', '0.05', '43', '2016-10-08 13:1
 INSERT INTO "public"."transaction" VALUES ('788', '0.72', '47', '2016-09-10 19:16:51', null);
 INSERT INTO "public"."transaction" VALUES ('789', '5.47', '39', '2016-09-09 01:09:21', null);
 INSERT INTO "public"."transaction" VALUES ('790', '331.33', '44', '2016-09-01 01:51:41', null);
-INSERT INTO "public"."transaction" VALUES ('791', '-0.96', '40', '2016-09-01 00:00:04', null);
 INSERT INTO "public"."transaction" VALUES ('792', '-1615.16', '42', '2016-09-09 13:19:53', null);
 INSERT INTO "public"."transaction" VALUES ('793', '-1444.42', '48', '2016-09-01 00:00:02', null);
 INSERT INTO "public"."transaction" VALUES ('794', '6.52', '41', '2016-09-01 05:05:42', null);
@@ -3693,7 +3684,6 @@ INSERT INTO "public"."transaction" VALUES ('827', '-211.11', '43', '2016-10-07 0
 INSERT INTO "public"."transaction" VALUES ('828', '978.98', '41', '2016-10-03 21:56:42', null);
 INSERT INTO "public"."transaction" VALUES ('829', '381.04', '45', '2016-09-21 10:59:10', null);
 INSERT INTO "public"."transaction" VALUES ('830', '1298.13', '44', '2016-09-05 01:03:05', null);
-INSERT INTO "public"."transaction" VALUES ('831', '808.86', '47', '2016-09-01 00:00:10', null);
 INSERT INTO "public"."transaction" VALUES ('832', '-355.55', '46', '2016-10-15 02:52:53', null);
 INSERT INTO "public"."transaction" VALUES ('833', '285.29', '40', '2016-09-16 00:49:03', null);
 INSERT INTO "public"."transaction" VALUES ('834', '0.01', '39', '2016-10-27 14:05:26', null);
@@ -3706,7 +3696,6 @@ INSERT INTO "public"."transaction" VALUES ('840', '0.97', '39', '2016-09-01 00:0
 INSERT INTO "public"."transaction" VALUES ('841', '344.34', '42', '2016-09-10 03:15:30', null);
 INSERT INTO "public"."transaction" VALUES ('842', '0.41', '40', '2016-10-07 10:06:06', null);
 INSERT INTO "public"."transaction" VALUES ('843', '299.30', '43', '2016-11-08 06:41:25', null);
-INSERT INTO "public"."transaction" VALUES ('844', '1452.15', '47', '2016-09-01 00:00:04', null);
 INSERT INTO "public"."transaction" VALUES ('845', '-253.25', '40', '2016-10-15 07:48:27', null);
 INSERT INTO "public"."transaction" VALUES ('846', '-0.03', '39', '2016-09-01 00:32:05', null);
 INSERT INTO "public"."transaction" VALUES ('847', '-358.00', '41', '2016-11-12 05:14:36', null);
@@ -3764,7 +3753,6 @@ INSERT INTO "public"."transaction" VALUES ('898', '-63.64', '40', '2016-09-02 03
 INSERT INTO "public"."transaction" VALUES ('899', '-1683.84', '39', '2016-09-13 20:48:05', null);
 INSERT INTO "public"."transaction" VALUES ('900', '-1023.02', '47', '2016-10-07 18:30:41', null);
 INSERT INTO "public"."transaction" VALUES ('901', '208.02', '46', '2016-10-30 16:29:32', null);
-INSERT INTO "public"."transaction" VALUES ('902', '-0.04', '44', '2016-09-01 00:00:09', null);
 INSERT INTO "public"."transaction" VALUES ('903', '0.14', '48', '2016-10-17 11:06:55', null);
 INSERT INTO "public"."transaction" VALUES ('904', '-274.75', '42', '2016-09-26 12:15:02', null);
 INSERT INTO "public"."transaction" VALUES ('905', '-1.16', '42', '2016-09-01 10:53:19', null);
@@ -3790,11 +3778,9 @@ INSERT INTO "public"."transaction" VALUES ('924', '-399.40', '41', '2016-10-03 2
 INSERT INTO "public"."transaction" VALUES ('925', '-976.76', '41', '2016-10-02 06:26:09', null);
 INSERT INTO "public"."transaction" VALUES ('926', '958.36', '39', '2016-10-12 21:29:39', null);
 INSERT INTO "public"."transaction" VALUES ('927', '982.71', '48', '2016-09-12 04:25:47', null);
-INSERT INTO "public"."transaction" VALUES ('928', '1422.42', '42', '2016-09-01 00:00:01', null);
 INSERT INTO "public"."transaction" VALUES ('929', '-252.25', '43', '2016-11-07 01:04:07', null);
 INSERT INTO "public"."transaction" VALUES ('930', '-933.34', '40', '2016-11-08 17:57:32', null);
 INSERT INTO "public"."transaction" VALUES ('931', '554.55', '46', '2016-09-01 02:02:15', null);
-INSERT INTO "public"."transaction" VALUES ('932', '279.03', '47', '2016-09-01 00:00:10', null);
 INSERT INTO "public"."transaction" VALUES ('933', '-829.83', '44', '2016-10-01 10:05:25', null);
 INSERT INTO "public"."transaction" VALUES ('934', '-0.01', '45', '2016-11-09 11:51:12', null);
 INSERT INTO "public"."transaction" VALUES ('935', '680.68', '45', '2016-09-08 09:19:54', null);
@@ -3906,7 +3892,6 @@ INSERT INTO "public"."transaction" VALUES ('1040', '776.00', '45', '2016-10-06 2
 INSERT INTO "public"."transaction" VALUES ('1041', '129.96', '46', '2016-09-12 17:45:49', null);
 INSERT INTO "public"."transaction" VALUES ('1042', '-1788.89', '41', '2016-09-26 14:45:36', null);
 INSERT INTO "public"."transaction" VALUES ('1043', '1736.74', '40', '2016-10-13 03:07:18', null);
-INSERT INTO "public"."transaction" VALUES ('1044', '362.77', '48', '2016-09-01 00:00:08', null);
 INSERT INTO "public"."transaction" VALUES ('1045', '220.22', '47', '2016-09-10 02:14:07', null);
 INSERT INTO "public"."transaction" VALUES ('1046', '-305.31', '43', '2016-09-21 16:53:46', null);
 INSERT INTO "public"."transaction" VALUES ('1047', '-898.99', '48', '2016-09-01 00:00:49', null);
@@ -3971,14 +3956,12 @@ INSERT INTO "public"."transaction" VALUES ('1105', '1962.20', '44', '2016-10-29 
 INSERT INTO "public"."transaction" VALUES ('1106', '92.08', '46', '2016-09-26 00:41:07', null);
 INSERT INTO "public"."transaction" VALUES ('1107', '1893.89', '43', '2016-10-01 07:32:38', null);
 INSERT INTO "public"."transaction" VALUES ('1108', '1969.20', '39', '2016-09-30 13:47:21', null);
-INSERT INTO "public"."transaction" VALUES ('1109', '977.98', '45', '2016-09-01 00:00:06', null);
 INSERT INTO "public"."transaction" VALUES ('1110', '-1576.58', '40', '2016-09-09 10:30:13', null);
 INSERT INTO "public"."transaction" VALUES ('1111', '343.34', '42', '2016-09-11 13:49:28', null);
 INSERT INTO "public"."transaction" VALUES ('1112', '270.27', '41', '2016-11-04 10:08:41', null);
 INSERT INTO "public"."transaction" VALUES ('1113', '-371.71', '48', '2016-09-01 00:01:22', null);
 INSERT INTO "public"."transaction" VALUES ('1114', '-0.09', '47', '2016-09-01 00:09:57', null);
 INSERT INTO "public"."transaction" VALUES ('1115', '-361.61', '40', '2016-09-09 02:20:54', null);
-INSERT INTO "public"."transaction" VALUES ('1116', '71.65', '43', '2016-09-01 00:00:10', null);
 INSERT INTO "public"."transaction" VALUES ('1117', '3.82', '42', '2016-09-19 06:08:48', null);
 INSERT INTO "public"."transaction" VALUES ('1118', '-1328.29', '41', '2016-09-01 00:00:44', null);
 INSERT INTO "public"."transaction" VALUES ('1119', '-1637.37', '44', '2016-10-10 15:07:21', null);
@@ -4041,7 +4024,7 @@ INSERT INTO "public"."transaction" VALUES ('1174', '-378.38', '40', '2016-10-23 
 -- ----------------------------
 -- View structure for apartment_occupation
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartment_occupation" AS 
+CREATE OR REPLACE VIEW "public"."apartment_occupation" AS
  SELECT count(li.person_id) AS beds_occupied,
     a.apartment_number,
     a.building_id,
@@ -4051,10 +4034,12 @@ CREATE OR REPLACE VIEW "public"."apartment_occupation" AS
      LEFT JOIN lives_in li ON (((li.building_id = a.building_id) AND (li.apartment_number = a.apartment_number))))
      JOIN apartment_type at ON ((a.apartment_type_id = at.apartment_type_id)))
   GROUP BY a.apartment_number, a.building_id, at.beds;
+
+
 -- ----------------------------
 -- View structure for apartments_with_employee
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_employee" AS 
+CREATE OR REPLACE VIEW "public"."apartments_with_employee" AS
  SELECT a.apartment_number,
     a.building_id
    FROM ((apartment a
@@ -4064,7 +4049,7 @@ CREATE OR REPLACE VIEW "public"."apartments_with_employee" AS
 -- ----------------------------
 -- View structure for apartments_with_female_persons
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_female_persons" AS 
+CREATE OR REPLACE VIEW "public"."apartments_with_female_persons" AS
  SELECT a.apartment_number,
     a.building_id
    FROM ((apartment a
@@ -4075,7 +4060,7 @@ CREATE OR REPLACE VIEW "public"."apartments_with_female_persons" AS
 -- ----------------------------
 -- View structure for apartments_with_free_beds
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_free_beds" AS 
+CREATE OR REPLACE VIEW "public"."apartments_with_free_beds" AS
  SELECT apartment_occupation.beds_occupied,
     apartment_occupation.apartment_number,
     apartment_occupation.building_id,
@@ -4087,7 +4072,7 @@ CREATE OR REPLACE VIEW "public"."apartments_with_free_beds" AS
 -- ----------------------------
 -- View structure for apartments_with_male_persons
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_male_persons" AS 
+CREATE OR REPLACE VIEW "public"."apartments_with_male_persons" AS
  SELECT a.apartment_number,
     a.building_id
    FROM ((apartment a
@@ -4098,7 +4083,7 @@ CREATE OR REPLACE VIEW "public"."apartments_with_male_persons" AS
 -- ----------------------------
 -- View structure for apartments_with_students
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_with_students" AS 
+CREATE OR REPLACE VIEW "public"."apartments_with_students" AS
  SELECT a.apartment_number,
     a.building_id
    FROM ((apartment a
@@ -4108,7 +4093,7 @@ CREATE OR REPLACE VIEW "public"."apartments_with_students" AS
 -- ----------------------------
 -- View structure for apartments_for_female_employee
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_for_female_employee" AS 
+CREATE OR REPLACE VIEW "public"."apartments_for_female_employee" AS
  SELECT awfb.beds_occupied,
     awfb.apartment_number,
     awfb.building_id,
@@ -4124,7 +4109,7 @@ CREATE OR REPLACE VIEW "public"."apartments_for_female_employee" AS
 -- ----------------------------
 -- View structure for apartments_for_female_students
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_for_female_students" AS 
+CREATE OR REPLACE VIEW "public"."apartments_for_female_students" AS
  SELECT awfb.beds_occupied,
     awfb.apartment_number,
     awfb.building_id,
@@ -4140,7 +4125,7 @@ CREATE OR REPLACE VIEW "public"."apartments_for_female_students" AS
 -- ----------------------------
 -- View structure for apartments_for_male_employee
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_for_male_employee" AS 
+CREATE OR REPLACE VIEW "public"."apartments_for_male_employee" AS
  SELECT awfb.beds_occupied,
     awfb.apartment_number,
     awfb.building_id,
@@ -4156,7 +4141,7 @@ CREATE OR REPLACE VIEW "public"."apartments_for_male_employee" AS
 -- ----------------------------
 -- View structure for apartments_for_male_students
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."apartments_for_male_students" AS 
+CREATE OR REPLACE VIEW "public"."apartments_for_male_students" AS
  SELECT awfb.beds_occupied,
     awfb.apartment_number,
     awfb.building_id,
@@ -4172,7 +4157,7 @@ CREATE OR REPLACE VIEW "public"."apartments_for_male_students" AS
 -- ----------------------------
 -- View structure for employees_without_apartments
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."employees_without_apartments" AS 
+CREATE OR REPLACE VIEW "public"."employees_without_apartments" AS
  SELECT p.person_id,
     p.first_name,
     p.middle_name,
@@ -4187,7 +4172,7 @@ CREATE OR REPLACE VIEW "public"."employees_without_apartments" AS
 -- ----------------------------
 -- View structure for guest_control
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."guest_control" AS 
+CREATE OR REPLACE VIEW "public"."guest_control" AS
  SELECT guest.person_id AS guest_id,
     person.first_name,
     person.family_name,
@@ -4200,7 +4185,7 @@ CREATE OR REPLACE VIEW "public"."guest_control" AS
 -- ----------------------------
 -- View structure for guest_control_with_host
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."guest_control_with_host" AS 
+CREATE OR REPLACE VIEW "public"."guest_control_with_host" AS
  SELECT guest.person_id AS guest_person_id,
     p1.first_name AS guest_name,
     p1.family_name AS guest_family_name,
@@ -4217,7 +4202,7 @@ CREATE OR REPLACE VIEW "public"."guest_control_with_host" AS
 -- ----------------------------
 -- View structure for have_entry_permissions
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."have_entry_permissions" AS 
+CREATE OR REPLACE VIEW "public"."have_entry_permissions" AS
  SELECT in_out.ecm_id,
     in_out.person_id,
     in_out.direction AS in_out,
@@ -4238,7 +4223,7 @@ CREATE OR REPLACE VIEW "public"."have_entry_permissions" AS
 -- ----------------------------
 -- View structure for last_time_person_accepted_in_out
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."last_time_person_accepted_in_out" AS 
+CREATE OR REPLACE VIEW "public"."last_time_person_accepted_in_out" AS
  SELECT in_out.person_id,
     max(in_out.date_time) AS last_accepted_entry
    FROM in_out
@@ -4248,7 +4233,7 @@ CREATE OR REPLACE VIEW "public"."last_time_person_accepted_in_out" AS
 -- ----------------------------
 -- View structure for no_entry_permission_for_in_out
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."no_entry_permission_for_in_out" AS 
+CREATE OR REPLACE VIEW "public"."no_entry_permission_for_in_out" AS
  SELECT in_out.ecm_id,
     in_out.person_id,
     in_out.direction AS in_out,
@@ -4269,7 +4254,7 @@ CREATE OR REPLACE VIEW "public"."no_entry_permission_for_in_out" AS
 -- ----------------------------
 -- View structure for outdated_documents
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."outdated_documents" AS 
+CREATE OR REPLACE VIEW "public"."outdated_documents" AS
  SELECT document.person_id,
     document.document_id,
     document.document_type_id,
@@ -4286,7 +4271,7 @@ CREATE OR REPLACE VIEW "public"."outdated_documents" AS
 -- ----------------------------
 -- View structure for outdated_documents_of_students_and_employee
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."outdated_documents_of_students_and_employee" AS 
+CREATE OR REPLACE VIEW "public"."outdated_documents_of_students_and_employee" AS
  SELECT document.person_id,
     document.document_id,
     document.document_type_id,
@@ -4307,7 +4292,7 @@ CREATE OR REPLACE VIEW "public"."outdated_documents_of_students_and_employee" AS
 -- ----------------------------
 -- View structure for personnel_attendance_control
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."personnel_attendance_control" AS 
+CREATE OR REPLACE VIEW "public"."personnel_attendance_control" AS
  SELECT person.person_id,
     person.first_name,
     person.family_name,
@@ -4323,7 +4308,7 @@ CREATE OR REPLACE VIEW "public"."personnel_attendance_control" AS
 -- ----------------------------
 -- View structure for persons_inside_campus_now
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."persons_inside_campus_now" AS 
+CREATE OR REPLACE VIEW "public"."persons_inside_campus_now" AS
  SELECT in_out.person_id,
     in_out.ecm_id,
     in_out.direction,
@@ -4349,7 +4334,7 @@ CREATE OR REPLACE VIEW "public"."persons_inside_campus_now" AS
 -- ----------------------------
 -- View structure for persons_with_first_accepted_campus_entry_equals_out
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."persons_with_first_accepted_campus_entry_equals_out" AS 
+CREATE OR REPLACE VIEW "public"."persons_with_first_accepted_campus_entry_equals_out" AS
  SELECT in_out.person_id,
     in_out.date_time,
     in_out.ecm_id,
@@ -4366,7 +4351,7 @@ CREATE OR REPLACE VIEW "public"."persons_with_first_accepted_campus_entry_equals
 -- ----------------------------
 -- View structure for persons_with_last_accepted_campus_entry_equals_in
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."persons_with_last_accepted_campus_entry_equals_in" AS 
+CREATE OR REPLACE VIEW "public"."persons_with_last_accepted_campus_entry_equals_in" AS
  SELECT in_out.person_id,
     in_out.date_time,
     in_out.ecm_id,
@@ -4384,7 +4369,7 @@ CREATE OR REPLACE VIEW "public"."persons_with_last_accepted_campus_entry_equals_
 -- ----------------------------
 -- View structure for rental_fee_balance
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."rental_fee_balance" AS 
+CREATE OR REPLACE VIEW "public"."rental_fee_balance" AS
  SELECT account.person_id,
     person.first_name,
     person.family_name,
@@ -4397,7 +4382,7 @@ CREATE OR REPLACE VIEW "public"."rental_fee_balance" AS
 -- ----------------------------
 -- View structure for rental_fee_balance_negative
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."rental_fee_balance_negative" AS 
+CREATE OR REPLACE VIEW "public"."rental_fee_balance_negative" AS
  SELECT account.person_id,
     person.first_name,
     person.family_name,
@@ -4410,7 +4395,7 @@ CREATE OR REPLACE VIEW "public"."rental_fee_balance_negative" AS
 -- ----------------------------
 -- View structure for students_without_apartment
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."students_without_apartment" AS 
+CREATE OR REPLACE VIEW "public"."students_without_apartment" AS
  SELECT p.person_id,
     p.first_name,
     p.middle_name,
@@ -4425,7 +4410,7 @@ CREATE OR REPLACE VIEW "public"."students_without_apartment" AS
 -- ----------------------------
 -- View structure for tuition_fee_balance
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."tuition_fee_balance" AS 
+CREATE OR REPLACE VIEW "public"."tuition_fee_balance" AS
  SELECT account.person_id,
     person.first_name,
     person.family_name,
@@ -4438,7 +4423,7 @@ CREATE OR REPLACE VIEW "public"."tuition_fee_balance" AS
 -- ----------------------------
 -- View structure for tuition_fee_balance_negative
 -- ----------------------------
-CREATE OR REPLACE VIEW "public"."tuition_fee_balance_negative" AS 
+CREATE OR REPLACE VIEW "public"."tuition_fee_balance_negative" AS
  SELECT account.person_id,
     person.first_name,
     person.family_name,
@@ -4449,7 +4434,7 @@ CREATE OR REPLACE VIEW "public"."tuition_fee_balance_negative" AS
   WHERE (((account_type.type_name)::text = 'Tuition Fee'::text) AND (account.balance < (0)::numeric));
 
 -- ----------------------------
--- Alter Sequences Owned By 
+-- Alter Sequences Owned By
 -- ----------------------------
 ALTER SEQUENCE "public"."account_account_id_seq" OWNED BY "account"."account_id";
 ALTER SEQUENCE "public"."apartment_type_apartment_type_id_seq" OWNED BY "apartment_type"."apartment_type_id";
@@ -4463,6 +4448,11 @@ ALTER SEQUENCE "public"."entry_permission_set_ep_set_id_seq" OWNED BY "entry_per
 ALTER SEQUENCE "public"."person_person_id_seq" OWNED BY "person"."person_id";
 ALTER SEQUENCE "public"."transaction_transaction_id_seq" OWNED BY "transaction"."transaction_id";
 ALTER SEQUENCE "public"."transaction_type_transaction_type_id_seq" OWNED BY "account_type"."account_type_id";
+
+-- ----------------------------
+-- Indexes structure for table account
+-- ----------------------------
+CREATE UNIQUE INDEX "account_person_id_account_type_id_idx" ON "public"."account" USING btree ("person_id", "account_type_id");
 
 -- ----------------------------
 -- Uniques structure for table account
@@ -4483,6 +4473,16 @@ ALTER TABLE "public"."account_type" ADD UNIQUE ("type_name") DEFERRABLE;
 -- Primary Key structure for table account_type
 -- ----------------------------
 ALTER TABLE "public"."account_type" ADD PRIMARY KEY ("account_type_id");
+
+-- ----------------------------
+-- Indexes structure for table apartment
+-- ----------------------------
+CREATE UNIQUE INDEX "apartment_building_id_apartment_number_idx" ON "public"."apartment" USING btree ("building_id", "apartment_number");
+
+-- ----------------------------
+-- Uniques structure for table apartment
+-- ----------------------------
+ALTER TABLE "public"."apartment" ADD UNIQUE ("building_id", "apartment_number");
 
 -- ----------------------------
 -- Primary Key structure for table apartment
@@ -4508,6 +4508,13 @@ ALTER TABLE "public"."building" ADD UNIQUE ("city", "street", "number_in_street"
 -- Primary Key structure for table building
 -- ----------------------------
 ALTER TABLE "public"."building" ADD PRIMARY KEY ("building_id");
+
+-- ----------------------------
+-- Indexes structure for table document
+-- ----------------------------
+CREATE UNIQUE INDEX "document_person_id_document_type_id_idx" ON "public"."document" USING btree ("person_id", "document_type_id");
+CREATE INDEX "document_person_id_clust_index" ON "public"."document" USING btree ("person_id");
+ALTER TABLE "public"."document" CLUSTER ON "document_person_id_clust_index";
 
 -- ----------------------------
 -- Primary Key structure for table document
@@ -4585,6 +4592,12 @@ ALTER TABLE "public"."guest_to_person" ADD PRIMARY KEY ("person_id", "date_time_
 ALTER TABLE "public"."in_out" ADD PRIMARY KEY ("date_time", "person_id", "ecm_id");
 
 -- ----------------------------
+-- Indexes structure for table lives_in
+-- ----------------------------
+CREATE INDEX "apartment_clustered_index" ON "public"."lives_in" USING btree ("apartment_number", "building_id");
+ALTER TABLE "public"."lives_in" CLUSTER ON "apartment_clustered_index";
+
+-- ----------------------------
 -- Primary Key structure for table lives_in
 -- ----------------------------
 ALTER TABLE "public"."lives_in" ADD PRIMARY KEY ("person_id");
@@ -4593,7 +4606,7 @@ ALTER TABLE "public"."lives_in" ADD PRIMARY KEY ("person_id");
 -- Uniques structure for table person
 -- ----------------------------
 ALTER TABLE "public"."person" ADD UNIQUE ("main_document_id") DEFERRABLE;
-ALTER TABLE "public"."person" ADD UNIQUE ("first_name", "family_name", "date_of_birth");
+ALTER TABLE "public"."person" ADD UNIQUE ("first_name", "family_name", "date_of_birth", "middle_name");
 
 -- ----------------------------
 -- Primary Key structure for table person
@@ -4619,9 +4632,41 @@ ALTER TABLE "public"."transaction" CLUSTER ON "transaction_account_id_index";
 -- ----------------------------
 -- Triggers structure for table transaction
 -- ----------------------------
-CREATE TRIGGER "account_balance_update" AFTER INSERT OR DELETE ON "public"."transaction"
+CREATE OR REPLACE FUNCTION update_account_balance_on_insert() RETURNS TRIGGER AS $$
+DECLARE
+BEGIN
+   UPDATE account
+    SET balance = (SELECT sum(amount) FROM transaction WHERE transaction.account_id = new.account_id)
+     WHERE account.account_id = new.account_id;
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION update_account_balance_on_delete() RETURNS TRIGGER AS $$
+DECLARE
+BEGIN
+   UPDATE account
+    SET balance = (SELECT sum(amount) FROM transaction WHERE transaction.account_id = old.account_id)
+     WHERE account.account_id = new.account_id;
+  RETURN old;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS account_balance_update_on_insert ON "public"."transaction" CASCADE;
+CREATE TRIGGER "account_balance_update_on_insert" AFTER INSERT ON "public"."transaction"
 FOR EACH ROW
-EXECUTE PROCEDURE "update_account_balance"();
+EXECUTE PROCEDURE "update_account_balance_on_insert"();
+
+DROP TRIGGER IF EXISTS account_balance_on_delete ON "public"."transaction" CASCADE;
+CREATE TRIGGER "account_balance_on_delete" AFTER DELETE ON "public"."transaction"
+FOR EACH ROW
+EXECUTE PROCEDURE "update_account_balance_on_delete"();
+
+-- ----------------------------
+-- Uniques structure for table transaction
+-- ----------------------------
+ALTER TABLE "public"."transaction" ADD UNIQUE ("account_id", "date_time");
 
 -- ----------------------------
 -- Primary Key structure for table transaction
@@ -4631,8 +4676,8 @@ ALTER TABLE "public"."transaction" ADD PRIMARY KEY ("transaction_id");
 -- ----------------------------
 -- Foreign Key structure for table "public"."account"
 -- ----------------------------
-ALTER TABLE "public"."account" ADD FOREIGN KEY ("account_type_id") REFERENCES "public"."account_type" ("account_type_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 ALTER TABLE "public"."account" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."account" ADD FOREIGN KEY ("account_type_id") REFERENCES "public"."account_type" ("account_type_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."apartment"
@@ -4655,8 +4700,8 @@ ALTER TABLE "public"."employee" ADD FOREIGN KEY ("person_id") REFERENCES "public
 -- ----------------------------
 -- Foreign Key structure for table "public"."entry_check_machine"
 -- ----------------------------
-ALTER TABLE "public"."entry_check_machine" ADD FOREIGN KEY ("building_id") REFERENCES "public"."building" ("building_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."entry_check_machine" ADD FOREIGN KEY ("entry_permission_id") REFERENCES "public"."entry_permission" ("entry_permission_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."entry_check_machine" ADD FOREIGN KEY ("building_id") REFERENCES "public"."building" ("building_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."ep_set_has_ep"
@@ -4672,14 +4717,14 @@ ALTER TABLE "public"."guest" ADD FOREIGN KEY ("person_id") REFERENCES "public"."
 -- ----------------------------
 -- Foreign Key structure for table "public"."guest_to_person"
 -- ----------------------------
-ALTER TABLE "public"."guest_to_person" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."guest_to_person" ADD FOREIGN KEY ("guest_person_id") REFERENCES "public"."guest" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."guest_to_person" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."in_out"
 -- ----------------------------
-ALTER TABLE "public"."in_out" ADD FOREIGN KEY ("ecm_id") REFERENCES "public"."entry_check_machine" ("ecm_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."in_out" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."in_out" ADD FOREIGN KEY ("ecm_id") REFERENCES "public"."entry_check_machine" ("ecm_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."lives_in"
@@ -4695,8 +4740,8 @@ ALTER TABLE "public"."person" ADD FOREIGN KEY ("main_document_id") REFERENCES "p
 -- ----------------------------
 -- Foreign Key structure for table "public"."person_has_ep_set"
 -- ----------------------------
-ALTER TABLE "public"."person_has_ep_set" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE CASCADE ON UPDATE CASCADE DEFERRABLE;
 ALTER TABLE "public"."person_has_ep_set" ADD FOREIGN KEY ("ep_set_id") REFERENCES "public"."entry_permission_set" ("ep_set_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+ALTER TABLE "public"."person_has_ep_set" ADD FOREIGN KEY ("person_id") REFERENCES "public"."person" ("person_id") ON DELETE CASCADE ON UPDATE CASCADE DEFERRABLE;
 
 -- ----------------------------
 -- Foreign Key structure for table "public"."student"
@@ -4707,3 +4752,5 @@ ALTER TABLE "public"."student" ADD FOREIGN KEY ("person_id") REFERENCES "public"
 -- Foreign Key structure for table "public"."transaction"
 -- ----------------------------
 ALTER TABLE "public"."transaction" ADD FOREIGN KEY ("account_id") REFERENCES "public"."account" ("account_id") ON DELETE RESTRICT ON UPDATE CASCADE DEFERRABLE;
+
+

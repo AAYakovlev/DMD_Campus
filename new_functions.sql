@@ -251,17 +251,3 @@ BEGIN
   END IF;
 END;
 $function$
-
-CREATE OR REPLACE FUNCTION update_account_balance() RETURNS TRIGGER AS $$
-DECLARE
-BEGIN
-  UPDATE account
-    SET balance = (SELECT sum(amount) FROM transaction WHERE transaction.account_id = new.account_id);
-  RETURN new;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS "account_balance_update" ON "public"."transaction";
-CREATE TRIGGER "account_balance_update" AFTER INSERT OR DELETE ON "public"."transaction"
-FOR EACH ROW
-EXECUTE PROCEDURE "update_account_balance"();
