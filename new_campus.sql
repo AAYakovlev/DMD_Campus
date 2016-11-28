@@ -4648,7 +4648,7 @@ DECLARE
 BEGIN
    UPDATE account
     SET balance = (SELECT sum(amount) FROM transaction WHERE transaction.account_id = old.account_id)
-     WHERE account.account_id = new.account_id;
+     WHERE account.account_id = old.account_id;
   RETURN old;
 END;
 $$ LANGUAGE plpgsql;
