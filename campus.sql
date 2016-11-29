@@ -144,9 +144,7 @@ CREATE TABLE "public"."account" (
 "account_type_id" int4 NOT NULL,
 "balance" numeric(255)
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of account
@@ -203,9 +201,7 @@ CREATE TABLE "public"."account_type" (
 "account_type_id" int4 DEFAULT nextval('transaction_type_transaction_type_id_seq'::regclass) NOT NULL,
 "type_name" varchar(50) COLLATE "default" NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of account_type
@@ -224,9 +220,7 @@ CREATE TABLE "public"."apartment" (
 "apartment_number" int4 NOT NULL,
 "apartment_type_id" int4 NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of apartment
@@ -596,9 +590,7 @@ CREATE TABLE "public"."apartment_type" (
 "monthly_cost" numeric(8,2),
 "type_name" varchar(50) COLLATE "default"
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of apartment_type
@@ -619,9 +611,7 @@ CREATE TABLE "public"."building" (
 "zip_code" varchar(30) COLLATE "default",
 "type_name" varchar(50) COLLATE "default"
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of building
@@ -643,9 +633,7 @@ CREATE TABLE "public"."document" (
 "document_type_id" int4 NOT NULL,
 "image_path" varchar(255) COLLATE "default" NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of document
@@ -686,9 +674,7 @@ CREATE TABLE "public"."document_type" (
 "type_name" varchar(50) COLLATE "default" NOT NULL,
 "identity_lvl" varchar(255) COLLATE "default" NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of document_type
@@ -712,9 +698,7 @@ CREATE TABLE "public"."employee" (
 "salary" numeric(8,2) NOT NULL,
 "employee_role_id" int4 NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of employee
@@ -735,9 +719,7 @@ CREATE TABLE "public"."employee_role" (
 "role_name" varchar(50) COLLATE "default" NOT NULL,
 "description" varchar(255) COLLATE "default"
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of employee_role
@@ -759,9 +741,7 @@ CREATE TABLE "public"."entry_check_machine" (
 "entry_permission_id" int4 NOT NULL,
 "constraint_group_id" int4
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of entry_check_machine
@@ -851,9 +831,7 @@ CREATE TABLE "public"."entry_permission" (
 "entry_permission_id" int4 DEFAULT nextval('entry_permission_entry_permission_id_seq'::regclass) NOT NULL,
 "permission_name" varchar(100) COLLATE "default" NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of entry_permission
@@ -888,9 +866,7 @@ CREATE TABLE "public"."entry_permission_set" (
 "ep_set_id" int4 DEFAULT nextval('entry_permission_set_ep_set_id_seq'::regclass) NOT NULL,
 "set_name" varchar(50) COLLATE "default" NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of entry_permission_set
@@ -911,9 +887,7 @@ CREATE TABLE "public"."ep_set_has_ep" (
 "entry_permission_id" int4 NOT NULL,
 "ep_set_id" int4 NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of ep_set_has_ep
@@ -952,9 +926,7 @@ DROP TABLE IF EXISTS "public"."guest" CASCADE;
 CREATE TABLE "public"."guest" (
 "person_id" int4 NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of guest
@@ -980,9 +952,7 @@ CREATE TABLE "public"."guest_to_person" (
 "date_time_end" timestamp(6),
 "guest_person_id" int4 NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of guest_to_person
@@ -1004,9 +974,7 @@ CREATE TABLE "public"."in_out" (
 "date_time" timestamp(6) NOT NULL,
 "accepted" bool NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of in_out
@@ -2727,9 +2695,7 @@ CREATE TABLE "public"."lives_in" (
 "building_id" int4 NOT NULL,
 "date_time_start" timestamp(6) NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of lives_in
@@ -2764,9 +2730,7 @@ CREATE TABLE "public"."person" (
 "gender" char(1) COLLATE "default" NOT NULL,
 "main_document_id" int4 NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of person
@@ -2806,9 +2770,7 @@ CREATE TABLE "public"."person_has_ep_set" (
 "person_id" int4 NOT NULL,
 "ep_set_id" int4 NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of person_has_ep_set
@@ -2858,9 +2820,7 @@ CREATE TABLE "public"."student" (
 "person_id" int4 NOT NULL,
 "scholarship" numeric(8,2) NOT NULL
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of student
@@ -2887,9 +2847,7 @@ CREATE TABLE "public"."transaction" (
 "date_time" timestamp(6) NOT NULL,
 "description" varchar(255) COLLATE "default"
 )
-WITH (OIDS=FALSE)
-
-;
+WITH (OIDS=FALSE);
 
 -- ----------------------------
 -- Records of transaction
