@@ -4438,11 +4438,6 @@ ALTER TABLE "public"."account_type" ADD PRIMARY KEY ("account_type_id");
 CREATE UNIQUE INDEX "apartment_building_id_apartment_number_idx" ON "public"."apartment" USING btree ("building_id", "apartment_number");
 
 -- ----------------------------
--- Uniques structure for table apartment
--- ----------------------------
-ALTER TABLE "public"."apartment" ADD UNIQUE ("building_id", "apartment_number");
-
--- ----------------------------
 -- Primary Key structure for table apartment
 -- ----------------------------
 ALTER TABLE "public"."apartment" ADD PRIMARY KEY ("building_id", "apartment_number");
