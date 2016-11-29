@@ -423,7 +423,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void alert(String title, String content) {
+    public static void alert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);

@@ -9,14 +9,20 @@ import org.postgresql.ds.PGPoolingDataSource;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws IOException {
         Properties config = new Properties();
-        config.load(new FileInputStream(new File("config.properties")));
+        try {
+            config.load(new FileInputStream(new File("config.properties")));
+        } catch (IOException e) {
+            Controller.alert("Error", "Can't find config.properties file");
+            return;
+        }
         String dbHost = config.getProperty("database.host");
         String dbName = config.getProperty("database.name");
         String dbUser = config.getProperty("database.user");
