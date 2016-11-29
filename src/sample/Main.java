@@ -7,17 +7,28 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.postgresql.ds.PGPoolingDataSource;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
+
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Properties config = new Properties();
+        config.load(new FileInputStream(new File("config.properties")));
+        String dbHost = config.getProperty("database.host");
+        String dbName = config.getProperty("database.name");
+        String dbUser = config.getProperty("database.user");
+        String dbPassword = config.getProperty("database.password");
+
         PGPoolingDataSource source = new PGPoolingDataSource();
         source.setDataSourceName("CampusData");
 
-        source.setServerName("localhost");      //EDIT THIS
-        source.setDatabaseName("campus");      //EDIT THIS
-        source.setUser("postgres");      //EDIT THIS
-        source.setPassword("");      //EDIT THIS
+        source.setServerName(dbHost);
+        source.setDatabaseName(dbName);
+        source.setUser(dbUser);
+        source.setPassword(dbPassword);
         source.setMaxConnections(10);
 
         DataAccess dataAccess = new DataAccess(source);

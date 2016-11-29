@@ -40,7 +40,7 @@ CREATE SEQUENCE "public"."document_document_id_seq"
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
- START 26
+ START 27
  CACHE 1;
 
 -- ----------------------------
@@ -4377,7 +4377,7 @@ CREATE OR REPLACE VIEW "public"."rental_fee_balance" AS
    FROM ((account
      JOIN person USING (person_id))
      JOIN account_type ON ((account_type.account_type_id = account.account_type_id)))
-  WHERE (((account_type.type_name)::text = 'Rental Fee'::text) AND (account.balance < (0)::numeric));
+  WHERE ((account_type.type_name)::text = 'Rental Fee'::text);
 
 -- ----------------------------
 -- View structure for rental_fee_balance_negative
